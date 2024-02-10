@@ -1,0 +1,7 @@
+Dejo las recomendaciones para las ramas, asi todos las entendemos cuando ya estén mano a la obra. (las locales sería bueno usar la misma nomenclatura.
+
+Para las historias de usuario, que son "features"
+Crear rama:
+
+feature/REQ-5-armar-crud-generosmusicales o feature/REQ-5-armar-crud-generos-musicales   (elijan uds)
+
