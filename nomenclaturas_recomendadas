@@ -5,3 +5,6 @@ Crear rama:
 
 feature/REQ-5-armar-crud-generosmusicales o feature/REQ-5-armar-crud-generos-musicales   (elijan uds)
 
+Si es un fix/parche de algo:  fix/REQ-5-correccion-login
+
+Opinen, esto es sugerencia, no es obligatorio. Pero esos prefijos, son los que verían en Trello y los testers al probar las funcionalidades y requerimientos, lo hace re visual y ordenado.
