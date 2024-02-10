@@ -28,6 +28,16 @@ const UsuariosSchema = Schema({
     required: [true, 'Al menos debe seleccionar un género músical']
   },
 
+  tuneMatch: {
+    type: [Schema.Types.Mixed],
+    default: []
+  },
+
+  ultimaPosicion: {
+    lat: Number,
+    lon: Number
+  },
+
   enBuscaDe: [{ type: String }],
 
   activo: { type: Boolean, default: true }

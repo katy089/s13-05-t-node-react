@@ -1,6 +1,7 @@
 const { request, response } = require('express')
 const bycript = require('bcryptjs')
 const Usuario = require('../models/usuarios')
+const calcularDistancia = require('../helpers/distance/haversine')
 
 
 const signUp = async (req = request, res = response) => {
@@ -11,6 +12,17 @@ const signUp = async (req = request, res = response) => {
       { nombre, correo, password, ...rest }
     )
     usuario.password = bycript.hashSync(password, salt)
+
+    if ('ultimaPosicion' in rest) {
+      const { ultimaPosicion } = rest
+      usuario.ultimaPosicion = ultimaPosicion
+      await usuario.save()
+      return res.status(201).json({
+        message: `Gracias por Inscribirte ${nombre}`,
+        usuario,
+      })
+    }
+
     await usuario.save()
 
     res.status(201).json({
@@ -30,8 +42,22 @@ const signUp = async (req = request, res = response) => {
 
 const logIn = async (req = request, res = response) => {
   try {
-    const { correo, password } = req.body
+    let distancia = ''
+    const { correo, password, ...rest } = req.body
     const usuario = await Usuario.findOne({ correo, activo: true })
+
+    if ('ultimaPosicion' in rest) {
+      const { ultimaPosicion } = rest
+      usuario.ultimaPosicion = ultimaPosicion
+      await usuario.save()
+      const coordTuneMatch = {
+        lat: 48.8584,
+        lon: 2.2945
+      };
+
+      distancia = calcularDistancia(ultimaPosicion, coordTuneMatch)
+
+    }
     if (!usuario) {
       return res.status(404).json({
         message: 'No existe este usuario',
@@ -46,7 +72,8 @@ const logIn = async (req = request, res = response) => {
     }
     res.status(200).json({
       message: `Gracias por volver ${usuario.nombre}`,
-      usuario
+      usuario,
+      distancia
     })
   } catch (e) {
     console.log('Error! no se pudo hacer Log-in'.red, e)
