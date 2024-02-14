@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { LOGIN } from "../../Router/Paths"
+import { LOGIN, SIGNUP } from "../../Router/Paths"
 
 
 function NavBar() {
@@ -11,6 +11,12 @@ function NavBar() {
           className='btn btn-ghost text-xl hover:bg-neutral hover:text-secondary'
         >
           login
+        </Link>
+        <Link
+          to={SIGNUP}
+          className='btn btn-ghost text-xl hover:bg-neutral hover:text-secondary'
+        >
+          signup
         </Link>
       </div>
     </header>
