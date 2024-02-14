@@ -2,6 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const connection = require('../dataBase/connection')
 const message = require('../helpers/message')
+const openapiSpecification = require('../utils/swagger.utils')
+const swaggerUi = require('swagger-ui-express')
 
 
 class Server {
@@ -36,6 +38,7 @@ class Server {
   routes() {
     this.app.get('/', (_, res) => res.json({ message: 'TuneMach Online' }))
     this.app.use(this.#usuario.route, this.#usuario.path)
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
   }
 }
 
