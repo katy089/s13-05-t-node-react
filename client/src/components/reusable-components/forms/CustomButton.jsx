@@ -6,7 +6,7 @@ function CustomButton({ onClick, text, icon: Icon }) {
 
   return (
     <button
-      className="flex items-center btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
+      className="flex items-center btn btn-xs sm:btn-sm md:btn-md"
       onClick={handleClick}
     >
       {Icon && <Icon />}

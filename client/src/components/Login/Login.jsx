@@ -1,20 +1,100 @@
-import CustomButton from "../reusable-components/forms/CustomButton";
-import { useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+// import CustomButton from "../reusable-components/forms/CustomButton";
+// import { FcGoogle } from "react-icons/fc";
+import { GoogleLogin } from "@react-oauth/google";
+
+import { useEffect, useState } from "react";
 
 function Login() {
-  const navigate = useNavigate();
-  const handleButtonClick = () => {
-    navigate("/");
+  // const navigate = useNavigate();
+  const [ultimaPosicion, setUltimaPosicion] = useState({});
+  const [emailTuneMatch, setEmailTuneMatch] = useState(null);
+
+  const obtenerPosicion = () => {
+    if (!navigator.geolocation) {
+      console.error("La geolocalización no es soportada por este navegador.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude: lat, longitude: lon } = position.coords;
+        setUltimaPosicion({ lat, lon });
+        console.log({ lat, lon });
+      },
+      (error) => {
+        console.error("Error obteniendo la ubicación del usuario:", error);
+      }
+    );
+  };
+
+  useEffect(() => {
+    obtenerPosicion();
+  }, []);
+
+  const handleLoginSuccess = (response) => {
+    // agregar un alert de respuesta exitosa
+    console.log(response);
+    // envío la info al backend
+    sendToBackend(response);
+  };
+
+  const handleLoginError = (error) => {
+    // manejo de errores
+    console.error(error);
+  };
+
+  const sendToBackend = (response) => {
+    const body =
+      Object.keys(ultimaPosicion).length !== 0
+        ? { id_token: response.credential, ultimaPosicion }
+        : { id_token: response.credential };
+
+    fetch("http://localhost:8080/api/usuario/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((resp) => resp.json())
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem(
+          "emailTuneMatch",
+          JSON.stringify(res.usuario.correo)
+        );
+        setEmailTuneMatch(res.usuario.correo);
+      })
+      .catch(handleLoginError);
+  };
+
+  const handleSignOut = async () => {
+    window.google.accounts.id.disableAutoSelect(); // google queda como variable global si se pone el script en el index principal
+    window.google.accounts.id.revoke(
+      localStorage.getItem("emailTuneMatch"),
+      (done) => {
+        if (done) {
+          console.log("Revocación exitosa");
+          localStorage.removeItem("emailTuneMatch"); // colocar el correo en el storage puede no ser seguro, pero se necesita durante la sesion para poder cerrar
+          window.location.reload(); // en caso de que haya quedado algo en el navegador se elimina, pero no es tan necesario, podría funcionar sin reload()
+        } else {
+          console.error("Error al revocar el consentimiento");
+        }
+      }
+    );
   };
   return (
     <div>
       <div>
-        <CustomButton
-          onClick={handleButtonClick}
-          text="Ingresar con Google"
-          icon={FcGoogle}
+        <GoogleLogin
+          onSuccess={handleLoginSuccess}
+          onFailure={handleLoginError}
         />
+        {emailTuneMatch && (
+          <button id="g_id_signout" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        )}
       </div>
     </div>
   );
