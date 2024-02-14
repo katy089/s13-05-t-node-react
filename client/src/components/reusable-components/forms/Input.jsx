@@ -1,4 +1,5 @@
 const Input =  ({
+    /* eslint-disable */
     labelText,
     type,
     placeholder,
@@ -6,6 +7,7 @@ const Input =  ({
     change,
     register,
     error,
+    /* eslint-disable */
 }) => 
 {
     return (
