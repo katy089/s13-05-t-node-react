@@ -25,6 +25,7 @@ class Server {
   middlewares() {
     this.app.use(cors())
     this.app.use(express.json())
+    this.app.use(express.static('public'))
   }
 
   async dataBase() {
@@ -36,7 +37,8 @@ class Server {
   }
 
   routes() {
-    this.app.get('/', (_, res) => res.json({ message: 'TuneMach Online' }))
+    this.app.get('/', (_, res) =>
+      res.sendFile(path.join(__dirname, 'public', 'index.html')))
     this.app.use(this.#usuario.route, this.#usuario.path)
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
   }

@@ -1,0 +1,16 @@
+Vamos a poner el paso a paso para ejecutarlo localmente?
+
+En cada carpeta (api o client) ejecutar
+npm i
+
+CLIENT
+------
+Ejecutar "npm run dev"
+En el prompt seleccionar h, y luego o
+
+
+API/BACKEND
+-----------
+
+Documentación: http://localhost:8080/docs
+npm start
