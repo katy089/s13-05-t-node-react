@@ -18,9 +18,9 @@
 
 <div align="center">
 
-[![DEMO](https://img.shields.io/static/v1?style=for-the-badge&message=Ver%20Demo&color=F29C5E&logo=netlify&logoColor=white&label=)](https://foodielist.netlify.app)
+[![DEMO](https://img.shields.io/static/v1?style=for-the-badge&message=Ver%20Demo&color=F29C5E&logo=netlify&logoColor=white&label=)](https://###)
 [![API](https://img.shields.io/static/v1?style=for-the-badge&message=Ver%20Video%20Promocional&color=F29C5E&logo=Youtube&logoColor=white&label=)](https://www.youtube.com)
-[![API](https://img.shields.io/static/v1?style=for-the-badge&message=Ver%20Figma&color=F29C5E&logo=figma&logoColor=white&label=)](https://www.figma.com/file/ymsbKYPDektW8kzJVJYKRL/Foodie-List?type=design&node-id=219%3A1016&mode=design&t=NMCiv8Uj41kSIV6q-1)
+[![API](https://img.shields.io/static/v1?style=for-the-badge&message=Ver%20Figma&color=F29C5E&logo=figma&logoColor=white&label=)](https://www.figma.com/)
 
 </div>
 
