@@ -1,14 +1,13 @@
 // eslint-disable-next-line react/prop-types
-function CustomButton({ onClick, text, icon: Icon }) {
+function CustomButton({ onClick, text, icon: Icon, className }) {
   const handleClick = () => {
     onClick();
   };
 
+  const combinedClasses = `flex items-center ${className}`;
+
   return (
-    <button
-      className="flex items-center btn btn-xs sm:btn-sm md:btn-md lg:btn-lg"
-      onClick={handleClick}
-    >
+    <button className={combinedClasses} onClick={handleClick}>
       {Icon && <Icon />}
       {text}
     </button>

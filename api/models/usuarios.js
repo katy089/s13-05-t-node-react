@@ -34,13 +34,21 @@ const UsuariosSchema = Schema({
   },
 
   ultimaPosicion: {
-    lat: Number,
-    lon: Number
+    lat: {
+      type: Number,
+      default: null
+    },
+    lon: {
+      type: Number,
+      default: null
+    }
   },
 
   enBuscaDe: [{ type: String }],
 
-  activo: { type: Boolean, default: true }
+  activo: { type: Boolean, default: true },
+
+  google: { type: Boolean, default: false }
 })
 
 UsuariosSchema.methods.toJSON = function () {
