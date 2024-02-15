@@ -53,8 +53,7 @@ const logIn = async (req = request, res = response) => {
     const { correo, password, ...rest } = req.body
     const usuario = await Usuario.findOne({
       correo,
-      activo: true,
-      google: false
+      activo: true
     })
 
     if ('ultimaPosicion' in rest) {
