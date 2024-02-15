@@ -12,10 +12,10 @@ const Input =  ({
 {
     return (
         <>
-            <div>
+            <div className="">
                 <label
                     htmlFor={name}
-                    className="flex mb-2 ml-1 text-sm font-medium text-gray-900 dark:text-white"
+                    className="flex mb-1 text-sm font-medium  dark:text-white "
                 >
                     {labelText}
                 </label>
@@ -23,7 +23,7 @@ const Input =  ({
                     type={type || "text"}
                     {...(register && { ...register(name) })}
                     name={name}
-                    className="bg-gray-50 border border-primary-800 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="px-6 py-1 bg-gradient-to-b from-[#c2d7dd] to-[#92a7ad] text-[#696969] sm:text-sm rounded-lg   "
                     placeholder={placeholder}
                     onChange={change && change}
                 />

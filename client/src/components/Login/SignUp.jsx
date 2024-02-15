@@ -11,11 +11,18 @@ const SignUp = () => {
     } = useForm()
 
     return (
-        <div>
-            <div className="flex h-max justify-center items-center">
-                <div className="w.full md:w-1/2 p-4  md:h-screen lg:py-0">
-                    <h1> Crear Cuenta </h1>
-                    <form >
+     
+        <div className="flex justify-center items-center w-96  rounded-lg bg-gradient-to-b from-[#875388] to-[#5c255c] ">
+                <div className="">
+                    
+                    <h1 className="text-center text-white p-2"> 
+                    Crear Cuenta 
+                    </h1>
+                    
+                    
+                    <form
+                        className="" 
+                    >
                         <div>
                             <Input
                                 labelText='Nombre'
@@ -45,25 +52,29 @@ const SignUp = () => {
                                 register={register}
                                 error={errors.password?.message}
                             />
-                            {/* <button
-                                className='relative self-end bottom-14 right-3'
+                            {/* { <button
+                                className=''
                                 type='button'
                                 //onClick={()=> }
                             >
                                 {  <Eye /> }
-                            </button> */}
-                            
+                            </button> }
+                             */}
                         </div>
-                        <div className="flex W-full gap-2 justify-around pt-5 mb-12">
+                    <div className="flex justify-around mb-12 px-2">
                             <RegisterButton text='Iniciar Sesión'/>
-                        </div>
+                    </div>
 
                     </form>
+                <div className="flex justify-center items-center">
+                    <p >o continua con </p>
+                       
+                    </div>
 
                 </div>
                 
 
-            </div>
+         
             
 
         </div>
