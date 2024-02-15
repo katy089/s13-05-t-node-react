@@ -12,7 +12,7 @@
 ## Introducción
 
 <p align="center">
-<h3 align="center"><a href="https://c15-20-ft-node-react.vercel.app/"><img src="https://readme-typing-svg.demolab.com/?lines=Bienvenidos%20a%20TuneMatch&font=Fira%20Code&center=true&width=700&height=45&color=fff53a&vCenter=true&pause=1000&size=25" /></a>
+<h3 align="center"><a href="#"><img src="https://readme-typing-svg.demolab.com/?lines=Bienvenidos%20a%20TuneMatch&font=Fira%20Code&center=true&width=700&height=45&color=fff53a&vCenter=true&pause=1000&size=25" /></a>
 </p>
 <h3>👉🏻 Con nuestra app puedes ponerte en contacto con gente de tus mismos intereses musicales para armar vínculos, poder compartir información acerca de las bandas/géneros, posibilidad de tener beneficios a recitales de los mismos, tener un canal privado de charla…unite y encontrá tu TuneMatch!</h3>
 
