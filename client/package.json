@@ -10,11 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "lucide-react": "^0.330.0",
-=======
     "@react-oauth/google": "^0.12.1",
->>>>>>> 095acbef64def4774d3d37429aa64749fc33017a
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
