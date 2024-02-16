@@ -56,7 +56,7 @@ const SignUp = () => {
                         
                          }}
                          >
-                        <div className="absolute z-30  md:-mt-8 -mt-12 md:pl-10 pl-28 text-center md:text-5xl text-2xl ">
+                        <div className="absolute z-30 md:left-0 md:-mt-8 -mt-12 left-16 md:pl-10 text-center  md:text-5xl text-2xl ">
                             <p>Estás a unos pasos de ser</p>
                             <p>parte de TuneMatch!</p>
                         </div>
@@ -65,9 +65,9 @@ const SignUp = () => {
                             <p>comencemos!</p>
                         </div>
 
-                        <div className="absolute z-20 md:top-0 top-48 right-4 px-4 pt-2 pb-2 rounded-lg bg-gradient-to-b from-[#664c66] to-[#6d2c6c] w-11/12 md:w-96">
+                        <div className="absolute z-20 md:top-0 top-48 right-4 px-4 pt-2 pb-2 rounded-lg bg-gradient-to-b from-[#664c66] to-[#6d2c6c] w-11/12 md:w-96 ">
                         
-                        <form 
+                        <form className=""
 
                                 action=""
                             >
@@ -122,7 +122,7 @@ const SignUp = () => {
                                 o continua con
                             </p>
 
-                            <div className="flex items-center flex-col my-4">
+                            <div className="flex items-center flex-col my-2">
                                 <GoogleLogin
                                     // onSuccess={handleLoginSuccess}
                                     // onFailure={handleLoginError}
@@ -131,11 +131,11 @@ const SignUp = () => {
                                     text="signin_with"
                                     shape="pill"
                                 />
-                                <div className="text-center mt-4">
+                                <div className="text-center mt-3 text-sm">
                                     <p>Al continuar, aceptas los <b>Términos de uso </b> y</p>
                                     <p> <b>Política de privacidad </b> de<b>TuneMatch</b> </p>
                                 </div>
-                                <div className="flex items-center space-x-1 mt-2">
+                                <div className="flex items-center space-x-1 mt-2 text-sm">
                                     <p>¿Tienes cuenta?</p>
                                     <CustomButton
                                         className="hover:text-gray-400"
