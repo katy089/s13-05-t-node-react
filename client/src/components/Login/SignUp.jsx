@@ -131,11 +131,11 @@ const SignUp = () => {
                                     text="signin_with"
                                     shape="pill"
                                 />
-                                <div className="text-center mt-3 text-xs">
+                                <div className="text-center mt-3 text-sm">
                                     <p>Al continuar, aceptas los <b>Términos de uso </b> y</p>
                                     <p> <b>Política de privacidad </b> de<b>TuneMatch</b> </p>
                                 </div>
-                                <div className="flex items-center space-x-1 mt-2 text-xs">
+                                <div className="flex items-center space-x-1 mt-2 text-sm">
                                     <p>¿Tienes cuenta?</p>
                                     <CustomButton
                                         className="hover:text-gray-400"
