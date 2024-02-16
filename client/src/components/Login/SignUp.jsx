@@ -56,7 +56,7 @@ const SignUp = () => {
                         
                          }}
                          >
-                        <div className="absolute z-30  md:-mt-8 -mt-12 md:pl-10 pl-28 text-center md:text-5xl text-2xl ">
+                        <div className="absolute z-30  md:-mt-8 -mt-12  md:left-15 left-16 md:pl-10 text-center  md:text-5xl text-2xl ">
                             <p>Estás a unos pasos de ser</p>
                             <p>parte de TuneMatch!</p>
                         </div>
