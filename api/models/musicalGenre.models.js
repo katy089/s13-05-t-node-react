@@ -5,6 +5,11 @@ const schema = mongoose.Schema({
     type: String,
     require: true,
   },
+  status: {
+    type: String,
+    enum: ['pending', 'active', 'closed'],
+    default: 'active'
+  }
 });
 
 const musicalGenreModel = mongoose.model("musicalGenre", schema);
