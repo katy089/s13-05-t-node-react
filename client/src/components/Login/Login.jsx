@@ -8,13 +8,14 @@ import {
   authenticateUser,
   sendToBackend,
 } from "../../auxFunctions/loginFunctions";
+import Swal from "sweetalert2";
 
 function Login() {
   const navigate = useNavigate();
   const [ultimaPosicion, setUltimaPosicion] = useState({});
   // eslint-disable-next-line no-unused-vars
   const [emailTuneMatch, setEmailTuneMatch] = useState(null);
-  const [email, setEmail] = useState("");
+  const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
 
   const handleButton = () => {
@@ -23,25 +24,46 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validateForm()) {
-      // solicitud de autenticación
-      const response = await authenticateUser(email, password);
-      if (response.success) {
-        // Navegamos a la página de inicio
-        navigate("/home");
-      } else {
-        // Mostramos mensaje o alerta de error
-        alert(response.message);
-      }
+    // Solicitud de autenticación
+    const response = await authenticateUser(correo, password);
+    if (response.status === 200 && response.success) {
+      // Pregunto al usuario si es mayor de  18 años antes de redirigir
+      Swal.fire({
+        title: "¿Eres mayor de  18 años?",
+        background: "#ff0000",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, soy mayor",
+        cancelButtonText: "No, soy menor",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si el usuario confirma que es mayor de  18 años, redirigimos a /home
+          Swal.fire({
+            title: "Bienvenido a TuneMatch!",
+            text: "Conecta a través de la música🎷",
+            icon: "success",
+          });
+          navigate("/home");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa
+          Swal.fire(
+            "Lo sentimos",
+            "Debes ser mayor de  18 años para ingresar.",
+            "info"
+          );
+        }
+      });
     } else {
-      // Mostrar mensaje de validación fallida, se podria poner una libreria para las alertas como sweetalert o notify
-      alert("Por favor, completa los campos correctamente");
+      // Muestro alerta con el mensaje de error
+      Swal.fire({
+        title: "Error de autenticación",
+        text: response.message,
+        icon: "error",
+      });
     }
-  };
-
-  const validateForm = () => {
-    // Validamos que los campos no estén vacíos y tengan el formato correcto
-    return email.trim() !== "" && password.trim() !== "";
   };
 
   const obtenerPosicion = () => {
@@ -67,8 +89,6 @@ function Login() {
   }, []);
 
   const handleLoginSuccess = (response) => {
-    // agregar un alert de respuesta exitosa
-    console.log(response);
     // envío la info al backend
     sendToBackend(
       response,
@@ -76,11 +96,46 @@ function Login() {
       setEmailTuneMatch,
       handleLoginError
     );
-    navigate("/home");
+    Swal.fire({
+      title: "¿Eres mayor de  18 años?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, soy mayor",
+      cancelButtonText: "No, soy menor",
+      confirmButtonColor: "#50d45b",
+      cancelButtonColor: "#d33",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma que es mayor de  18 años, redirigimos a /home
+        Swal.fire({
+          title: "Bienvenido a TuneMatch!",
+          imageUrl:
+            "https://images.pexels.com/photos/4406761/pexels-photo-4406761.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+          imageWidth: 350,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+          text: "Conecta a través de la música🎷",
+        });
+        navigate("/home");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Si el usuario niega ser mayor de  18 años, muestro un aleert de disculpa
+        Swal.fire(
+          "Lo sentimos",
+          "Debes ser mayor de  18 años para ingresar.",
+          "info"
+        );
+      }
+    });
   };
 
   const handleLoginError = (error) => {
     // manejo de errores
+    Swal.fire({
+      title: "Error de autenticación",
+      text: "Prueba ingresar un cuenta válida",
+      icon: "error",
+    });
     console.error(error);
   };
 
@@ -130,7 +185,7 @@ function Login() {
               </p>
               <div className="flex items-center justify-center  my-5 sm:my-10">
                 <CustomButton
-                  onClick={handleButton}
+                  handleClick={handleButton}
                   text={"Comienza Ahora!"}
                   className="bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-1/2 md:w-1/3 text-white rounded-3xl"
                 />
@@ -155,8 +210,8 @@ function Login() {
                   <label htmlFor="email">Email</label>
                   <input
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={correo}
+                    onChange={(e) => setCorreo(e.target.value)}
                     required
                     style={{
                       backgroundImage: ` linear-gradient(180deg, rgba(169,181,180,1) 0%, rgba(154,201,196,1) 34%)`,
@@ -180,11 +235,12 @@ function Login() {
                   />
                 </div>
                 <div className="flex items-center justify-center text-center my-6">
-                  <CustomButton
+                  <button
                     type="submit"
-                    className="bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-full text-white rounded-3xl"
-                    text={"Inicia Sesión"}
-                  />
+                    className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl"
+                  >
+                    Inicia Sesión
+                  </button>
                 </div>
               </form>
               <span className="-mt-[38px] flex items-center justify-center mx-auto text-center w-max px-1 bg-[#6C2B6D]">
@@ -204,7 +260,7 @@ function Login() {
                   <p>¿No tienes cuenta?</p>
                   <CustomButton
                     className="hover:text-gray-400"
-                    onClick={handleButton}
+                    handleClick={handleButton}
                     text={"Registrate!"}
                   />
                 </div>
