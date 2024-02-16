@@ -14,6 +14,16 @@ class Server {
     path: require('../routes/routes.usuario')
   }
 
+  #band = {
+    route: '/api/band',
+    path: require("../routes/band.routes")
+  }
+
+  #musicalGenre = {
+    route: '/api/musicalGenre',
+    path: require("../routes/musicalGenre.routes")
+  }
+
 
   constructor() {
     this.app = express()
@@ -39,8 +49,10 @@ class Server {
   routes() {
     this.app.get('/', (_, res) =>
       res.sendFile(path.join(__dirname, 'public', 'index.html')))
-    this.app.use(this.#usuario.route, this.#usuario.path)
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
+    this.app.use(this.#usuario.route, this.#usuario.path)
+    this.app.use(this.#band.route, this.#band.path)
+    this.app.use(this.#musicalGenre.route, this.#musicalGenre.path)
   }
 }
 
