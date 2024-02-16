@@ -2,7 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const connection = require('../dataBase/connection')
 const message = require('../helpers/message')
-const path = require('path')
+const openapiSpecification = require('../utils/swagger.utils')
+const swaggerUi = require('swagger-ui-express')
 
 
 class Server {
@@ -39,6 +40,7 @@ class Server {
     this.app.get('/', (_, res) =>
       res.sendFile(path.join(__dirname, 'public', 'index.html')))
     this.app.use(this.#usuario.route, this.#usuario.path)
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
   }
 }
 
