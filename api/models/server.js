@@ -2,7 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const connection = require('../dataBase/connection')
 const message = require('../helpers/message')
-const path = require('path')
+const openapiSpecification = require('../utils/swagger.utils')
+const swaggerUi = require('swagger-ui-express')
 
 
 class Server {
@@ -11,6 +12,16 @@ class Server {
   #usuario = {
     route: '/api/usuario',
     path: require('../routes/routes.usuario')
+  }
+
+  #band = {
+    route: '/api/band',
+    path: require("../routes/band.routes")
+  }
+
+  #musicalGenre = {
+    route: '/api/musicalGenre',
+    path: require("../routes/musicalGenre.routes")
   }
 
 
@@ -38,7 +49,10 @@ class Server {
   routes() {
     this.app.get('/', (_, res) =>
       res.sendFile(path.join(__dirname, 'public', 'index.html')))
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
     this.app.use(this.#usuario.route, this.#usuario.path)
+    this.app.use(this.#band.route, this.#band.path)
+    this.app.use(this.#musicalGenre.route, this.#musicalGenre.path)
   }
 }
 
