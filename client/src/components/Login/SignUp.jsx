@@ -3,25 +3,38 @@ import REGISTER11 from "../../assets/register11.png";
 import { useForm } from "react-hook-form"
 import Input from "../reusable-components/forms/Input"
 import RegisterButton from "../reusable-components/forms/RegisterButton"
-import { Eye } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
 import { GoogleLogin } from "@react-oauth/google";
 import CustomButton from "../reusable-components/forms/CustomButton";
 import {useNavigate} from "react-router-dom"
-
-
+import userRegister from "../hooks/userRegister";
 
 
 const SignUp = () => {
     const navigate = useNavigate()
         const {
-            // handleSubmit,
+            handleSubmit,
             register,
-            formState: {errors}
+            formState: {errors},
+            reset
         } = useForm()
 
-    const handleButton = () => {
-        navigate("/");
-    };
+        const onSubmit = (data) => {
+            handleRegister(data);
+            reset()
+        
+        }
+
+        const handleLogin = () => {
+            navigate("/");
+        };
+
+        const { 
+            handleRegister,
+            showPassword,
+            setShowPassword
+        } = userRegister()
+
 
         return(
             
@@ -67,9 +80,10 @@ const SignUp = () => {
 
                         <div className="absolute z-20 md:top-0 top-48 right-4 px-4 pt-2 pb-2 rounded-lg bg-gradient-to-b from-[#664c66] to-[#6d2c6c] w-11/12 md:w-96 ">
                         
-                        <form className=""
-
-                                action=""
+                            <form 
+                                action="onSubmit"
+                                onSubmit={handleSubmit(onSubmit)}
+                                                           
                             >
                                 <h1 className="text-center text-3xl pb-2">
                                     Crear Cuenta
@@ -81,7 +95,7 @@ const SignUp = () => {
                                         placeholder='Introduce tu nombre'
                                         name='name'
                                         register={register}
-                                        error={errors.email?.message}
+                                        error={errors.name?.message}
                                     />
                                 </div>
                                 <div>
@@ -97,7 +111,8 @@ const SignUp = () => {
                                 <div className="flex flex-col">
                                     <Input
                                         labelText='Contraseña'
-                                        type='text'
+                                        type = 'password'
+                                        // type={showPassword ? 'text' : 'password'}
                                         placeholder='Introduce al menos 6 caracteres'
                                         name='password'
                                         register={register}
@@ -106,9 +121,9 @@ const SignUp = () => {
                                     <button
                                     className='relative self-end -top-9 right-2'
                                         type='button'
-                                    //onClick={()=> }
+                                        onClick={() => setShowPassword(!showPassword)}
                                     >
-                                        {<Eye />}
+                                        {showPassword ? <Eye /> : <EyeOff />}
                                     </button> 
                                
                                 </div>
@@ -139,7 +154,7 @@ const SignUp = () => {
                                     <p>¿Tienes cuenta?</p>
                                     <CustomButton
                                         className="hover:text-gray-400"
-                                        onClick={handleButton}
+                                        onClick={handleLogin}
                                         text={<b> Inicia sesion!</b> }
                                     />
                                 </div>
