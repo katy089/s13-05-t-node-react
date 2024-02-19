@@ -19,7 +19,7 @@ const SignUp = () => {
             formState: {errors}
         } = useForm()
 
-    const handleButton = () => {
+    const handleLogin = () => {
         navigate("/");
     };
 
@@ -139,7 +139,7 @@ const SignUp = () => {
                                     <p>¿Tienes cuenta?</p>
                                     <CustomButton
                                         className="hover:text-gray-400"
-                                        onClick={handleButton}
+                                        onClick={handleLogin}
                                         text={<b> Inicia sesion!</b> }
                                     />
                                 </div>
