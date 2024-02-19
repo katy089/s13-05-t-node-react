@@ -1,4 +1,4 @@
-import paginate  from "mongoose-paginate-v2"
+const paginate = require("mongoose-paginate-v2")
 
 const { Schema, model, mongo, default: mongoose } = require("mongoose");
 
@@ -69,6 +69,6 @@ UserSchema.pre("findOne", function () {
   this.populate("bandas");
 });
 
-productSchema.plugin(paginate)
+UserSchema.plugin(paginate)
 module.exports = model("Usuario", UserSchema);
 
