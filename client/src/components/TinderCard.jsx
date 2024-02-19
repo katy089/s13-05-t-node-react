@@ -40,19 +40,23 @@ function TinderCards() {
 
     return (
         <div className=''>
-            <div className='cardContainer'>
+            <div className='cardContainer flex items-center'>
                 {characters.map((character) =>
-                    <TinderCard className='swipe' 
-                    key={character.name} 
-                    onSwipe={(dir) => swiped(dir, character.name)} 
-                    onCardLeftScreen={() => outOfFrame(character.name)}
-                    preventSwipe={['left', 'right']}>
-                        <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card relative size-80 bg-center bg-cover shadow-xl p-5 '>
+                    <TinderCard
+                        className='swipe absolute'
+                        key={character.name}
+                        onSwipe={(dir) => swiped(dir, character.name)}
+                        onCardLeftScreen={() => outOfFrame(character.name)}
+                        preventSwipe={['left', 'right']}>
+                        <div
+                            style={{ backgroundImage: 'url(' + character.url + ')' }}
+                            className='card relative size-80 bg-center bg-cover shadow-xl p-5 '
+                        >
                             <h2 className='text-white'>{character.name}, 27</h2>
                             <p className="text-white font-light text-xs ">Buenos Aires a 50km</p>
                             <p className="text-white font-light text-xs ">Guitarrista</p>
-                            
-                            <button className="absolute btn btn-circle  btn-secondary bg-clearGray bottom-10 left-10 p-2"><LucideEye /> </button>
+
+                            <button className="absolute btn btn-circle btn-outline btn-secondary bg-clearGray bottom-10 left-10 p-2"><LucideEye /> </button>
                             <button className="absolute btn btn-circle btn-outline btn-secondary bg-clearGray bottom-10  left-1/2 transform -translate-x-1/2 p-2 "><LucideEye /> </button>
                             <button className="absolute btn btn-circle btn-outline btn-error bg-clearGray bottom-10 right-10 p-2 "><LucideEye /> </button>
 

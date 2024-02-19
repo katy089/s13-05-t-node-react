@@ -1,5 +1,5 @@
 // import { useEffect, useState } from "react";
-
+import ChatCards from "../components/ChatCards"
 import TinderCards from "../components/TinderCard"
 
 // "../reusable-components/forms/CustomButton";
@@ -11,12 +11,54 @@ const MatchSection = () => {
                 <div className="bg-purple-900 ">
                     {/* chats */}
                     <div className="card h-full p-2 bg-black shadow-xl items-center  ">
-                        <div className="card-body bg-slate-400 p-4 m-6">
-                            <h2 className="card-title">Shoes!</h2>
-                            <p>If a dog chews shoes whose shoes does he choose?</p>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Buy Now</button>
-                            </div>
+                        <div className="card-body bg-slate-100 p-4 m-6 flex justify-between align-middle overflow-hidden">
+                            <ChatCards 
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+                            <ChatCards
+                                name={'Alicia'}
+                                profilePicture={'https://images.pexels.com/photos/8159657/pexels-photo-8159657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1g'}
+                                message={'If a dog chews shoes whose shoes does he choose?'}
+                            />
+
+
                         </div>
 
                     </div>
