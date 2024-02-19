@@ -1,10 +1,10 @@
-const  Usuario  = require('../models/usuarios') 
+const  Usuario  = require('../models/usuarios.models') 
 
 
 
 const bycript = require('bcryptjs')
 
-const calcularDistancia = require('../helpers/distance/haversine')
+const calcularDistancia = require('../../helpers/distance/haversine')
 
 
 const coordTuneMatch = {
@@ -16,7 +16,7 @@ module.exports = {
     signUp: async (nombre, correo, password, rest, res) => {
         try {
             const salt = bycript.genSaltSync() 
-            const usuario = new Usuario({ nombre, correo, password, ...rest }) 
+            const usuario = new Usuario({ nombre, correo, password, rest }) 
             usuario.password = bycript.hashSync(password, salt) 
 
             let distancia = 'No tenemos tus coordenadas'  // Definir la variable distancia por defecto
@@ -25,14 +25,14 @@ module.exports = {
                 const { ultimaPosicion } = rest 
                 usuario.ultimaPosicion = ultimaPosicion 
                 await usuario.save() 
-                distancia = calcularDistancia(ultimaPosicion, coordTuneMatch)  // Calcular la distancia si es necesario
+                return res.status(201).json({
+                  message: `Gracias por Inscribirte ${nombre}`,
+                  usuario,
+                  distancia
+              }) 
             }
 
-            return res.status(201).json({
-                message: `Gracias por Inscribirte ${nombre}`,
-                usuario,
-                distancia
-            }) 
+            
         } catch (error) {
             return res.status(400).json({
                 error: `Se ha producido un error: ${error.message}`,
@@ -123,5 +123,24 @@ res.status(200).json({
                 stack: error.stack
             }) 
         }
+    },
+
+
+
+    getUser:async(id)=>{
+
+      try {
+        const user = await Usuario.findOne({ _id: id })
+        if (!user) return res.json({ error: "No existe el usuario" })
+        
+      } catch (error) {
+        return res.status(400).json({
+          error: `Se ha producido un error: ${error.message}`,
+          type: error.name,
+          stack: error.stack
+      }) 
+        
+      }
+
     }
 } 

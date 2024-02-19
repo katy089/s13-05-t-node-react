@@ -1,6 +1,6 @@
 const { request, response } = require('express')
 
-const googleCheck = require('../helpers/googleCheck')
+const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
 
 
@@ -150,8 +150,19 @@ const googleAuth = async (req, res = response) => {
   }
 }
 
+
+const getUser = async (req, res) => {
+  const { id } = req.params
+
+  const user = await serviceUser.getUser(id)
+  
+ 
+  res.json(user)
+}
+
 module.exports = {
   signUp,
   logIn,
-  googleAuth
+  googleAuth,
+  getUser
 }
