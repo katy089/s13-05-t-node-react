@@ -4,7 +4,7 @@ const {
   logIn,
   googleAuth,
   getUser
-} = require('../controller/usuario.controller')
+} = require('../controller/usuario.controller.js')
 
 const router = Router()
 
@@ -12,7 +12,7 @@ const {
   POST_SIGN_UP,
   POST_LOGIN,
   POST_GOOGLE
-} = require('../helpers/checks')
+} = require('../../helpers/checks')
 
 router.post('/sign-up', POST_SIGN_UP, signUp)
 router.post('/login', POST_LOGIN, logIn)
