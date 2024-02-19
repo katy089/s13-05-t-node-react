@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const connection = require('../dataBase/connection')
-const message = require('../helpers/message')
+const connection = require('../dataBase/connection.dataBase.js')
+const message = require('../../helpers/message.js')
 const openapiSpecification = require('../utils/swagger.utils')
 const swaggerUi = require('swagger-ui-express')
 
@@ -11,17 +11,17 @@ class Server {
   #PORT = process.env.PORT
   #usuario = {
     route: '/api/usuario',
-    path: require('../routes/routes.usuario')
+    path: require('../routes/usuario.routes.js')
   }
 
   #band = {
     route: '/api/band',
-    path: require("../routes/band.routes")
+    path: require("../routes/band.routes.js")
   }
 
   #musicalGenre = {
     route: '/api/musicalGenre',
-    path: require("../routes/musicalGenre.routes")
+    path: require("../routes/musicalGenre.routes.js")
   }
 
 
