@@ -137,7 +137,7 @@ const SignUp = () => {
                 text="signin_with"
                 shape="pill"
               />
-              <p className="mt-3 text-sm w-full flex flex-wrap bg-yellow-300">
+              <p className="mt-3 text-sm w-full flex flex-wrap">
                 Al continuar, aceptas los
                 <CustomButton
                   onClick={handleTerms}
