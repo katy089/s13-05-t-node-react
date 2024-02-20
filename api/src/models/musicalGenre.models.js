@@ -4,7 +4,7 @@ const schema = mongoose.Schema({
   name: {
     type: String,
     unique: true,
-    require: true,
+    required: true,
   },
   status: {
     type: String,
