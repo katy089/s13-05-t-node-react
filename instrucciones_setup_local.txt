@@ -24,4 +24,4 @@ Ejecutar dentro de la carpeta api: npm start
 Documentación Swagger: http://localhost:8080/docs
 
 KAOS
-KAOS
+
