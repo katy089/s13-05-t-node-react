@@ -1,9 +1,19 @@
 import Swal from "sweetalert2";
 import {useState} from "react"
 
+import { useDispatch, useSelector } from 'react-redux'
+import { startLoading, stopLoading, selectLoading } from '../redux/loaderSlice'
+import axios from "axios";
+
+import { API_URL_REGISTER } from '../config/api'
+
 const userRegister = () => {
     //eslint-disable-next-line
     const [showPassword, setShowPassword] = useState(false)
+
+    const dispatch = useDispatch()
+    const isLoading = useSelector(selectLoading )
+
 
     const handleRegister = async (data) => {
         const {name, email, password } = data;
@@ -30,8 +40,26 @@ const userRegister = () => {
             return;
         }
 
-        Swal.fire("Success", "Usuario registrado exitosamente", "success");
+        // Swal.fire("Success", "Usuario registrado exitosamente", "success");
+
+        await dispatch(startLoading())
+
+        await axios
+              .post(API_URL_REGISTER, {
+                   nombre: name,
+                   correo: email,
+                   password,
+               })
+
+
+        
+
+
+
+
     }
+
+    
 
     return {
         handleRegister,
