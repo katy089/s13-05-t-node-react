@@ -47,9 +47,7 @@ class Server {
   }
 
   routes() {
-    // this.app.get('/', (_, res) =>
-    //   res.sendFile(path.join(__dirname, 'public', 'index.html')))
-    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
+    this.app.use('/', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
     this.app.use(this.#usuario.route, this.#usuario.path)
     this.app.use(this.#band.route, this.#band.path)
     this.app.use(this.#musicalGenre.route, this.#musicalGenre.path)
