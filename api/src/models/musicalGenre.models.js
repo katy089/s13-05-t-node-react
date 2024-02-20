@@ -8,7 +8,7 @@ const schema = mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "active", "closed"],
+    enum: ["pending", "active", "closed"], //no me quedan claro estos estados
     default: "active",
   },
 });

@@ -1,9 +1,9 @@
 const { request, response } = require('express')
 const bycript = require('bcryptjs')
-const Usuario = require('../models/usuarios')
-const calcularDistancia = require('../helpers/distance/haversine')
-const googleCheck = require('../helpers/googleCheck')
-const usuarios = require('../models/usuarios')
+const Usuario = require('../models/usuarios.models.js')
+const calcularDistancia = require('../../helpers/distance/haversine.js')
+const googleCheck = require('../../helpers/googleCheck.js')
+const usuarios = require('../models/usuarios.models.js')
 
 
 const coordTuneMatch = {
