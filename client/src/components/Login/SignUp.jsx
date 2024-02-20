@@ -7,8 +7,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
 import CustomButton from "../reusable-components/forms/CustomButton";
 import { useNavigate } from "react-router-dom";
-import userRegister from "../hooks/userRegister";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import UserRegister from "../../hooks/userRegister";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const SignUp = () => {
     navigate("/");
   };
 
-  const { handleRegister, showPassword, setShowPassword } = userRegister();
+  const { handleRegister, showPassword, setShowPassword } = UserRegister();
 
   const handleTerms = () => {
     navigate("/terms");
