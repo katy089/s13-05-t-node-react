@@ -2,7 +2,6 @@ import Swal from "sweetalert2";
 import {useState} from "react"
 
 const userRegister = () => {
-
     //eslint-disable-next-line
     const [showPassword, setShowPassword] = useState(false)
 

@@ -7,7 +7,7 @@ import { Eye, EyeOff } from "lucide-react"
 import { GoogleLogin } from "@react-oauth/google";
 import CustomButton from "../reusable-components/forms/CustomButton";
 import {useNavigate} from "react-router-dom"
-import userRegister from "../hooks/userRegister";
+import userRegister from "../../hooks/userRegister";
 
 
 const SignUp = () => {
@@ -66,7 +66,6 @@ const SignUp = () => {
                              background: `url(${REGISTER11})`,
                              backgroundSize: "cover",
                              backgroundPosition: "center",
-                        
                          }}
                          >
                         <div className="absolute z-30 md:left-0 md:-mt-8 -mt-12 left-16 md:pl-10 text-center  md:text-5xl text-2xl ">
