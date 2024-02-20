@@ -47,10 +47,7 @@ const Privacy = () => {
           <ul className="list-disc ml-6 mb-4">
             <li>Información de registro proporcionada por el usuario.</li>
             <li>Información sobre tus gustos musicales.</li>
-            <li>
-              Información de geolocalización si has activado este servicio en tu
-              dispositivo.
-            </li>
+            <li>Información de geolocalización activada por el usuario.</li>
           </ul>
           <h3 className="text-lg font-bold mb-2">Uso de la Información</h3>
           <p className="mb-4">Utilizamos la información recopilada para:</p>

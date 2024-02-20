@@ -1,5 +1,5 @@
 import { GoogleLogin } from "@react-oauth/google";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import loginbg from "../../assets/loginbg.jpg";
 import LOGO from "../../assets/LOGO.png";
 import { useNavigate } from "react-router-dom";
@@ -32,14 +32,114 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Solicitud de autenticación
-    const response = await authenticateUser(correo, password);
-    if (response.status === 200 && response.success) {
-      // Pregunto al usuario si es mayor de  18 años antes de redirigir
+
+    try {
+      // Esperamos a que el usuario permita la geolocalización
+      await obtenerPosicion();
+
+      // Solicitud de autenticación
+      const response = await authenticateUser(correo, password, ultimaPosicion);
+      if (response.status === 200 && response.success) {
+        // Pregunto al usuario si es mayor de  18 años antes de redirigir
+        Swal.fire({
+          title: "¿Eres mayor de  18 años?",
+          background: "#2c2c2c",
+          color: "white",
+          icon: "question",
+          iconColor: "#BB7EBC",
+          showCancelButton: true,
+          confirmButtonText: "Sí, soy mayor",
+          cancelButtonText: "No, soy menor",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Si el usuario confirma que es mayor de  18 años, redirigimos a /home
+            Swal.fire({
+              title: "Bienvenido a TuneMatch!",
+              background: "#2c2c2c",
+              color: "white",
+              imageUrl:
+                "https://images.pexels.com/photos/4406761/pexels-photo-4406761.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              imageWidth: 350,
+              imageHeight: 200,
+              imageAlt: "Custom image",
+              text: "Conecta a través de la música🎷",
+            });
+            navigate("/home");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa
+            Swal.fire({
+              background: "#2c2c2c",
+              title: "Lo sentimos",
+              text: "Debes ser mayor de  18 años para ingresar.",
+              icon: "info",
+              iconColor: "#BB7EBC",
+              color: "white",
+            });
+          }
+        });
+      } else {
+        // Muestro alerta con el mensaje de error
+        Swal.fire({
+          title: "Error de autenticación",
+          background: "#2c2c2c",
+          color: "white",
+          text: response.message,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      // Si hay un error al obtener la geolocalización, mostramos el mensaje
+      Swal.fire({
+        title: "Error de autenticación",
+        background: "#2c2c2c",
+        color: "white",
+        text: "Debes activar la geolocalización para poder matchear con otras personas.",
+        icon: "error",
+      });
+    }
+  };
+
+  const obtenerPosicion = () => {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject("La geolocalización no es soportada por este navegador.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude: lat, longitude: lon } = position.coords;
+          setUltimaPosicion({ lat, lon });
+          resolve(position);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  };
+
+  const handleLoginSuccess = async (response) => {
+    try {
+      // Esperamos a que el usuario permita la geolocalización
+      await obtenerPosicion();
+
+      // envío la info al backend
+      sendToBackend(
+        response,
+        ultimaPosicion,
+        setEmailTuneMatch,
+        handleLoginError
+      );
       Swal.fire({
         title: "¿Eres mayor de  18 años?",
-        background: "#ff0000",
+        background: "#2c2c2c",
         icon: "question",
+        iconColor: "#BB7EBC",
+        color: "white",
         showCancelButton: true,
         confirmButtonText: "Sí, soy mayor",
         cancelButtonText: "No, soy menor",
@@ -51,90 +151,37 @@ const Login = () => {
           // Si el usuario confirma que es mayor de  18 años, redirigimos a /home
           Swal.fire({
             title: "Bienvenido a TuneMatch!",
+            background: "#2c2c2c",
+            color: "white",
+            imageUrl:
+              "https://images.pexels.com/photos/4406761/pexels-photo-4406761.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            imageWidth: 350,
+            imageHeight: 200,
+            imageAlt: "Custom image",
             text: "Conecta a través de la música🎷",
-            icon: "success",
           });
           navigate("/home");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa
-          Swal.fire(
-            "Lo sentimos",
-            "Debes ser mayor de  18 años para ingresar.",
-            "info"
-          );
+          // Si el usuario niega ser mayor de  18 años, muestro un aleert de disculpa
+          Swal.fire({
+            background: "#2c2c2c",
+            title: "Lo sentimos",
+            text: "Debes ser mayor de  18 años para ingresar.",
+            color: "white",
+            icon: "info",
+          });
         }
       });
-    } else {
-      // Muestro alerta con el mensaje de error
+    } catch (error) {
+      // Si hay un error al obtener la geolocalización, mostramos el mensaje
       Swal.fire({
         title: "Error de autenticación",
-        text: response.message,
+        background: "#2c2c2c",
+        color: "white",
+        text: "Debes activar la geolocalización para poder matchear con otras personas.",
         icon: "error",
       });
     }
-  };
-
-  const obtenerPosicion = () => {
-    if (!navigator.geolocation) {
-      console.error("La geolocalización no es soportada por este navegador.");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude: lat, longitude: lon } = position.coords;
-        setUltimaPosicion({ lat, lon });
-        console.log({ lat, lon });
-      },
-      (error) => {
-        console.error("Error obteniendo la ubicación del usuario:", error);
-      }
-    );
-  };
-
-  useEffect(() => {
-    obtenerPosicion();
-  }, []);
-
-  const handleLoginSuccess = (response) => {
-    // envío la info al backend
-    sendToBackend(
-      response,
-      ultimaPosicion,
-      setEmailTuneMatch,
-      handleLoginError
-    );
-    Swal.fire({
-      title: "¿Eres mayor de  18 años?",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Sí, soy mayor",
-      cancelButtonText: "No, soy menor",
-      confirmButtonColor: "#50d45b",
-      cancelButtonColor: "#d33",
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Si el usuario confirma que es mayor de  18 años, redirigimos a /home
-        Swal.fire({
-          title: "Bienvenido a TuneMatch!",
-          imageUrl:
-            "https://images.pexels.com/photos/4406761/pexels-photo-4406761.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          imageWidth: 350,
-          imageHeight: 200,
-          imageAlt: "Custom image",
-          text: "Conecta a través de la música🎷",
-        });
-        navigate("/home");
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // Si el usuario niega ser mayor de  18 años, muestro un aleert de disculpa
-        Swal.fire(
-          "Lo sentimos",
-          "Debes ser mayor de  18 años para ingresar.",
-          "info"
-        );
-      }
-    });
   };
 
   const handleLoginError = (error) => {
@@ -142,6 +189,8 @@ const Login = () => {
     Swal.fire({
       title: "Error de autenticación",
       text: "Prueba ingresar un cuenta válida",
+      background: "#2c2c2c",
+      color: "white",
       icon: "error",
     });
     console.error(error);
