@@ -50,6 +50,17 @@ const userRegister = () => {
                    correo: email,
                    password,
                })
+               .then(async({data}) => {
+                   const {id, email } = data;
+                   await dispatch(stopLoading)
+                //    if(id && email) {
+
+                //    }
+                
+                
+                
+
+               })
 
 
         
