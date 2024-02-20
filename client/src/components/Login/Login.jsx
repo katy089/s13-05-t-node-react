@@ -2,15 +2,16 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useEffect, useState } from "react";
 import loginbg from "../../assets/loginbg.jpg";
 import LOGO from "../../assets/LOGO.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "../reusable-components/forms/CustomButton";
 import {
   authenticateUser,
   sendToBackend,
 } from "../../auxFunctions/loginFunctions";
 import Swal from "sweetalert2";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const [ultimaPosicion, setUltimaPosicion] = useState({});
   // eslint-disable-next-line no-unused-vars
@@ -20,6 +21,13 @@ function Login() {
 
   const handleButton = () => {
     navigate("/signup");
+  };
+
+  const handleTerms = () => {
+    navigate("/terms");
+  };
+  const handlePrivacy = () => {
+    navigate("/privacy");
   };
 
   const handleSubmit = async (event) => {
@@ -141,6 +149,7 @@ function Login() {
 
   return (
     <div className="w-screen min-h-[140vh] sm:min-h-screen flex bg-black">
+      <ScrollToTop />
       <div className="relative">
         <div
           className="absolute top-0 left-0 w-0 h-0 border-solid border-transparent border-r-[35vw] border-b-[100vh] border-black bg-black z-10"
@@ -154,18 +163,21 @@ function Login() {
             clipPath: "polygon(100% 0, 0 0, 100% 100%)",
           }}
         ></div>
-        <nav className="flex items-center w-full top-0 z-20 relative bg-black text-white pt-2 pb-2 md:pb-0 md:pt-4">
-          <ul className="flex items-center space-x-4 sm:space-x-8 md:space-x-14 mx-4 md:mx-10">
-            <li>
+        <nav className="flex items-center w-full top-0 z-20 relative text-white">
+          <div className="flex items-center space-x-4 sm:space-x-8 md:space-x-14 mx-4 md:mx-10">
+            <div>
               <img src={LOGO} alt="logo" title="logo de la aplicación" />
-            </li>
-            <li>
-              <Link to="/signup">Registrarse</Link>
-            </li>
-          </ul>
+            </div>
+            <CustomButton
+              onClick={handleButton}
+              className="px-4 py-3 hover:text-[#BB7EBC]  transition-colors duration-300 ease-in-out"
+              text={"Registrarse"}
+              style={{ zIndex: 9999 }}
+            />
+          </div>
         </nav>
         <div
-          className="pt-20 pb-40 sm:pt-40 h-[90vh] flex items-center text-white relative"
+          className="pb-40 pt-40 h-[90vh] flex items-center text-white relative"
           style={{
             backgroundImage: `url(${loginbg})`,
             backgroundSize: "cover",
@@ -174,7 +186,7 @@ function Login() {
         >
           <div className="flex flex-col sm:flex-row justify-between w-full h-[85vh]  px-2 sm:px-4 md:px-10 z-40">
             <div className="place-content-start flex flex-col w-11/12 mx-auto justify-normal sm:justify-center sm:mx-0 sm:w-1/2 md:w-3/4 mb-4 sm:mb-0">
-              <h1 className="text-2xl sm:text-3xl md:text-6xl text-start py-10">
+              <h1 className="text-2xl sm:text-3xl md:text-6xl text-start py-5 sm:py-10">
                 Conecta con músicos!
               </h1>
               <p className="text-base md:text-xl  md:pr-56">
@@ -185,9 +197,9 @@ function Login() {
               </p>
               <div className="flex items-center justify-center  my-5 sm:my-10">
                 <CustomButton
-                  handleClick={handleButton}
+                  onClick={handleButton}
                   text={"Comienza Ahora!"}
-                  className="bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-1/2 md:w-1/3 text-white rounded-3xl"
+                  className="bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-1/2 md:w-1/3 text-white rounded-3xl transition-colors duration-300 ease-in-out"
                 />
               </div>
             </div>
@@ -256,11 +268,26 @@ function Login() {
                   shape="pill"
                   // type="icon" muestra solo el icono con la G
                 />
+                <p className="mt-3 text-sm w-full flex flex-wrap">
+                  Al continuar, aceptas los
+                  <CustomButton
+                    onClick={handleTerms}
+                    text={"Términos de uso"}
+                    className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
+                  />
+                  y{" "}
+                  <CustomButton
+                    text={"Política de privacidad"}
+                    onClick={handlePrivacy}
+                    className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
+                  />
+                  de <b className="mx-1">TuneMatch</b>
+                </p>
                 <div className="my-4 flex items-center space-x-1">
                   <p>¿No tienes cuenta?</p>
                   <CustomButton
-                    className="hover:text-gray-400"
-                    handleClick={handleButton}
+                    className="hover:text-gray-400 transition-colors duration-300 ease-in-out"
+                    onClick={handleButton}
                     text={"Registrate!"}
                   />
                 </div>
@@ -271,6 +298,6 @@ function Login() {
       </div>
     </div>
   );
-}
+};
 
 export default Login;
