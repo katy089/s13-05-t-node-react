@@ -51,8 +51,8 @@ const Terms = () => {
             <li className="mb-2">
               <strong>Geolocalización:</strong> Para utilizar plenamente el
               servicio, es necesario activar la geolocalización en tu
-              dispositivo. Si no activas la geolocalización, es posible que no
-              puedas acceder a todas las funciones de la Aplicación.
+              dispositivo. Si no activas la geolocalización, no podrás acceder a
+              todas las funciones de la Aplicación.
             </li>
             <li className="mb-2">
               <strong>Registro y Cuenta de Usuario:</strong> Deberás
