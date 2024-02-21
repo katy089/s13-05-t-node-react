@@ -1,11 +1,11 @@
 import { useState } from "react";
-import generos from "../../assets/generos.png";
+// import generos from "../../assets/generos.png";
 import LOGO from "../../assets/LOGO.png";
 import {useNavigate } from "react-router-dom";
 import CustomButton from "../reusable-components/forms/CustomButton";
 
 const PageSelection = () => {
-  navigate("/pageselection");
+  
   const navigate = useNavigate();
   const [selectedGenres, setSelectedGenres] = useState([]);
 
@@ -25,9 +25,9 @@ const PageSelection = () => {
       </nav>
 
       <div
-        className="pt-20 pb-40 sm:pt-40 h-[90vh] flex items-center text-white relative"
+        className="pt-20 pb-40 sm:pt-40 h-[90vh] bg-black flex items-center text-white relative"
         style={{
-          backgroundImage: `url(${generos})`,
+          // backgroundImage: `url(${generos})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -50,7 +50,5 @@ const PageSelection = () => {
     </div>
   );
 };
-
-
 
 export default PageSelection
