@@ -1,6 +1,8 @@
+import { API_URL_LOGIN, API_URL_GOOGLE } from '../config/api'
+
 export const authenticateUser = async (correo, password) => {
   try {
-    const response = await fetch("http://localhost:8080/api/usuario/login", {
+    const response = await fetch(API_URL_LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +39,7 @@ export const sendToBackend = (
       ? { id_token: response.credential, ultimaPosicion }
       : { id_token: response.credential };
 
-  fetch("http://localhost:8080/api/usuario/google", {
+  fetch(API_URL_GOOGLE, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
