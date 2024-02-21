@@ -1,6 +1,8 @@
+const paginate = require("mongoose-paginate-v2")
+
 const { Schema, model, mongo, default: mongoose } = require("mongoose");
 
-const UsuariosSchema = Schema({
+const UserSchema = Schema({
   nombre: {
     type: String,
     required: [true, "Debe Ingresar un nombre de usuario"],
@@ -26,7 +28,7 @@ const UsuariosSchema = Schema({
     },
   ],
 
-  generos: [
+  generos: [ //el usuario deberia seleccionar los géneros, no escribirlos manualmente
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "musicalGenre",
@@ -57,15 +59,16 @@ const UsuariosSchema = Schema({
   google: { type: Boolean, default: false },
 });
 
-UsuariosSchema.methods.toJSON = function () {
+UserSchema.methods.toJSON = function () {
   const { __v, _id: id, password, ...usuario } = this.toObject();
   return { id, ...usuario };
 };
 
-UsuariosSchema.pre("findOne", function () {
+UserSchema.pre("findOne", function () {
   this.populate("generos");
   this.populate("bandas");
 });
 
-module.exports = model("Usuario", UsuariosSchema);
+UserSchema.plugin(paginate)
+module.exports = model("Usuario", UserSchema);
 

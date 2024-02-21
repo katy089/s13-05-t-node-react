@@ -4,11 +4,11 @@ const schema = mongoose.Schema({
   name: {
     type: String,
     unique: true,
-    require: true,
+    required: true,
   },
   status: {
     type: String,
-    enum: ["pending", "active", "closed"],
+    enum: ["pending", "active", "closed"], //no me quedan claro estos estados
     default: "active",
   },
 });
