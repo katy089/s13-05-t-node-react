@@ -1,6 +1,7 @@
 import { LucideEye } from 'lucide-react'
 import { useState } from 'react'
 import TinderCard from 'react-tinder-card'
+import TinderCardButtons from "./TinderCardButtons.jsx"
 
 const db = [
     {

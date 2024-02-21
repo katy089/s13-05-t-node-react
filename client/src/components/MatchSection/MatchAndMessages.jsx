@@ -1,12 +1,12 @@
 import React from 'react'
 import ChatCards from "./ChatCards.jsx"
+import TinderCardButtons from "./TinderCardButtons.jsx"
+import MatchCard from "./MatchCard.jsx"
+
 
 const MatchAndMessages = () => {
   return (
                     <div className="card h-full p-2 bg-black shadow-xl items-center w-80 ">
-
-
-
 
                         <div className="card-body bg-slate-100 p-4 m-6 flex justify-between align-middle overflow-hidden">
                             <ChatCards
