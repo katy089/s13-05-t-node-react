@@ -17,12 +17,12 @@ const SignUp = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
+    // reset,
   } = useForm({ name: '', email: '', password: '', checkbox: false } );
 
   const onSubmit = (data) => {
     handleRegister(data);
-    reset();
+    // reset();
   };
 
   const handleLogin = () => {
