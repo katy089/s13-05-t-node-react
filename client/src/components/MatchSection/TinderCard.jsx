@@ -56,9 +56,6 @@ function TinderCards() {
                             <p className="text-white font-light text-xs ">Buenos Aires a 50km</p>
                             <p className="text-white font-light text-xs ">Guitarrista</p>
 
-                            <button className="absolute btn btn-circle btn-outline btn-secondary bg-clearGray bottom-10 left-10 p-2"><LucideEye /> </button>
-                            <button className="absolute btn btn-circle btn-outline btn-secondary bg-clearGray bottom-10  left-1/2 transform -translate-x-1/2 p-2 "><LucideEye /> </button>
-                            <button className="absolute btn btn-circle btn-outline btn-error bg-clearGray bottom-10 right-10 p-2 "><LucideEye /> </button>
 
                         </div>
                     </TinderCard>

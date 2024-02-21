@@ -1,8 +1,10 @@
 
 const ChatCards = ({ profilePicture, name, message }) => {
   return (
-      <div className="flex items-center">
-          <img src={profilePicture} className="size-14 btn btn-circle bg-center bg-contain mr-2"/>
+      <div className="flex justify-start">
+          <div className=" h-14 min-w-14">
+              <img src={profilePicture} className=" btn btn-circle bg-center bg-cover" />
+       </div>
               <div>
                   <strong>{name}</strong>
                   <div>

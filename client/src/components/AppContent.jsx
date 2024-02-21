@@ -5,11 +5,13 @@ import Login from './Login/Login';
 import SignUp from './Login/SignUp';
 import MatchSection from '../pages/MatchSection';
 import ScrollToTop from './other-components/ScrollToTop';
+import NavBar from './NavBar/NavBar';
 
 
 function AppContent() {
     return (
             <ScrollToTop>
+                <NavBar/>
                 <Routes>
                     <Route path={HOME} element={<Home />} />
                     <Route path={SIGNUP} element={<SignUp />} />
