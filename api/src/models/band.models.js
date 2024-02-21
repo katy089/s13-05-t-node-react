@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const paginate = require("mongoose-paginate-v2")
 
 const schema = mongoose.Schema({
   name: {
@@ -12,6 +13,8 @@ const schema = mongoose.Schema({
     default: "active",
   },
 });
+
+schema.plugin(paginate)
 
 const bandModel = mongoose.model("band", schema);
 
