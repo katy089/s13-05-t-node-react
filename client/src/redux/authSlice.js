@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isLoggedIn: false,
-
+    id: "",
     nombre: "",
     correo: "",
     password: "",
@@ -16,8 +16,8 @@ const initialState = {
     active: false,   
   }
 
-export const loginSlice = createSlice({
-  name: 'user',
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     login: (state) => {
@@ -25,6 +25,7 @@ export const loginSlice = createSlice({
     },
     logout: (state) => {
       state.isLoggedIn = false;
+      state.id = "";
       state.nombre = "";
       state.correo = "";
       state.password = "";
@@ -36,6 +37,9 @@ export const loginSlice = createSlice({
       state.ultimaPosicion = {};
       state.enBuscaDe = [];
       state.active = false;
+    },
+    setId: (state, action) => {
+      state.id = action.payload;
     },
     setNombre: (state, action) => {
       state.nombre = action.payload;
@@ -75,22 +79,23 @@ export const loginSlice = createSlice({
 
 
 // selectores
-export const getNombre = (state) => state?.user?.nombre
-export const getCorreo = (state) => state?.user?.correo
-export const getPassword = (state) => state?.user?.password
-export const getMiGenero = (state) => state?.user?.miGenero
-export const getFotos = (state) => state?.user?.fotos
-export const getBandas = (state) => state?.user?.bandas
-export const getGeneros = (state) => state?.user?.generos
-export const getTuneMatch = (state) => state?.user?.tuneMatch
-export const getUltomaPosicion = (state) => state?.user?.ultomaPosicion
-export const getEnBuscaDe = (state) => state?.user?.enBuscaDe
-export const getActive = (state) => state?.user?.active
+export const getNombre = (state) => state?.auth?.nombre
+export const getCorreo = (state) => state?.auth?.correo
+export const getPassword = (state) => state?.auth?.password
+export const getMiGenero = (state) => state?.auth?.miGenero
+export const getFotos = (state) => state?.auth?.fotos
+export const getBandas = (state) => state?.auth?.bandas
+export const getGeneros = (state) => state?.auth?.generos
+export const getTuneMatch = (state) => state?.auth?.tuneMatch
+export const getUltimaPosicion = (state) => state?.auth?.ultimaPosicion
+export const getEnBuscaDe = (state) => state?.auth?.enBuscaDe
+export const getActive = (state) => state?.auth?.active
 
-
+// actions
 export const { 
     login, 
-    logout, 
+    logout,
+    setId, 
     setNombre, 
     setCorreo, 
     setPassword, 
@@ -102,7 +107,7 @@ export const {
     setUltimaPosicion, 
     setEnBuscaDe, 
     setActive 
-} = loginSlice.actions;
+} = authSlice.actions;
 
 
-export default loginSlice.reducer
+export default authSlice.reducer
