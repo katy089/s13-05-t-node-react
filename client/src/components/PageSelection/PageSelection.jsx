@@ -1,19 +1,7 @@
-import { useState } from "react";
 import generos from "../../assets/generos.png";
 import LOGO from "../../assets/LOGO.png";
-import {useNavigate } from "react-router-dom";
-import CustomButton from "../reusable-components/forms/CustomButton";
 
 const PageSelection = () => {
-  navigate("/pageselection");
-  const navigate = useNavigate();
-  const [selectedGenres, setSelectedGenres] = useState([]);
-
-  const handleGenreSelect = (genre) => {
-    // Función para manejar la selección de géneros
-    // ...
-  };
-
   return (
     <div>
       <nav className="flex items-center w-full top-0 z-20 relative bg-black text-white pt-2 pb-2 md:pb-0 md:pt-4">
@@ -38,8 +26,9 @@ const PageSelection = () => {
               Cuentanos acerca de tus géneros favoritos
             </h1>
             <p className="text-base md:text-xl  md:pr-56">
-              Dinos qué música te apasiona y nos aseguraremos de conectar contigo a personas que comparten tus
-              mismos gustos. ¡Comparte tu pasión musical y descubre nuevas  experiencias con personas afines!
+              Dinos qué música te apasiona y nos aseguraremos de conectar
+              contigo a personas que comparten tus mismos gustos. ¡Comparte tu
+              pasión musical y descubre nuevas experiencias con personas afines!
             </p>
             <div className="flex items-center justify-center  my-5 sm:my-10">
               {/** Aquí se agregaría la lista de géneros con opciones seleccionables */}
@@ -51,6 +40,4 @@ const PageSelection = () => {
   );
 };
 
-
-
-export default PageSelection
+export default PageSelection;
