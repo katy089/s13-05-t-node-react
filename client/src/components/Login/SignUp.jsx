@@ -7,8 +7,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
 import CustomButton from "../reusable-components/forms/CustomButton";
 import { useNavigate } from "react-router-dom";
+import useRegister from "../../hooks/useRegister";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import UserRegister from "../../hooks/userRegister";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const SignUp = () => {
     navigate("/");
   };
 
-  const { handleRegister, showPassword, setShowPassword } = UserRegister();
+  const { handleRegister, showPassword, setShowPassword } = useRegister();
 
   const handleTerms = () => {
     navigate("/terms");
@@ -104,8 +104,7 @@ const SignUp = () => {
               <div className="flex flex-col">
                 <Input
                   labelText="Contraseña"
-                  type="password"
-                  // type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Introduce al menos 6 caracteres"
                   name="password"
                   register={register}
