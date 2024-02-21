@@ -119,7 +119,7 @@ const SignUp = () => {
                 </button>
               </div>
               <div className=" bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-full text-white rounded-3xl">
-                <RegisterButton text="Iniciar Sesión" />
+                <RegisterButton text="Registrarse" />
               </div>
             </form>
 
