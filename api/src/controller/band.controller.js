@@ -12,20 +12,21 @@ const createBand = async (req, res) => {
     catch (err) {
         res.status(500).json({
             message: 'Hubo un error inesperado al crear los datos',
-            error: e.message,
+            error: err.message,
         })
     }
 }
 
 const allBands = async (req, res) => {
     try {
-        const bands = await bandModel.find({ status: 'active' })
+        const { docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage } = await bandModel.paginate({ status: 'active' }, { page: 1, limit: 50 })
+        const bands = { bands: docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage }
         res.status(200).json(bands)
     }
     catch (err) {
         res.status(500).json({
             message: 'Hubo un error inesperado al traer los datos',
-            error: e.message,
+            error: err.message,
         })
     }
 }

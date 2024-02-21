@@ -12,20 +12,21 @@ const createMusicalGenre = async (req, res) => {
     catch (err) {
         res.status(500).json({
             message: 'Hubo un error inesperado al crear los datos',
-            error: e.message,
+            error: err.message,
         })
     }
 }
 
 const allMusicalGenres = async (req, res) => {
     try {
-        const musicalGenres = await musicalGenreModel.find({ status: 'active' })
+        const { docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage } = await musicalGenreModel.paginate({ status: 'active' }, { page: 1, limit: 50 })
+        const musicalGenres = { bands: docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage }
         res.status(200).json(musicalGenres)
     }
     catch (err) {
         res.status(500).json({
             message: 'Hubo un error inesperado al traer los datos',
-            error: e.message,
+            error: err.message,
         })
     }
 }
