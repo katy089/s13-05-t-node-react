@@ -28,12 +28,14 @@ import {
   REGISTER2,
   TERMS,
   PRIVACY,
+  PAGESELECTION,
 } from "../Router/Paths";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
 import Register2 from "./Register2/Register2";
 import Terms from "./Login/Terms";
 import Privacy from "./Login/Privacy";
+import PageSelection from "./PageSelection/PageSelection";
 
 function AppContent() {
   return (
@@ -44,6 +46,9 @@ function AppContent() {
       <Route path={REGISTER2} element={<Register2 />} />
       <Route path={TERMS} element={<Terms />} />
       <Route path={PRIVACY} element={<Privacy />} />
+      <Route path={PAGESELECTION} element={<PageSelection />} />
+
+
     </Routes>
   );
 >>>>>>> develop
