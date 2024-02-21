@@ -10,8 +10,8 @@ const serviceUser = require('../services/serviceUser')
 // };
 
 const signUp = async (req = request, res = response) => {
-  const { nombre, correo, password, ...rest  } = req.body
-  
+  const { nombre, correo, password, ...rest } = req.body
+
   try {
     // const salt = bycript.genSaltSync()
     // const usuario = new Usuario(
@@ -37,15 +37,15 @@ const signUp = async (req = request, res = response) => {
     //   usuario,
     // })
 
-    const usuario = await serviceUser.signUp( nombre, correo, password, rest,res)
-    res.status(200).json(usuario)
+    await serviceUser.signUp(nombre, correo, password, rest, res)
+
 
   } catch (e) {
     console.log(e)
     res.status(500).json({
       message: 'Hubo un error inesperado al grabar los datos',
       error: e.message,
-      
+
     })
   }
 }
@@ -81,9 +81,9 @@ const logIn = async (req = request, res = response) => {
     //   usuario,
     //   distancia
     // })
-    const usuario = await serviceUser.logIn(correo, password, rest, res )
-    res.status(200).json(usuario)
- 
+    await serviceUser.logIn(correo, password, rest, res)
+
+
   } catch (e) {
     console.log('Error! no se pudo hacer Log-in'.red, e)
     res.status(400).json({
@@ -137,8 +137,7 @@ const googleAuth = async (req, res = response) => {
     //     distancia
     //   })
     // }
-    const usuario = await serviceUser.googleAuth(correo, nombre, img,ultimaPosicion,res)
-    res.status(200).json(usuario)
+    await serviceUser.googleAuth(correo, nombre, img, ultimaPosicion, res)
 
   } catch (error) {
 
@@ -151,13 +150,11 @@ const googleAuth = async (req, res = response) => {
 }
 
 
-const getUser = async (req, res) => {
+const getUser = async (req, _) => {
   const { id } = req.params
 
-  const user = await serviceUser.getUser(id)
-  
- 
-  res.json(user)
+  await serviceUser.getUser(id)
+
 }
 
 module.exports = {
