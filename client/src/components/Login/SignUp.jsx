@@ -17,12 +17,12 @@ const SignUp = () => {
     handleSubmit,
     register,
     formState: { errors },
-    // reset,
+    reset,
   } = useForm({ name: '', email: '', password: '', checkbox: false } );
 
   const onSubmit = (data) => {
     handleRegister(data);
-    // reset();
+    reset();
   };
 
   const handleLogin = () => {
@@ -154,6 +154,7 @@ const SignUp = () => {
                 />
                   de <b className="mx-1">TuneMatch </b>
                   <InputTer 
+                  
                   register={register} 
                     error={errors.email?.message}/>
               </p>

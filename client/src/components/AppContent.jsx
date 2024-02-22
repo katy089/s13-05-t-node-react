@@ -8,6 +8,8 @@ import {
   TERMS,
   PRIVACY,
   PAGESELECTION,
+
+  REGISTER22
 } from "../Router/Paths";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
@@ -15,6 +17,8 @@ import Register2 from "./Register2/Register2";
 import Terms from "./Login/Terms";
 import Privacy from "./Login/Privacy";
 import PageSelection from "./PageSelection/PageSelection";
+
+import Register22 from "./Register22/Register22";
 
 function AppContent() {
   return (
@@ -26,6 +30,8 @@ function AppContent() {
       <Route path={TERMS} element={<Terms />} />
       <Route path={PRIVACY} element={<Privacy />} />
       <Route path={PAGESELECTION} element={<PageSelection />} />
+
+      <Route path={REGISTER22} element={<Register22/>} />
     </Routes>
   );
 }
