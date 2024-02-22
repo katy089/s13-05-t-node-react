@@ -19,8 +19,12 @@ const createMusicalGenre = async (req, res) => {
 
 const allMusicalGenres = async (req, res) => {
     try {
-        const { docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage } = await musicalGenreModel.paginate({ status: 'active' }, { page: 1, limit: 50 })
-        const musicalGenres = { bands: docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage }
+        let { queryPage, limit } = req.query
+        queryPage = +queryPage || 1
+        limit = +limit || 50
+
+        const { docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage } = await musicalGenreModel.paginate({ status: 'active' }, { page: queryPage, limit })
+        const musicalGenres = { musicalGenres: docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage }
         res.status(200).json(musicalGenres)
     }
     catch (err) {
