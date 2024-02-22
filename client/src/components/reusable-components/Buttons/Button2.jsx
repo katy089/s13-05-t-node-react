@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+// Se creo un nuevo botón para quitar numeral
 
 function Button2({text}) {
     return (

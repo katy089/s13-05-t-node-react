@@ -42,8 +42,8 @@ const useRegister = () => {
         }
         
         //eslint-disable-next-line
-        const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
-        if (!password.match(passwordRegex)) { 
+        //const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
+        if (!password) { 
             Swal.fire(
                 "Error",
                 "La contraseña debe contener al menos 6 dígitos y un carácter especial (., *, +)",
@@ -61,6 +61,7 @@ const useRegister = () => {
                })
                .then(async({data}) => {
                    const { id, nombre, correo, password } = data.usuario;
+                   console.log(data.usuario)
                              
                    if( id ) {
                     dispatch(login())
@@ -69,7 +70,7 @@ const useRegister = () => {
                     dispatch(setCorreo(correo))
                     dispatch(setPassword(password))
                     dispatch(setActive(true))
-                    navigate("/home")
+                    navigate("/register22")
                    }        
                })
                .catch(async(error) => {

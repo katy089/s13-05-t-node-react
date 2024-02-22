@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
       
 export const authenticateUser = async (correo, password) => {
   //eslint-disable-next-line
-  const dispatch = useDispatch();
-
+ // const dispatch = useDispatch();
+//console.log(correo , password);
   try {
     const response = await fetch(API_URL_LOGIN, {
       method: "POST",
@@ -21,7 +21,7 @@ export const authenticateUser = async (correo, password) => {
       const data = await response.json();
     //  const { id } = data.usuario
 
-    //   dispatch(setId(id))
+    //  dispatch(setId(id))
 
       return { status: response.status, success: true, message: data.message };
     } else {

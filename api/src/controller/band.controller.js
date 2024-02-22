@@ -19,7 +19,11 @@ const createBand = async (req, res) => {
 
 const allBands = async (req, res) => {
     try {
-        const { docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage } = await bandModel.paginate({ status: 'active' }, { page: 1, limit: 50 })
+        let { queryPage, limit } = req.query
+        queryPage = +queryPage || 1
+        limit = +limit || 50
+
+        const { docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage } = await bandModel.paginate({ status: 'active' }, { page: queryPage, limit })
         const bands = { bands: docs, page, totalPages, hasNextPage, nextPage, hasPrevPage, prevPage }
         res.status(200).json(bands)
     }
