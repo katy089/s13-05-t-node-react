@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux'
       
 export const authenticateUser = async (correo, password) => {
   //eslint-disable-next-line
-  const dispatch = useDispatch();
-
+ // const dispatch = useDispatch();
+//console.log(correo , password);
   try {
     const response = await fetch(API_URL_LOGIN, {
       method: "POST",
