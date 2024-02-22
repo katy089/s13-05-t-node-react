@@ -1,17 +1,15 @@
 import { Link } from "react-router-dom";
-import { HOME } from "./../../Router/Paths";
+import { HOME, PROFILE } from "./../../Router/Paths";
 import { RiHome6Line } from "react-icons/ri";
-import { MdOutlineMusicVideo, MdOutlineExplore } from "react-icons/md";
 import { FaHeart, FaRegBell } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiMessageCircle } from "react-icons/fi";
-import { AiOutlinePlus } from "react-icons/ai";
 import LOGOBLACK from "../../assets/LOGOBLACK.png";
 
 function NavBar() {
   return (
-    <header className="navbar sticky top-0 z-30 w-screen bg-black pl-4 pr-8 shadow">
-      <div className="flex w-screen gap-5 justify-center">
+    <header className="navbar sticky top-0 z-30 flex justify-center items-center bg-black pl-4 pr-8 shadow">
+      <div className="flex  gap-5 justify-center">
         <div className="w-[13%] h-12">
           <Link
             to={HOME}
@@ -25,15 +23,7 @@ function NavBar() {
             <RiHome6Line size={20} color="white" />
             <span className=" text-white">Feed</span>
           </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-inherit border-none shadow-none hover:bg-slate-300">
-            <MdOutlineExplore size={20} color="black" />
-            <span className=" text-black">Explorar</span>
-          </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-inherit border-none shadow-none hover:bg-slate-300">
-            <MdOutlineMusicVideo size={20} color="black" />
-            <span className=" text-black">Biblioteca</span>
-          </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800">
+          <div className="btn h-8 min-h-min rounded-[30px] bg-[#BB7EBC] border-none shadow-none hover:bg-teal-800">
             <FaHeart size={20} color="white" />
             <span className=" text-white">Conoce Gente!</span>
           </div>
@@ -69,10 +59,10 @@ function NavBar() {
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
+                <Link to={PROFILE}>
                   Profile
                   <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a>Settings</a>
@@ -81,10 +71,6 @@ function NavBar() {
                 <a>Logout</a>
               </li>
             </ul>
-          </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800">
-            <AiOutlinePlus size={20} color="white" />
-            <span className=" text-white">Crear</span>
           </div>
         </div>
       </div>
