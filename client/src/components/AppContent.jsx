@@ -26,6 +26,8 @@ function AppContent() {
       <Route path={TERMS} element={<Terms />} />
       <Route path={PRIVACY} element={<Privacy />} />
       <Route path={PAGESELECTION} element={<PageSelection />} />
+
+
     </Routes>
   );
 }
