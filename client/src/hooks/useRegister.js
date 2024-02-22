@@ -21,9 +21,14 @@ const useRegister = () => {
     const navigate = useNavigate();
    
     const handleRegister = async (data) => {
-        const {name, email, password } = data;
+        const {name, email, password, checkbox = false } = data;
 
         console.log(data)
+
+        if(!checkbox){
+            Swal.fire("Error", "Acepte los terminos y condiciones", "error");
+            return
+        }
 
         if (!name) {
             Swal.fire("Error", "El nombre es necesario", "error");
@@ -37,8 +42,8 @@ const useRegister = () => {
         }
         
         //eslint-disable-next-line
-        const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
-        if (!password.match(passwordRegex)) { 
+        //const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
+        if (!password) { 
             Swal.fire(
                 "Error",
                 "La contraseña debe contener al menos 6 dígitos y un carácter especial (., *, +)",
@@ -56,6 +61,7 @@ const useRegister = () => {
                })
                .then(async({data}) => {
                    const { id, nombre, correo, password } = data.usuario;
+                   console.log(data.usuario)
                              
                    if( id ) {
                     dispatch(login())
@@ -64,7 +70,7 @@ const useRegister = () => {
                     dispatch(setCorreo(correo))
                     dispatch(setPassword(password))
                     dispatch(setActive(true))
-                    navigate("/home")
+                    navigate("/register22")
                    }        
                })
                .catch(async(error) => {

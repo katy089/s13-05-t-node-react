@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { HOME } from "./../../Router/Paths";
+import { HOME, PROFILE } from "./../../Router/Paths";
 import { RiHome6Line } from "react-icons/ri";
 import { FaHeart, FaRegBell } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
@@ -142,10 +142,11 @@ function NavBar() {
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box lg:w-52"
             >
               <li>
-                <a className="justify-between">
-                  Perfil
+                <Link to={PROFILE} className="justify-between">
+                  {" "}
+                  Profile
                   <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a>Configuración</a>
