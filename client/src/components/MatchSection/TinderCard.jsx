@@ -1,4 +1,4 @@
-import { LucideEye } from 'lucide-react'
+// import { LucideEye } from 'lucide-react'
 import { useState } from 'react'
 import TinderCard from 'react-tinder-card'
 import TinderCardButtons from "./TinderCardButtons.jsx"
@@ -40,31 +40,39 @@ function TinderCards() {
     }
 
     return (
-        <div className=''>
-            <div className='cardContainer flex items-center'>
-                {characters.map((character) =>
-                    <TinderCard
-                        className='swipe absolute'
-                        key={character.name}
-                        onSwipe={(dir) => swiped(dir, character.name)}
-                        onCardLeftScreen={() => outOfFrame(character.name)}
-                        preventSwipe={['left', 'right']}>
-                        <div
-                            style={{ backgroundImage: 'url(' + character.url + ')' }}
-                            className='card relative size-80 bg-center bg-cover shadow-xl p-5 '
-                        >
-                            <h2 className='text-white'>{character.name}, 27</h2>
-                            <p className="text-white font-light text-xs ">Buenos Aires a 50km</p>
-                            <p className="text-white font-light text-xs ">Guitarrista</p>
-
-
-                        </div>
-                    </TinderCard>
-                )}
-            </div>
-            {lastDirection ? <h2 className='infoText'>You swiped {lastDirection}</h2> : <h2 className='infoText' />}
+      <div className="">
+        <div className="cardContainer ">
+          {characters.map((character) => (
+            <TinderCard
+              className="swipe absolute "
+              key={character.name}
+              onSwipe={(dir) => swiped(dir, character.name)}
+              onCardLeftScreen={() => outOfFrame(character.name)}
+              preventSwipe={["left", "right"]}
+            >
+              <div
+                style={{ backgroundImage: "url(" + character.url + ")" }}
+                className="card relative size-80 bg-center bg-cover shadow-xl p-5 "
+              >
+                <h2 className="text-white">{character.name}, 27</h2>
+                <p className="text-white font-light text-xs ">
+                  Buenos Aires a 50km
+                </p>
+                <p className="text-white font-light text-xs ">Guitarrista</p>
+              </div>
+              <span className="absolute w-80 bottom-0 flex justify-between p-4">
+                <TinderCardButtons />
+              </span>
+            </TinderCard>
+          ))}
         </div>
-    )
+        {lastDirection ? (
+          <h2 className="infoText">You swiped {lastDirection}</h2>
+        ) : (
+          <h2 className="infoText" />
+        )}
+      </div>
+    );
 }
 
 export default TinderCards

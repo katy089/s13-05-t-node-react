@@ -1,15 +1,20 @@
-import React from 'react'
-import { LucideEye } from 'lucide-react'
+import { Music, Undo2, X  } from 'lucide-react'
 
 
 const TinderCardButtons = () => {
   return (
-    <div className="flex">                  
-       <button className="absolute btn btn-circle btn-outline btn-secondary bg-clearGray  p-2"><LucideEye /> </button>
-       <button className="absolute btn btn-circle btn-outline btn-secondary bg-clearGray  p-2 "><LucideEye /> </button>
-       <button className="absolute btn btn-circle btn-outline btn-error bg-clearGray p-2 "><LucideEye /> </button>
-    </div>
-  )
+    <>
+      <button className=" btn btn-circle btn-outline btn-primary bg-clearGray  p-2">
+        <X />{" "}
+      </button>
+      <button className=" btn btn-circle btn-outline  btn-primary bg-clearGray  p-2 ">
+        <Music />{" "}
+      </button>
+      <button className=" btn btn-circle btn-outline  btn-primary bg-clearGray p-2 ">
+        <Undo2 />
+      </button>
+    </>
+  );
 }
 
 export default TinderCardButtons

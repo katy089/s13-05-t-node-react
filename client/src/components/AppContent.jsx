@@ -11,7 +11,7 @@ import NavBar from './NavBar/NavBar';
 function AppContent() {
     return (
             <ScrollToTop>
-                <NavBar/>
+                {/* <NavBar/> */}
                 <Routes>
                     <Route path={HOME} element={<Home />} />
                     <Route path={SIGNUP} element={<SignUp />} />

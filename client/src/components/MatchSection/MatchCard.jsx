@@ -1,19 +1,14 @@
-import React from 'react'
 
-const MatchCard = () => {
+const MatchCard = (props) => {
   return (
-          <div className="">
-
-            <div className="avatar">
-              <div className="w-32 rounded">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
-            </div>
-
-          </div>
-
-
-  )
+    <div className="">
+      <div className="avatar">
+        <div className="w-44 rounded">
+          <img src={props.item.url} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default MatchCard

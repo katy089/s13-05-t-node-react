@@ -15,6 +15,17 @@ export default {
       },
       borderRadius: {
         // '4xl': '2rem',
+      },
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        'primario': '#bb7ebc',//medio
+        'secundario': '#6c2b6d',//oscuro
+        'terciario': '#d7b4d8',//claro
+        'clearGray': '#0404046b'
+      },
+      textUnderlineOffset: {
+        3: '3px',
       }
 
     },
