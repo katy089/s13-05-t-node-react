@@ -21,9 +21,14 @@ const useRegister = () => {
     const navigate = useNavigate();
    
     const handleRegister = async (data) => {
-        const {name, email, password } = data;
+        const {name, email, password, checkbox = false } = data;
 
         console.log(data)
+
+        if(!checkbox){
+            Swal.fire("Error", "Acepte los terminos y condiciones", "error");
+            return
+        }
 
         if (!name) {
             Swal.fire("Error", "El nombre es necesario", "error");
