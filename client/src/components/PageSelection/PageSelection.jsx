@@ -3,6 +3,7 @@ import generos from "../../assets/generos.png";
 import Button2 from "../reusable-components/Buttons/Button2";
 
 // Se añadió opciones para marcar género de preferencia
+
 const data = [
   {
     name: "Rock",
