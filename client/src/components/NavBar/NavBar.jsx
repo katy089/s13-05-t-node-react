@@ -6,11 +6,11 @@ import { FaHeart, FaRegBell } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiMessageCircle } from "react-icons/fi";
 import { AiOutlinePlus } from "react-icons/ai";
-import LOGOBLACK from '../../assets/LOGOBLACK.png'
+import LOGOBLACK from "../../assets/LOGOBLACK.png";
 
 function NavBar() {
   return (
-    <header className="navbar sticky top-0 z-30 w-full bg-white pl-4 pr-8 shadow">
+    <header className="navbar sticky top-0 z-30 w-screen bg-black pl-4 pr-8 shadow">
       <div className="flex w-screen gap-5 justify-center">
         <div className="w-[13%] h-12">
           <Link

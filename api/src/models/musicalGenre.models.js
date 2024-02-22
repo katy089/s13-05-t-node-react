@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+const paginate = require("mongoose-paginate-v2")
 
 const schema = mongoose.Schema({
   name: {
     type: String,
     unique: true,
-    require: true,
+    required: true,
   },
   status: {
     type: String,
@@ -12,6 +13,8 @@ const schema = mongoose.Schema({
     default: "active",
   },
 });
+
+schema.plugin(paginate)
 
 const musicalGenreModel = mongoose.model("musicalGenre", schema);
 
