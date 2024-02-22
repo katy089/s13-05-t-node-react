@@ -154,6 +154,7 @@ const SignUp = () => {
                 />
                   de <b className="mx-1">TuneMatch </b>
                   <InputTer 
+                  
                   register={register} 
                     error={errors.email?.message}/>
               </p>
