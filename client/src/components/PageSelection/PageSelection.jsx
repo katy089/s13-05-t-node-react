@@ -2,6 +2,7 @@ import LOGO from "../../assets/LOGO.png";
 import generos from "../../assets/generos.png";
 import Button2 from "../reusable-components/Buttons/Button2";
 
+// Lista de género
 const data = [
   {
     name: "Rock",
