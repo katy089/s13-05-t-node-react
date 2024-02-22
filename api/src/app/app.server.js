@@ -6,6 +6,7 @@ const openapiSpecification = require('../utils/swagger.utils')
 const swaggerUi = require('swagger-ui-express')
 
 
+
 class Server {
 
   #PORT = process.env.PORT
@@ -47,7 +48,9 @@ class Server {
   }
 
   routes() {
-    this.app.use('/', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
+    //this.app.get('/', (_, res) =>
+    //res.sendFile(path.join(__dirname, '../public', 'index.html')))
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification))
     this.app.use(this.#usuario.route, this.#usuario.path)
     this.app.use(this.#band.route, this.#band.path)
     this.app.use(this.#musicalGenre.route, this.#musicalGenre.path)
