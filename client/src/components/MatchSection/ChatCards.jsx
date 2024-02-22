@@ -1,17 +1,25 @@
 
-const ChatCards = ({ profilePicture, name, message }) => {
+const ChatCards = (props) => {
   return (
-      <div className="flex justify-start">
-          <div className=" h-14 min-w-14">
-              <img src={profilePicture} className=" btn btn-circle bg-center bg-cover" />
-       </div>
-              <div>
-                  <strong>{name}</strong>
-                  <div>
-                  <span className="">{message}</span>
-                  </div>
-              </div>
-      </div>  )
+    <div className="flex justify-start  m-3 p-4">
+      <div className=" h-14 min-w-14">
+        <img
+          src={props.item.url}
+          className="btn btn-circle bg-center bg-cover"
+        />
+      </div>
+      <div
+        className={`${
+          !!props.item.reed && "text-slate-400"
+        }`}
+      >
+        <strong>{props.item.name}</strong>
+        <div>
+          <span className="">{props.message}</span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ChatCards
