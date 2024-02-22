@@ -21,7 +21,7 @@ export const authenticateUser = async (correo, password) => {
       const data = await response.json();
     //  const { id } = data.usuario
 
-    //   dispatch(setId(id))
+    //  dispatch(setId(id))
 
       return { status: response.status, success: true, message: data.message };
     } else {
