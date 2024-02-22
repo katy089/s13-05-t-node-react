@@ -42,8 +42,8 @@ const useRegister = () => {
         }
         
         //eslint-disable-next-line
-        const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
-        if (!password.match(passwordRegex)) { 
+        //const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
+        if (!password) { 
             Swal.fire(
                 "Error",
                 "La contraseña debe contener al menos 6 dígitos y un carácter especial (., *, +)",
