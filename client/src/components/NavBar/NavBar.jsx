@@ -1,56 +1,129 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HOME } from "./../../Router/Paths";
 import { RiHome6Line } from "react-icons/ri";
-import { MdOutlineMusicVideo, MdOutlineExplore } from "react-icons/md";
 import { FaHeart, FaRegBell } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiMessageCircle } from "react-icons/fi";
-import { AiOutlinePlus } from "react-icons/ai";
 import LOGOBLACK from "../../assets/LOGOBLACK.png";
+import { useEffect, useRef, useState } from "react";
+import { GrMenu } from "react-icons/gr";
 
 function NavBar() {
+  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
+  const menuHamburguesaRef = useRef(null);
+
+  const showMenuHandler = (event) => {
+    event.stopPropagation();
+    setShowMenu(!showMenu);
+  };
+
+  const handleSession = () => {
+    // setUser();  //configurar con el context
+    navigate("/");
+  };
+
+  const closeMenuHandler = (event) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      menuHamburguesaRef.current &&
+      !menuHamburguesaRef.current.contains(event.target)
+    ) {
+      setShowMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", closeMenuHandler);
+
+    return () => {
+      document.removeEventListener("click", closeMenuHandler);
+    };
+  }, []);
+
   return (
-    <header className="navbar sticky top-0 z-30 w-screen bg-black pl-4 pr-8 shadow">
-      <div className="flex w-screen gap-5 justify-center">
-        <div className="w-[13%] h-12">
+    <header className="navbar sticky top-0 z-30 w-screen bg-black p-0 shadow">
+      <div className="flex w-full  items-center">
+        <div className="flex items-center place-content-start w-1/2 ">
           <Link
             to={HOME}
-            className="btn bg-inherit border-none hover:bg-inherit text-xl "
+            className="btn btn-xs md:h-8 bg-inherit min-h-min border-none hover:bg-inherit"
           >
-            <img src={LOGOBLACK} alt="" />
+            <img src={LOGOBLACK} alt="logo en home" />
           </Link>
         </div>
-        <div className="flex gap-5 justify-between items-center">
-          <div className="btn h-8 min-h-min rounded-[30px] ">
-            <RiHome6Line size={20} color="white" />
-            <span className=" text-white">Feed</span>
+        <div className="flex items-center place-content-end space-x-2 w-full px-2">
+          {/** Lista de Nav */}
+          <ul className="md:flex md:flex-row hidden md:space-x-8">
+            <li className="btn btn-sm hover:bg-slate-600 hover:text-white rounded-[30px] bg-gray-500">
+              <RiHome6Line size={20} color="white" />
+              <span className=" text-white hidden sm:flex">Feed</span>
+            </li>
+            <li className="btn btn-sm rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800">
+              <FaHeart size={20} color="white" />
+              <span className="hidden sm:flex text-white">Conoce Gente!</span>
+            </li>
+            <li>
+              <div className="p-1 rounded-[30px] flex items-center bg-slate-300 border-white border-[1.5px] hover:bg-slate-600 hover:text-white">
+                <IoSearchOutline size={20} className="mx-1" />
+                <input
+                  type="text"
+                  className="bg-transparent text-sm font-semibold w-1/2 px-2 outline-none hover:placeholder:text-slate-100"
+                  placeholder="Buscar..."
+                />
+              </div>
+            </li>
+            <li className="w-8 h-8 flex items-center justify-center rounded-full bg-inherit border-none shadow-none bg-slate-300 cursor-pointer hover:bg-slate-600 hover:text-white">
+              <FaRegBell size={20} />
+            </li>
+            <li className="w-8 h-8 flex items-center justify-center rounded-full bg-inherit border-none shadow-none bg-slate-300 cursor-pointer hover:bg-slate-600 hover:text-white">
+              <FiMessageCircle size={20} />
+            </li>
+          </ul>
+          {/**Menu navbar en movil */}
+          <div
+            className="md:hidden relative w-[45vw] sm:w-1/2"
+            ref={menuHamburguesaRef}
+          >
+            <div className="flex place-content-end" onClick={showMenuHandler}>
+              <GrMenu size={24} color="white" />
+            </div>
+            {showMenu ? (
+              <ul
+                className="absolute top-9 bg-black left-0 w-full mt-2 shadow-lg rounded-b-md py-3 px-1 space-y-1 text-xs"
+                ref={menuRef}
+              >
+                <li className="flex items-center btn btn-sm justify-center min-h-min rounded-[30px] bg-gray-500 p-1 hover:bg-slate-600 hover:text-white">
+                  <RiHome6Line size={20} color="white" />
+                  <span className=" text-white flex">Feed</span>
+                </li>
+                <li className="flex items-center btn btn-sm justify-center min-h-min rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800 p-1">
+                  <FaHeart size={20} color="white" />
+                  <span className=" text-white">Conoce Gente!</span>
+                </li>
+                <li className="">
+                  <div className="p-[4px] rounded-[30px] flex items-center bg-slate-300 border-white border-[1.5px] hover:bg-slate-600 hover:text-white">
+                    <IoSearchOutline size={20} className="mx-2 " />
+                    <input
+                      type="text"
+                      className="bg-transparent text-sm font-semibold w-4/5 px-1 py-1 outline-none hover:placeholder:text-slate-100"
+                      placeholder="Buscar"
+                    />
+                  </div>
+                </li>
+                <li className="btn rounded-full bg-inherit border-none shadow-none bg-slate-300 hover:bg-slate-600 hover:text-white mx-4 sm:mx-8">
+                  <FaRegBell size={20} />
+                </li>
+                <li className="btn rounded-full bg-inherit border-none shadow-none bg-slate-300 hover:bg-slate-600 hover:text-white">
+                  <FiMessageCircle size={20} />
+                </li>
+              </ul>
+            ) : null}
           </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-inherit border-none shadow-none hover:bg-slate-300">
-            <MdOutlineExplore size={20} color="black" />
-            <span className=" text-black">Explorar</span>
-          </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-inherit border-none shadow-none hover:bg-slate-300">
-            <MdOutlineMusicVideo size={20} color="black" />
-            <span className=" text-black">Biblioteca</span>
-          </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800">
-            <FaHeart size={20} color="white" />
-            <span className=" text-white">Conoce Gente!</span>
-          </div>
-          <label className="input input-bordered- h-8 min-h-min rounded-[30px] bg-slate-300 flex items-center gap-2">
-            <IoSearchOutline size={20} color="black" />
-            <input
-              type="text"
-              className="grow bg-slate-300"
-              placeholder="Search"
-            />
-          </label>
-          <div className="btn h-8 min-h-min btn-circle bg-inherit border-none shadow-none hover:bg-slate-300 ">
-            <FaRegBell size={20} color="black" />
-          </div>
-          <div className="btn h-8 min-h-min btn-circle bg-inherit border-none shadow-none hover:bg-slate-300 ">
-            <FiMessageCircle size={20} color="black" />
-          </div>
+
+          {/**Dropdown */}
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -66,25 +139,21 @@ function NavBar() {
             </div>
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box lg:w-52"
             >
               <li>
                 <a className="justify-between">
-                  Profile
+                  Perfil
                   <span className="badge">New</span>
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <a>Configuración</a>
               </li>
-              <li>
-                <a>Logout</a>
+              <li className="cursor-pointer">
+                <a onClick={handleSession}>Cerrar sesión</a>
               </li>
             </ul>
-          </div>
-          <div className="btn h-8 min-h-min rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800">
-            <AiOutlinePlus size={20} color="white" />
-            <span className=" text-white">Crear</span>
           </div>
         </div>
       </div>
