@@ -2,6 +2,7 @@ import LOGO from "../../assets/LOGO.png";
 import REGISTER11 from "../../assets/register11.png";
 import { useForm } from "react-hook-form";
 import Input from "../reusable-components/forms/Input";
+import InputTer from "../reusable-components/forms/inputTer";
 import RegisterButton from "../reusable-components/forms/RegisterButton";
 import { Eye, EyeOff } from "lucide-react";
 import { GoogleLogin } from "@react-oauth/google";
@@ -9,26 +10,40 @@ import CustomButton from "../reusable-components/forms/CustomButton";
 import { useNavigate } from "react-router-dom";
 import useRegister from "../../hooks/useRegister";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import useLoginGoogle from "../../hooks/useLoginGoogle";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  
+  const { 
+    handleRegister, 
+    showPassword, 
+    setShowPassword, 
+    repeatShowPassword, 
+    setRepeatShowPassword 
+  } = useRegister();
+
+  const { 
+    handleLoginSuccess,
+    handleLoginError
+  } = useLoginGoogle
+  
+  
   const {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
+    
     handleRegister(data);
-    reset();
   };
 
   const handleLogin = () => {
     navigate("/");
   };
 
-  const { handleRegister, showPassword, setShowPassword } = useRegister();
 
   const handleTerms = () => {
     navigate("/terms");
@@ -118,26 +133,41 @@ const SignUp = () => {
                   {showPassword ? <Eye /> : <EyeOff />}
                 </button>
               </div>
+              <div className="flex flex-col -mt-6">
+                <Input
+                  labelText="Repetir Contraseña"
+                  type={repeatShowPassword ? 'text' : 'password'}
+                  placeholder="Introduce al menos 6 caracteres"
+                  name="repeatPassword"
+                  register={register}
+                />
+                <button
+                  className="relative self-end -top-9 right-2"
+                  type="button"
+                  onClick={() => setRepeatShowPassword(!repeatShowPassword)}
+                >
+                  {repeatShowPassword ? <Eye /> : <EyeOff />}
+                </button>
+              </div>
               <div className=" bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-full text-white rounded-3xl">
                 <RegisterButton text="Registrarse" />
               </div>
-            </form>
-
             <p className="flex items-center justify-center pt-4">
               o continua con
             </p>
 
-            <div className="flex items-center flex-col my-2">
+              <div className="flex items-center flex-col my-2 ">
               <GoogleLogin
-                // onSuccess={handleLoginSuccess}
-                // onFailure={handleLoginError}
+                onSuccess={handleLoginSuccess}
+                onFailure={handleLoginError}
                 theme="filled_black"
                 size="medium"
                 text="signin_with"
                 shape="pill"
-              />
-              <p className="mt-3 text-sm w-full flex flex-wrap">
-                Al continuar, aceptas los
+                />
+              <div> 
+               <p className="mt-3 text-sm w-full flex flex-wrap items-center justify-center ">
+                 Al continuar, aceptas los
                 <CustomButton
                   onClick={handleTerms}
                   text={"Términos de uso"}
@@ -145,12 +175,17 @@ const SignUp = () => {
                 />
                 y{" "}
                 <CustomButton
-                  text={"Política de privacidad"}
+                  text={"Política de privacidad "}
                   onClick={handlePrivacy}
                   className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
                 />
-                de <b className="mx-1">TuneMatch</b>
+                  de <b className="mx-1">TuneMatch </b>
+                  <InputTer 
+                  register={register} 
+                    error={errors.email?.message}
+                  />
               </p>
+              </div> 
               <div className="flex items-center space-x-1 mt-2 text-sm">
                 <p>¿Tienes cuenta?</p>
                 <CustomButton
@@ -160,6 +195,7 @@ const SignUp = () => {
                 />
               </div>
             </div>
+            </form>
           </div>
         </div>
       </div>

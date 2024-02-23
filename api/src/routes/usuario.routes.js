@@ -4,7 +4,9 @@ const {
   logIn,
   googleAuth,
   getUser,
-  matchProfile
+  matchProfile,
+  updateUser
+
 } = require('../controller/usuario.controller.js')
 
 const router = Router()
@@ -19,6 +21,7 @@ router.post('/sign-up', POST_SIGN_UP, signUp)
 router.post('/login', POST_LOGIN, logIn)
 router.post('/google', POST_GOOGLE, googleAuth)
 router.get('/:id', getUser) //conflicto con otras rutas get
+router.put('/:id', updateUser)
 router.get('/match', matchProfile)
 
 module.exports = router

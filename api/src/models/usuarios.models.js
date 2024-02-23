@@ -7,6 +7,7 @@ const UserSchema = Schema({
     type: String,
     required: [true, "Debe Ingresar un nombre de usuario"],
   },
+  
   correo: {
     type: String,
     required: [true, "Debe Ingresar un correo"],

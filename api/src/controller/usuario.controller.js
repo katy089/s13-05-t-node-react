@@ -2,8 +2,10 @@ const { request, response } = require('express')
 const scoring = require('../../helpers/scoring')
 const usuarios = require('../models/usuarios.models.js')
 
+
 const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
+
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body
@@ -59,12 +61,6 @@ const googleAuth = async (req, res = response) => {
   }
 }
 
-const getUser = async (req, _) => {
-  const { id } = req.params
-
-  await serviceUser.getUser(id)
-
-}
 
 /*  
   test13@gmail.com  / _id: 65d64275114bffc51bfab4e5
@@ -98,12 +94,41 @@ const matchProfile = async (req = request, res = response) => {
     console.log(err);
   }
 
+
+const getUser = async (req, _) => {
+  const { id } = req.params
+
+  await serviceUser.getUser(id)
+
 }
+
+//para modificar el perfil de usuario
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe} = req.body;
+
+  try {
+    const user = await usuarios.findOneAndUpdate(
+      { _id: id },
+      { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe },
+      { new: true }
+    );
+
+    if (!user) return res.json({ error: "No existe el usuario" });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Error al actualizar el usuario" });
+  }
+};
+
 
 module.exports = {
   signUp,
   logIn,
   googleAuth,
   getUser,
-  matchProfile
+  matchProfile,
+  updateUser
 }

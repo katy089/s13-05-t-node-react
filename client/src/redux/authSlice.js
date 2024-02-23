@@ -74,6 +74,9 @@ export const authSlice = createSlice({
     setActive: (state, action) => {
       state.active = action.payload;
     },
+    updateAll: (state, action) => {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
@@ -90,6 +93,7 @@ export const getTuneMatch = (state) => state?.auth?.tuneMatch
 export const getUltimaPosicion = (state) => state?.auth?.ultimaPosicion
 export const getEnBuscaDe = (state) => state?.auth?.enBuscaDe
 export const getActive = (state) => state?.auth?.active
+export const getAllState = (state) => state?.auth;
 
 // actions
 export const { 
@@ -106,7 +110,8 @@ export const {
     setTuneMatch, 
     setUltimaPosicion, 
     setEnBuscaDe, 
-    setActive 
+    setActive,
+    updateAll, 
 } = authSlice.actions;
 
 
