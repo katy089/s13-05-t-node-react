@@ -10,11 +10,25 @@ import CustomButton from "../reusable-components/forms/CustomButton";
 import { useNavigate } from "react-router-dom";
 import useRegister from "../../hooks/useRegister";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import useLoginGoogle from "../../hooks/useLoginGoogle";
 
 const SignUp = () => {
   const navigate = useNavigate();
   
-  const { handleRegister, showPassword, setShowPassword, repeatShowPassword, setRepeatShowPassword } = useRegister();
+  const { 
+    handleRegister, 
+    showPassword, 
+    setShowPassword, 
+    repeatShowPassword, 
+    setRepeatShowPassword 
+  } = useRegister();
+
+  const { 
+    handleLoginSuccess,
+    handleLoginError
+  } = useLoginGoogle
+  
+  
   const {
     handleSubmit,
     register,
@@ -144,8 +158,8 @@ const SignUp = () => {
 
               <div className="flex items-center flex-col my-2 ">
               <GoogleLogin
-                // onSuccess={handleLoginSuccess}
-                // onFailure={handleLoginError}
+                onSuccess={handleLoginSuccess}
+                onFailure={handleLoginError}
                 theme="filled_black"
                 size="medium"
                 text="signin_with"
