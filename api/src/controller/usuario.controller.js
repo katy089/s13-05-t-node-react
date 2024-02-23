@@ -4,6 +4,7 @@ const Usuario = require('../models/usuarios.models.js')
 const calcularDistancia = require('../../helpers/distance/haversine.js')
 const googleCheck = require('../../helpers/googleCheck.js')
 const usuarios = require('../models/usuarios.models.js')
+const scoring = require('../../helpers/scoring')
 
 
 const coordTuneMatch = {
@@ -150,9 +151,44 @@ const getUser = async (req, res) => {
   res.json(user)
 }
 
+/*  
+  test13@gmail.com  / _id: 65d64275114bffc51bfab4e5
+  brandon@gmail.com / _id: 65d66c03a3404872f147fe5f
+  test20@gmail.com / _id: 65d80f90447ba575bbcaf98a
+  test21@gmail.com / _id: 65d8101a447ba575bbcaf98c
+*/
+const matchProfile = async (req = request, res = response) => {
+  const start = new Date();
+  const { id } = req.body
+  try {
+    const user = await Usuario.findOne({ _id: id }, ['bandas', 'generos']);
+    const matchs = await Usuario.find({
+      _id: { $ne: user._id },
+      $or: [
+        { generos: { $in: user.generos } }, 
+        { bandas: { $in: user.bandas } }
+      ]
+    }, ['bandas', 'generos']).limit(10)//.explain("executionStats");
+    // posibles problemas de performance: https://www.mongodb.com/docs/manual/reference/operator/query/in/#syntax
+
+    const match_list = scoring(user._doc, matchs)
+    
+    const end = new Date();
+    res.status(200).json({
+           match_list,
+           estimated_time: (end.getTime() - start.getTime()) + "ms"
+        })
+
+  } catch (err) {
+    console.log(err);
+  }
+
+}
+
 module.exports = {
   signUp,
   logIn,
   googleAuth,
-  getUser
+  getUser,
+  matchProfile
 }
