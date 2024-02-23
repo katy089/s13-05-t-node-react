@@ -13,14 +13,17 @@ const MatchSection = () => {
   const [tabState, setTabState] = useState(0);
 
   return (
-    <div className="w-screen grid grid-cols-3 grid-flow-dense gap-5 ">
+    <div
+      className="w-screen grid grid-cols-3 grid-flow-row 
+     "
+    >
       {/* chats */}
       <div className="bg-terciario">
         <div className="bg-secundario grid grid-cols-3 p-3">
           <h2
             onClick={() => setTabState(0)}
             className={`hover:underline-offset: 8px ${
-              tabState === 0 && "text-underline-offset: 8px"
+              tabState === 0 && "underline underline-offset-8"
             } text-white p-2 pr-4`}
           >
             <div className="indicator">
@@ -52,22 +55,30 @@ const MatchSection = () => {
           </h2>
         </div>
 
-        
         {tabState === 1 ? <MessageList /> : <MatchCardsList />}
       </div>
       {/* chats */}
-      <div className="bg-red-100 p-8">
-        {/* tinder card */}
-        <TinderCards />
-        {/* <TinderCardButtons /> */}
-        {/* tinder card */}
-      </div>
 
-      {/* espacio vacio */}
-      <div className=" bg-inherit">
-        <MatchCardsList />
+      {/* tinder card 
+          <TinderCards />
+         
+           tinder card */}
+
+      {/* espacio vacio 
+      <div className=" bg-slate-500">
       </div>
       {/* espacio vacio */}
+
+      {/* <div className="bg-black p-2">
+        <MatchCardsList />
+      </div> */}
+      <div className="bg-purple-400 p-2 grid ">
+        <div className="bg-secundario">
+          <TinderCards />
+          jjjjjjjjjjjjjjjjjjjjjjjjjj
+        </div>
+      </div>
+      <div className="bg-pink-300  items-center p-2">c</div>
     </div>
   );
 };

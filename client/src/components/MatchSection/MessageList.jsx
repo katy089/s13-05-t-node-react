@@ -30,17 +30,16 @@ const db = [
 
 const MessageList = () => {
   return (
-    <div className="">
-      <div className=" bg-slate-100  ">
+    <div className="bg-slate-100 p-2">
+      <div className="   ">
         {
-          <div className=" p-4 ">
+          <div className=" p- ">
             {db.map((item, i) => {
               return (
                 <ChatCards
                   key={i}
                   item={item}
                   message={"If a dog chews shoes whose shoes does he choose?"}
-                  
                 />
               );
             })}

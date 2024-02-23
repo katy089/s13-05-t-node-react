@@ -32,6 +32,7 @@ function TinderCards() {
 
     const swiped = (direction, nameToDelete) => {
         console.log('removing: ' + nameToDelete)
+        console.log(direction, nameToDelete);
         setLastDirection(direction)
     }
 
@@ -40,8 +41,8 @@ function TinderCards() {
     }
 
     return (
-      <div className="">
-        <div className="cardContainer ">
+      <>
+        <div className="cardContainer relative flex justify-center">
           {characters.map((character) => (
             <TinderCard
               className="swipe absolute "
@@ -52,7 +53,7 @@ function TinderCards() {
             >
               <div
                 style={{ backgroundImage: "url(" + character.url + ")" }}
-                className="card relative size-80 bg-center bg-cover shadow-xl p-5 "
+                className="card relative size-96 bg-center bg-cover shadow-xl p-5 "
               >
                 <h2 className="text-white">{character.name}, 27</h2>
                 <p className="text-white font-light text-xs ">
@@ -67,11 +68,13 @@ function TinderCards() {
           ))}
         </div>
         {lastDirection ? (
-          <h2 className="infoText">You swiped {lastDirection}</h2>
+          <h2 className="infoText absolute">You swiped {lastDirection}</h2>
         ) : (
-          <h2 className="infoText" />
+          <h2 className="infoText absolute" />
         )}
-      </div>
+        <div className="relative">relative</div>
+        <p className="absolute">gklgkkhkll</p>
+      </>
     );
 }
 
