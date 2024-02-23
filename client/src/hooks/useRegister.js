@@ -8,7 +8,6 @@ import {
     setId,
     setNombre,
     setCorreo,
-    setPassword,
     setActive,
  } from '../redux/authSlice'
 
@@ -17,11 +16,12 @@ import { API_URL_REGISTER } from '../config/api'
 const useRegister = () => {
     
     const [showPassword, setShowPassword] = useState(false)
+    const [repeatShowPassword, setRepeatShowPassword] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate();
    
     const handleRegister = async (data) => {
-        const {name, email, password, checkbox = false } = data;
+        const {name, email, password, repeatPassword, checkbox = false } = data;
 
         console.log(data)
 
@@ -42,11 +42,29 @@ const useRegister = () => {
         }
         
         //eslint-disable-next-line
-        const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
-        if (!password.match(passwordRegex)) { 
+        // const passwordRegex = /^(?=.*[A-Za-z0-9])(?=.*[.*+\/]).{6,}$/;
+        // if (!password.match(passwordRegex)) { 
+        //     Swal.fire(
+        //         "Error",
+        //         "La contraseña debe contener al menos 6 dígitos y un carácter especial (., *, +)",
+        //         "error"
+        //      );
+        //     return;
+        // }
+              
+        if (!password) { 
             Swal.fire(
                 "Error",
                 "La contraseña debe contener al menos 6 dígitos y un carácter especial (., *, +)",
+                "error"
+             );
+            return;
+        }
+
+        if (password !== repeatPassword) { 
+            Swal.fire(
+                "Error",
+                "Las contraseñas no coincide",
                 "error"
              );
             return;
@@ -60,24 +78,27 @@ const useRegister = () => {
                    password,
                })
                .then(async({data}) => {
-                   const { id, nombre, correo, password } = data.usuario;
-                   console.log(data.usuario)
+                   const { id, nombre, correo } = data.usuario;
+                   console.log(data)
                              
                    if( id ) {
                     dispatch(login())
                     dispatch(setId(id))
                     dispatch(setNombre(nombre))
                     dispatch(setCorreo(correo))
-                    dispatch(setPassword(password))
                     dispatch(setActive(true))
                     navigate("/register22")
                    }        
                })
                .catch(async(error) => {
-            
-                   if (error.response) {
-                       Swal.fire("Error", "Ocurrió un error durante el registro", "error")
-                   }
+
+                   if(error.response.status === 400){
+                      Swal.fire("Error", "Usuario existente", "error")
+                      return
+                    }
+
+                   Swal.fire("Error", "Ocurrió un error durante el registro", "error")
+                   
                })            
 
     }
@@ -85,7 +106,9 @@ const useRegister = () => {
     return {
         handleRegister,
         showPassword,
-        setShowPassword
+        setShowPassword,
+        repeatShowPassword, 
+        setRepeatShowPassword
     }  
 
 } 

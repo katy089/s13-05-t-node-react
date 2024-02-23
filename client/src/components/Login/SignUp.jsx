@@ -17,19 +17,17 @@ const SignUp = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
-  } = useForm({ name: '', email: '', password: '', checkbox: false } );
+  } = useForm();
 
   const onSubmit = (data) => {
     handleRegister(data);
-    reset();
   };
 
   const handleLogin = () => {
     navigate("/");
   };
 
-  const { handleRegister, showPassword, setShowPassword } = useRegister();
+  const { handleRegister, showPassword, setShowPassword, repeatShowPassword, setRepeatShowPassword } = useRegister();
 
   const handleTerms = () => {
     navigate("/terms");
@@ -119,11 +117,25 @@ const SignUp = () => {
                   {showPassword ? <Eye /> : <EyeOff />}
                 </button>
               </div>
+              <div className="flex flex-col -mt-6">
+                <Input
+                  labelText="Repetir Contraseña"
+                  type={repeatShowPassword ? 'text' : 'password'}
+                  placeholder="Introduce al menos 6 caracteres"
+                  name="repeatPassword"
+                  register={register}
+                />
+                <button
+                  className="relative self-end -top-9 right-2"
+                  type="button"
+                  onClick={() => setRepeatShowPassword(!repeatShowPassword)}
+                >
+                  {repeatShowPassword ? <Eye /> : <EyeOff />}
+                </button>
+              </div>
               <div className=" bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-full text-white rounded-3xl">
                 <RegisterButton text="Registrarse" />
               </div>
-            
-
             <p className="flex items-center justify-center pt-4">
               o continua con
             </p>
@@ -139,7 +151,6 @@ const SignUp = () => {
                 />
               <div> 
                <p className="mt-3 text-sm w-full flex flex-wrap items-center justify-center ">
-                
                  Al continuar, aceptas los
                 <CustomButton
                   onClick={handleTerms}
@@ -154,9 +165,9 @@ const SignUp = () => {
                 />
                   de <b className="mx-1">TuneMatch </b>
                   <InputTer 
-                  
                   register={register} 
-                    error={errors.email?.message}/>
+                    error={errors.email?.message}
+                  />
               </p>
               </div> 
               <div className="flex items-center space-x-1 mt-2 text-sm">
