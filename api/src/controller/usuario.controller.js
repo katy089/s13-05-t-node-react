@@ -1,10 +1,10 @@
 const { request, response } = require('express')
+const scoring = require('../../helpers/scoring')
 const bycript = require('bcryptjs')
 const Usuario = require('../models/usuarios.models.js')
 const calcularDistancia = require('../../helpers/distance/haversine.js')
 const googleCheck = require('../../helpers/googleCheck.js')
 const usuarios = require('../models/usuarios.models.js')
-const scoring = require('../../helpers/scoring')
 
 
 const coordTuneMatch = {
