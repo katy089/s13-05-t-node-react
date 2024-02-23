@@ -3,7 +3,7 @@ import useGeolocation from "../hooks/useGeolocation";
 import axios from "axios";
 import { API_URL_GOOGLE } from '../config/api'
 import { useDispatch } from "react-redux"
-import { updateAll, login } from "../../redux/authSlice"
+import { updateAll, login } from "../redux/authSlice"
 import { useNavigate } from "react-router-dom";
 
 
