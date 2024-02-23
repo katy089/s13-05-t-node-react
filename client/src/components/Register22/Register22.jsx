@@ -173,7 +173,7 @@ const Register22 = () => {
                                     className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl"
                                     onClick={register23}
                                 >
-                                    Sigiente
+                                    Siguiente
                                 </button>
                             </div>
                         </div>

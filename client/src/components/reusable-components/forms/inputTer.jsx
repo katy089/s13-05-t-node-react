@@ -1,10 +1,9 @@
-
-const InputTer = ({ 
-    /* eslint-disable */
-    register,
-    change,
-    error 
-    /* eslint-disable */
+const InputTer = ({
+  /* eslint-disable */
+  register,
+  change,
+  error,
+  /* eslint-disable */
 }) => {
     return (
         <div>
@@ -24,6 +23,3 @@ const InputTer = ({
 };
 
 export default InputTer;
-
-
-

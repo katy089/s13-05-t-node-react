@@ -210,7 +210,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen min-h-[140vh] sm:min-h-screen flex bg-black">
+    <div className="w-screen min-h-[150vh] sm:min-h-screen flex bg-black">
       <ScrollToTop />
       <div className="relative">
         <div
@@ -328,7 +328,7 @@ const Login = () => {
                   size="medium"
                   text="signin_with"
                   shape="pill"
-                // type="icon" muestra solo el icono con la G
+                  // type="icon" muestra solo el icono con la G
                 />
                 <p className="mt-3 text-sm w-full flex items-center justify-center flex-wrap">
                   Al continuar, aceptas los
