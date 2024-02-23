@@ -19,7 +19,7 @@ module.exports = {
       const usuario = new Usuario({ nombre, correo, password, rest })
       usuario.password = bycript.hashSync(password, salt)
 
-      let distancia = 'No tenemos tus coordenadas'  
+      let distancia = 'No tenemos tus coordenadas'
 
       if ('ultimaPosicion' in rest) {
         const { ultimaPosicion } = rest
@@ -133,11 +133,12 @@ module.exports = {
 
 
 
-  getUser: async (id) => {
+  getUser: async (id, res) => {
 
     try {
       const user = await Usuario.findOne({ _id: id })
       if (!user) return res.json({ error: "No existe el usuario" })
+      res.json(user)
 
     } catch (error) {
       return res.status(400).json({
