@@ -43,6 +43,7 @@ const Login = () => {
     try {
       // Esperamos a que el usuario permita la geolocalización
       await obtenerPosicion();
+      console.log(ultimaPosicion)
 
       // Solicitud de autenticación
       const response = await authenticateUser(correo, password, ultimaPosicion);
@@ -74,7 +75,7 @@ const Login = () => {
               imageAlt: "Custom image",
               text: "Conecta a través de la música🎷",
             });
-            console.log(response.usuario)
+            console.log(response)
             dispatch(updateAll(response.usuario))
             dispatch(login())
             navigate("/home");
