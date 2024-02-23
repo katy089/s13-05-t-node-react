@@ -1,23 +1,35 @@
-import { API_URL_LOGIN, API_URL_GOOGLE } from '../config/api'
-     
+import { API_URL_LOGIN, API_URL_GOOGLE } from "../config/api";
+
 export const authenticateUser = async (correo, password, ultimaPosicion) => {
-  
-  console.log(ultimaPosicion)
+  console.log(ultimaPosicion);
   try {
+    const body = {};
+    // Verifico si ultimaPosicion tiene valores que no son null
+    if (
+      ultimaPosicion &&
+      ultimaPosicion.lat !== null &&
+      ultimaPosicion.lon !== null
+    ) {
+      body.ultimaPosicion = ultimaPosicion;
+    }
+
     const response = await fetch(API_URL_LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ correo, password,  ultimaPosicion, }),
+      body: JSON.stringify({ correo, password, ...body }), // Incluyo ultimaPosicion solo si tiene valores válidos
     });
 
     // Verifica si response fue exitosa
     if (response.ok) {
       const data = await response.json();
-      console.log(data)
-  
-      return { status: response.status, success: true, message: data.message, usuario:data.usuario };
+      return {
+        status: response.status,
+        success: true,
+        message: data.message,
+        usuario: data.usuario,
+      };
     } else {
       const errorData = await response.json();
       return {

@@ -10,11 +10,8 @@ import {
 } from "../../auxFunctions/loginFunctions";
 import Swal from "sweetalert2";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import { updateAll, login } from "../../redux/authSlice"
-import { useDispatch } from "react-redux"
-
-
-
+import { updateAll, login } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -74,9 +71,9 @@ const Login = () => {
               imageAlt: "Custom image",
               text: "Conecta a través de la música🎷",
             });
-            console.log(response.usuario)
-            dispatch(updateAll(response.usuario))
-            dispatch(login())
+            console.log(response.usuario);
+            dispatch(updateAll(response.usuario));
+            dispatch(login());
             navigate("/home");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa
@@ -170,9 +167,9 @@ const Login = () => {
             imageAlt: "Custom image",
             text: "Conecta a través de la música🎷",
           });
-          console.log(response.usuario)
-          dispatch(updateAll(response.usuario))
-          dispatch(login())
+          console.log(response.usuario);
+          dispatch(updateAll(response.usuario));
+          dispatch(login());
           navigate("/home");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Si el usuario niega ser mayor de  18 años, muestro un aleert de disculpa
