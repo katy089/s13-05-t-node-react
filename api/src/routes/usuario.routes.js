@@ -6,7 +6,6 @@ const {
   getUser,
   matchProfile,
   updateUser
-
 } = require('../controller/usuario.controller.js')
 
 const router = Router()

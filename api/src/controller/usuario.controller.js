@@ -72,8 +72,8 @@ const matchProfile = async (req = request, res = response) => {
   const start = new Date();
   const { id } = req.body
   try {
-    const user = await Usuario.findOne({ _id: id }, ['bandas', 'generos']);
-    const matchs = await Usuario.find({
+    const user = await usuarios.findOne({ _id: id }, ['bandas', 'generos']);
+    const matchs = await usuarios.find({
       _id: { $ne: user._id },
       $or: [
         { generos: { $in: user.generos } }, 
@@ -93,7 +93,7 @@ const matchProfile = async (req = request, res = response) => {
   } catch (err) {
     console.log(err);
   }
-
+}
 
 const getUser = async (req, _) => {
   const { id } = req.params
