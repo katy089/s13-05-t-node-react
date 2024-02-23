@@ -1,4 +1,4 @@
-export const API_URL_BASE = import.meta.env.VITE_URL_BASE
+export const API_URL_BASE = import.meta.env.VITE_URL_BASE || 'https://tunematch.onrender.com/api'
 
 //--------------------------------------------------------------------------
 

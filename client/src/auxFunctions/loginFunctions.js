@@ -1,29 +1,23 @@
 import { API_URL_LOGIN, API_URL_GOOGLE } from '../config/api'
-import { useDispatch } from 'react-redux'
-// import { setId } from '../redux/authSlice'
-
-      
-export const authenticateUser = async (correo, password) => {
-  //eslint-disable-next-line
- // const dispatch = useDispatch();
-//console.log(correo , password);
+     
+export const authenticateUser = async (correo, password, ultimaPosicion) => {
+  
+  console.log(ultimaPosicion)
   try {
     const response = await fetch(API_URL_LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ correo, password }),
+      body: JSON.stringify({ correo, password,  ultimaPosicion, }),
     });
 
     // Verifica si response fue exitosa
     if (response.ok) {
       const data = await response.json();
-    //  const { id } = data.usuario
-
-    //  dispatch(setId(id))
-
-      return { status: response.status, success: true, message: data.message };
+      console.log(data)
+  
+      return { status: response.status, success: true, message: data.message, usuario:data.usuario };
     } else {
       const errorData = await response.json();
       return {
