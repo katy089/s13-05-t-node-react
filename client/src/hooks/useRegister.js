@@ -9,7 +9,9 @@ import {
     setNombre,
     setCorreo,
     setActive,
+    setUltimaPosicion
  } from '../redux/authSlice'
+ import useGeolocation from "../hooks/useGeolocation";
 
 import { API_URL_REGISTER } from '../config/api'
 
@@ -17,13 +19,15 @@ const useRegister = () => {
     
     const [showPassword, setShowPassword] = useState(false)
     const [repeatShowPassword, setRepeatShowPassword] = useState(false)
+    const { obtenerPosicion, ultimaPosicion  } = useGeolocation()
     const dispatch = useDispatch();
     const navigate = useNavigate();
    
     const handleRegister = async (data) => {
         const {name, email, password, repeatPassword, checkbox = false } = data;
+        await obtenerPosicion()
 
-        console.log(data)
+        console.log(data, ultimaPosicion)
 
         if(!checkbox){
             Swal.fire("Error", "Acepte los terminos y condiciones", "error");
@@ -76,9 +80,10 @@ const useRegister = () => {
                    nombre: name,
                    correo: email,
                    password,
+                   ultimaPosicion
                })
                .then(async({data}) => {
-                   const { id, nombre, correo } = data.usuario;
+                   const { id, nombre, correo, ultimaPosicion } = data.usuario;
                    console.log(data)
                              
                    if( id ) {
@@ -87,6 +92,7 @@ const useRegister = () => {
                     dispatch(setNombre(nombre))
                     dispatch(setCorreo(correo))
                     dispatch(setActive(true))
+                    dispatch(setUltimaPosicion(ultimaPosicion))
                     navigate("/register22")
                    }        
                })

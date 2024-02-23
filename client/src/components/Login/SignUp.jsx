@@ -13,13 +13,16 @@ import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  
+  const { handleRegister, showPassword, setShowPassword, repeatShowPassword, setRepeatShowPassword } = useRegister();
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
+    
     handleRegister(data);
   };
 
@@ -27,7 +30,6 @@ const SignUp = () => {
     navigate("/");
   };
 
-  const { handleRegister, showPassword, setShowPassword, repeatShowPassword, setRepeatShowPassword } = useRegister();
 
   const handleTerms = () => {
     navigate("/terms");
