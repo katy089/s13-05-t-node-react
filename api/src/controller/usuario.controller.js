@@ -150,9 +150,32 @@ const getUser = async (req, res) => {
   res.json(user)
 }
 
+//para modificar el perfil de usuario
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe} = req.body;
+
+  try {
+    const user = await usuarios.findOneAndUpdate(
+      { _id: id },
+      { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe },
+      { new: true }
+    );
+
+    if (!user) return res.json({ error: "No existe el usuario" });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Error al actualizar el usuario" });
+  }
+};
+
+
 module.exports = {
   signUp,
   logIn,
   googleAuth,
-  getUser
+  getUser,
+  updateUser
 }
