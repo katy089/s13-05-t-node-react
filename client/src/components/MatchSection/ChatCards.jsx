@@ -8,14 +8,10 @@ const ChatCards = (props) => {
           className="btn btn-circle bg-center bg-cover"
         />
       </div>
-      <div
-        className={`${
-          !!props.item.reed && "text-slate-400"
-        }`}
-      >
+      <div className={`${!!props.item.reed && "text-slate-400"}`}>
         <strong>{props.item.name}</strong>
         <div>
-          <span className="">{props.message}</span>
+          <span className="line-clamp-1">{props.message}</span>
         </div>
       </div>
     </div>

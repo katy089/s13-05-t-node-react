@@ -1,22 +1,16 @@
-// import { useEffect, useState } from "react";
-// import ChatCards from "../components/MatchSection/ChatCards.jsx"
-import TinderCards from "../components/MatchSection/TinderCard.jsx";
-// import TinderCardButtons from "../components/MatchSection/TinderCardButtons.jsx";
-import MatchCardsList from "../components/MatchSection/MatchCardsList.jsx";
 import { useState } from "react";
+import TinderCards from "../components/MatchSection/TinderCard.jsx";
+import ToggleCheckbox from "../components/MatchSection/ToggleCheckbox.jsx";
+import CustomButton from "../components/reusable-components/forms/CustomButton.jsx";
+import MatchCardsList from "../components/MatchSection/MatchCardsList.jsx";
 import MessageList from "../components/MatchSection/MessageList.jsx";
-// import VerticalCarousel from "../components/MatchSection/VerticalCarousel.jsx";
-// import TabTitle from "../components/MatchSection/TabTitle.jsx"
-// "../reusable-components/forms/CustomButton";
 
 const MatchSection = () => {
   const [tabState, setTabState] = useState(0);
 
   return (
     <div
-      className="w-screen grid grid-cols-3 grid-flow-row 
-     "
-    >
+      className="w-screen grid grid-cols-4 grid-flow-auto h-screen">
       {/* chats */}
       <div className="bg-terciario">
         <div className="bg-secundario grid grid-cols-3 p-3">
@@ -57,28 +51,68 @@ const MatchSection = () => {
 
         {tabState === 1 ? <MessageList /> : <MatchCardsList />}
       </div>
-      {/* chats */}
-
-      {/* tinder card 
-          <TinderCards />
-         
-           tinder card */}
-
-      {/* espacio vacio 
-      <div className=" bg-slate-500">
+      {/* tinder card */}
+      <div className="bg-slate-200 relative p-2 grid col-span-2 ">
+        <TinderCards />
       </div>
-      {/* espacio vacio */}
+      {/* datos matcheo */}
+      <div className="bg-black font-bold text-slate-200 items-center flex flex-col gap-4 p-4">
+        <h2>Tipo de cuenta</h2>
+        <CustomButton
+          className={
+            "bg-primario uppercase rounded-lg flex justify-center font-semi-bold p-3 w-full"
+          }
+          text={"gratuita"}
+        />
+        <h2>Ajustes de descubrimiento</h2>
+        <div className="bg-primario flex flex-col justify-between  p-4 w-full rounded-xl gap-3  capitalize">
+          <h2>Muéstrame</h2>
+          <div>
+            <ToggleCheckbox text="Hombres" classInfo={"toggle-primary"} />
+            <ToggleCheckbox text="Mujeres" classInfo={"toggle-primary"} />
+            <div className="divider divider-primary"></div>
+            <p className="text-sm flex items-end justify-between capitalize font-light">
+              Músicos
+              <span className="badge badge-sm bg-black text-white p-2 font-light">
+                instrumentos
+              </span>
+            </p>
 
-      {/* <div className="bg-black p-2">
-        <MatchCardsList />
-      </div> */}
-      <div className="bg-purple-400 p-2 grid ">
-        <div className="bg-secundario">
-          <TinderCards />
-          jjjjjjjjjjjjjjjjjjjjjjjjjj
+            <p className="text-sm flex items-end justify-between capitalize font-light">
+              Fan N°1
+              <span className="badge badge-sm bg-black text-white p-2 font-light">
+                bandas
+              </span>
+            </p>
+          </div>
         </div>
+        <div className="bg-primario flex items-start p-4 w-full rounded-xl gap-3  capitalize flex-col">
+          <p>distancia máxima</p>
+          <p>80km.</p>
+          <input
+            type="range"
+            min={0}
+            max="100"
+            value="40"
+            className="range range-xs"
+          />{" "}
+        </div>
+        <div className="bg-primario flex items-start p-4 w-full rounded-xl gap-3 ">
+          <p>rango de edad</p>
+          <p>18-32</p>
+          <input
+            type="range"
+            min={0}
+            max="100"
+            value="40"
+            className="range range-xs bg-primario"
+          />{" "}
+        </div>
+        <p>
+          TuneMatch usa estas preferencias para sugerir matches. Algunas
+          sugerencias pueden no estar dentro de tus parámetros de preferencia
+        </p>
       </div>
-      <div className="bg-pink-300  items-center p-2">c</div>
     </div>
   );
 };

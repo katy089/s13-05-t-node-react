@@ -1,0 +1,11 @@
+.swipe{
+    width: 36rem;
+    /* background-color: red; */
+
+}
+.p{
+    position: absolute;
+    background-color: red;
+    width: 100%;
+    z-index: 99999;
+}
