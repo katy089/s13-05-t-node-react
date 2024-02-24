@@ -9,10 +9,9 @@ const MatchSection = () => {
   const [tabState, setTabState] = useState(0);
 
   return (
-    <div
-      className="w-screen grid grid-cols-4 grid-flow-auto h-screen">
+    <div className="w-screen grid grid-cols-7 grid-flow-auto h-screen">
       {/* chats */}
-      <div className="bg-terciario">
+      <div className="bg-terciario col-span-2">
         <div className="bg-secundario grid grid-cols-3 p-3">
           <h2
             onClick={() => setTabState(0)}
@@ -52,11 +51,11 @@ const MatchSection = () => {
         {tabState === 1 ? <MessageList /> : <MatchCardsList />}
       </div>
       {/* tinder card */}
-      <div className="bg-slate-200 relative p-2 grid col-span-2 ">
+      <div className="bg-slate-200 relative p-2 grid col-span-3 ">
         <TinderCards />
       </div>
       {/* datos matcheo */}
-      <div className="bg-black font-bold text-slate-200 items-center flex flex-col gap-4 p-4">
+      <div className="bg-black font-bold text-slate-200 items-center flex flex-col gap-4 p-4 col-span-2">
         <h2>Tipo de cuenta</h2>
         <CustomButton
           className={
