@@ -18,7 +18,7 @@ const {
 router.post('/sign-up', POST_SIGN_UP, signUp)
 router.post('/login', POST_LOGIN, logIn)
 router.post('/google', POST_GOOGLE, googleAuth)
-router.get('/:id', getUser)
 router.put('/:id', updateUser)
+router.get('/list/:id', getUser)
 
 module.exports = router

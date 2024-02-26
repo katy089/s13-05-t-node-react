@@ -75,7 +75,7 @@ const Login = () => {
               imageAlt: "Custom image",
               text: "Conecta a través de la música🎷",
             });
-
+            console.log(response.usuario);
             navigate("/home");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa

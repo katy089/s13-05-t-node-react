@@ -2,14 +2,14 @@ const { request, response } = require('express')
 
 const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
-
+const usuarios = require('../models/usuarios.models')
 
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body
 
   try {
-   
+
     await serviceUser.signUp(nombre, correo, password, rest, res)
 
 
@@ -24,10 +24,10 @@ const signUp = async (req = request, res = response) => {
 }
 
 const logIn = async (req = request, res = response) => {
- 
+
   const { correo, password, ...rest } = req.body
   try {
-  
+
     await serviceUser.logIn(correo, password, rest, res)
 
 
@@ -46,7 +46,7 @@ const googleAuth = async (req, res = response) => {
   const { id_token, ultimaPosicion } = req.body
   try {
     const { correo, nombre, img } = await googleCheck(id_token)
-   
+
     await serviceUser.googleAuth(correo, nombre, img, ultimaPosicion, res)
 
   } catch (error) {
@@ -60,10 +60,10 @@ const googleAuth = async (req, res = response) => {
 }
 
 
-const getUser = async (req, _) => {
+const getUser = async (req, res) => {
   const { id } = req.params
 
-  await serviceUser.getUser(id)
+  await serviceUser.getUser(id, res)
 
 }
 
@@ -71,7 +71,7 @@ const getUser = async (req, _) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe} = req.body;
+  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe } = req.body;
 
   try {
     const user = await usuarios.findOneAndUpdate(
