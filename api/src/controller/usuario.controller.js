@@ -2,7 +2,7 @@ const { request, response } = require('express')
 
 const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
-
+const usuarios = require('../models/usuarios.models')
 
 
 const signUp = async (req = request, res = response) => {
