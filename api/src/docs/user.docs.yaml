@@ -72,7 +72,7 @@ paths:
           description: Error al intentar conectar a la db
 
 
-  /api/usuario/{userId}:
+  /api/usuario/list/{userId}:
     get:
       summary: traer un usuario
       tags:
@@ -92,6 +92,53 @@ paths:
           description: Error al intentar conectar a la db
   
 
+  /api/usuario/{userId}:
+    put:
+      summary: actualizar un usuario
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          description: id de usuario
+          schema:
+            type: String
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                miGenero:
+                  type: string
+                fotos:
+                  type: array
+                  items:
+                    type: string
+                bandas:
+                  type: array
+                  items:
+                    type: string
+                generos:
+                  type: array
+                  items:
+                    type: string
+                ultimaPosicion:
+                  type: object
+                enBuscaDe:
+                  type: array
+                  items:
+                    type: string
+
+      responses:
+        "201":
+          description: actualizacion del usuario correctamente
+        "500":
+          description: Error al intentar conectar a la db
 
 
 components:

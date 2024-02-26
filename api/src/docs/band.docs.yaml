@@ -30,16 +30,16 @@ paths:
           name: queryPage
           schema:
             type: string
-          description: Ingrese si quiere la pagina que quiere obtener de los resultados
+          description: Ingrese la pagina que quiere obtener de los resultados
         - in: query
           name: limit
           schema:
             type: string
-          description: Ingrese si quiere el limite de los resultados que quiere obtener
+          description: Ingrese el limite de los resultados que quiere obtener
 
       responses:
         "201":
-          description: Se agrego correctamente la banda
+          description: Se trajo correctamente las bandas
         "500":
           description: Error al intentar conectar a la db
 
