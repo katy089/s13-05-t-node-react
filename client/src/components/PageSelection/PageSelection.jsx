@@ -1,6 +1,7 @@
 import LOGO from "../../assets/LOGO.png";
 import generos from "../../assets/generos.png";
 import Button2 from "../reusable-components/Buttons/Button2";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 // Lista de género
 const data = [
@@ -74,7 +75,8 @@ const data = [
 
 function PageSelection() {
   return (
-    <div className="w-screen min-h-[140vh] sm:min-h-screen flex bg-black">
+    <div className="w-screen min-h-[140vh] sm:min-h-screen flex bg-black text-white">
+      <ScrollToTop />
       <div className="relative">
         <div
           className="absolute top-0 left-0 w-0 h-0 border-solid border-transparent border-r-[35vw] border-b-[100vh] border-black bg-black z-10"
