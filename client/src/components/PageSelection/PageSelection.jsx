@@ -142,7 +142,7 @@ function PageSelection() {
                   type="submit"
                   className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl"
                 >
-                  Sigiente
+                  Siguiente
                 </button>
               </div>
             </div>

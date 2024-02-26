@@ -10,6 +10,11 @@ import {
 } from "../../auxFunctions/loginFunctions";
 import Swal from "sweetalert2";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import { updateAll, login } from "../../redux/authSlice"
+import { useDispatch } from "react-redux"
+
+
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +23,8 @@ const Login = () => {
   const [emailTuneMatch, setEmailTuneMatch] = useState(null);
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleButton = () => {
     navigate("/signup");
@@ -36,6 +43,7 @@ const Login = () => {
     try {
       // Esperamos a que el usuario permita la geolocalización
       await obtenerPosicion();
+      console.log(ultimaPosicion)
 
       // Solicitud de autenticación
       const response = await authenticateUser(correo, password, ultimaPosicion);
@@ -67,6 +75,9 @@ const Login = () => {
               imageAlt: "Custom image",
               text: "Conecta a través de la música🎷",
             });
+            console.log(response)
+            dispatch(updateAll(response.usuario))
+            dispatch(login())
             navigate("/home");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa
@@ -160,6 +171,9 @@ const Login = () => {
             imageAlt: "Custom image",
             text: "Conecta a través de la música🎷",
           });
+          console.log(response.usuario)
+          dispatch(updateAll(response.usuario))
+          dispatch(login())
           navigate("/home");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Si el usuario niega ser mayor de  18 años, muestro un aleert de disculpa
@@ -197,7 +211,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen min-h-[140vh] sm:min-h-screen flex bg-black">
+    <div className="w-screen min-h-[150vh] sm:min-h-screen flex bg-black">
       <ScrollToTop />
       <div className="relative">
         <div
@@ -315,7 +329,7 @@ const Login = () => {
                   size="medium"
                   text="signin_with"
                   shape="pill"
-                // type="icon" muestra solo el icono con la G
+                  // type="icon" muestra solo el icono con la G
                 />
                 <p className="mt-3 text-sm w-full flex items-center justify-center flex-wrap">
                   Al continuar, aceptas los

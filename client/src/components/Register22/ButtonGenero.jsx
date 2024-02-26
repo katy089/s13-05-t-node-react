@@ -1,15 +1,44 @@
+import{ useState } from 'react';
 
 /* eslint-disable react/prop-types */
+const ButtonGenero = ({ 
+    text, 
+    onClick 
+}) => {
 
-function ButtonReg({ text }) {
+    const [isClicked, setIsClicked] = useState(false);
+
+    const handleClick = () => {
+        setIsClicked(!isClicked);
+        onClick(text);
+    };
+
     return (
-        <>
-            <button
-                className="bg-[#BB7EBC] hover:bg-slate-800 rounded-3xl h-8"
-                style={{ width: 'auto' }}
-            >{text}</button>
-        </>
+        <button
+            className={`${isClicked ? 'bg-[#1f1e1f]' : 'bg-[#c329c5]'
+                } hover:bg-[nuevo-color] active:bg-[#111011] rounded-3xl h-8 focus:outline-none focus:ring focus:border-purple-300`}
+            style={{ width: 'auto' }}
+            onClick={handleClick}
+        >
+            {text}
+        </button>
     );
-}
 
-export default ButtonReg;
+};
+
+export default ButtonGenero;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
