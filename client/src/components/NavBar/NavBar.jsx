@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { HOME, PROFILE } from "./../../Router/Paths";
+import { PROFILE } from "./../../Router/Paths";
 import { RiHome6Line } from "react-icons/ri";
 import { FaHeart, FaRegBell } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
@@ -7,21 +7,47 @@ import { FiMessageCircle } from "react-icons/fi";
 import LOGOBLACK from "../../assets/LOGOBLACK.png";
 import { useEffect, useRef, useState } from "react";
 import { GrMenu } from "react-icons/gr";
+import { useDispatch } from "react-redux";
+import { revokeGoogleAccess } from "../../auxFunctions/logoutFunctions";
+import Swal from "sweetalert2";
 
 function NavBar() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const menuHamburguesaRef = useRef(null);
+  const dispatch = useDispatch();
 
   const showMenuHandler = (event) => {
     event.stopPropagation();
     setShowMenu(!showMenu);
   };
 
-  const handleSession = () => {
-    // setUser();  //configurar con el context
-    navigate("/");
+  const handleLogout = () => {
+    revokeGoogleAccess(dispatch)
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          background: "#2c2c2c",
+          color: "white",
+          title: "¡Sesión cerrada exitosamente!",
+          text: "Tu sesión se ha cerrado correctamente.",
+        }).then(() => {
+          navigate("/");
+        });
+      })
+      .catch(handleLogoutError);
+  };
+
+  const handleLogoutError = () => {
+    console.error("Error al realizar el logout");
+    Swal.fire({
+      icon: "error",
+      background: "#2c2c2c",
+      color: "white",
+      title: "Error al cerrar sesión",
+      text: "Hubo un problema al cerrar sesión. Por favor, intenta de nuevo más tarde.",
+    });
   };
 
   const closeMenuHandler = (event) => {
@@ -48,7 +74,7 @@ function NavBar() {
       <div className="flex w-full  items-center">
         <div className="flex items-center place-content-start w-1/2 ">
           <Link
-            to={HOME}
+            to={"/"}
             className="btn btn-xs md:h-8 bg-inherit min-h-min border-none hover:bg-inherit"
           >
             <img src={LOGOBLACK} alt="logo en home" />
@@ -144,7 +170,7 @@ function NavBar() {
               <li>
                 <Link to={PROFILE} className="justify-between">
                   {" "}
-                  Profile
+                  Perfil
                   <span className="badge">New</span>
                 </Link>
               </li>
@@ -152,7 +178,7 @@ function NavBar() {
                 <a>Configuración</a>
               </li>
               <li className="cursor-pointer">
-                <a onClick={handleSession}>Cerrar sesión</a>
+                <a onClick={handleLogout}>Cerrar sesión</a>
               </li>
             </ul>
           </div>

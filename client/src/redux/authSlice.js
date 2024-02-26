@@ -1,23 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoggedIn: false,
-    id: "",
-    nombre: "",
-    correo: "",
-    password: "",
-    miGenero: "",
-    fotos: [],
-    bandas: [],
-    generos: [],
-    tuneMatch: [],
-    ultimaPosicion: {},
-    enBuscaDe: [],
-    active: false,   
-  }
+  id: "",
+  nombre: "",
+  correo: "",
+  password: "",
+  miGenero: "",
+  fotos: [],
+  bandas: [],
+  generos: [],
+  tuneMatch: [],
+  ultimaPosicion: {},
+  enBuscaDe: [],
+  active: false,
+  google: false,
+};
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     login: (state) => {
@@ -37,6 +37,9 @@ export const authSlice = createSlice({
       state.ultimaPosicion = {};
       state.enBuscaDe = [];
       state.active = false;
+      state.clientId = "";
+      state.credential = "";
+      localStorage.removeItem("reduxState");
     },
     setId: (state, action) => {
       state.id = action.payload;
@@ -74,45 +77,49 @@ export const authSlice = createSlice({
     setActive: (state, action) => {
       state.active = action.payload;
     },
+    setGoogleAuth: (state, action) => {
+      state.google = action.payload;
+    },
     updateAll: (state, action) => {
       return { ...state, ...action.payload };
     },
   },
 });
 
-
 // selectores
-export const getNombre = (state) => state?.auth?.nombre
-export const getCorreo = (state) => state?.auth?.correo
-export const getPassword = (state) => state?.auth?.password
-export const getMiGenero = (state) => state?.auth?.miGenero
-export const getFotos = (state) => state?.auth?.fotos
-export const getBandas = (state) => state?.auth?.bandas
-export const getGeneros = (state) => state?.auth?.generos
-export const getTuneMatch = (state) => state?.auth?.tuneMatch
-export const getUltimaPosicion = (state) => state?.auth?.ultimaPosicion
-export const getEnBuscaDe = (state) => state?.auth?.enBuscaDe
-export const getActive = (state) => state?.auth?.active
+export const getNombre = (state) => state?.auth?.nombre;
+export const getCorreo = (state) => state?.auth?.correo;
+export const getPassword = (state) => state?.auth?.password;
+export const getMiGenero = (state) => state?.auth?.miGenero;
+export const getFotos = (state) => state?.auth?.fotos;
+export const getBandas = (state) => state?.auth?.bandas;
+export const getGeneros = (state) => state?.auth?.generos;
+export const getTuneMatch = (state) => state?.auth?.tuneMatch;
+export const getUltimaPosicion = (state) => state?.auth?.ultimaPosicion;
+export const getEnBuscaDe = (state) => state?.auth?.enBuscaDe;
+export const getActive = (state) => state?.auth?.active;
+export const getGoogleAuth = (state) => state.auth?.google;
+export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const getAllState = (state) => state?.auth;
 
 // actions
-export const { 
-    login, 
-    logout,
-    setId, 
-    setNombre, 
-    setCorreo, 
-    setPassword, 
-    setMiGenero, 
-    setFotos, 
-    setBandas, 
-    setGeneros, 
-    setTuneMatch, 
-    setUltimaPosicion, 
-    setEnBuscaDe, 
-    setActive,
-    updateAll, 
+export const {
+  login,
+  logout,
+  setId,
+  setNombre,
+  setCorreo,
+  setPassword,
+  setMiGenero,
+  setFotos,
+  setBandas,
+  setGeneros,
+  setTuneMatch,
+  setUltimaPosicion,
+  setEnBuscaDe,
+  setActive,
+  setGoogleAuth,
+  updateAll,
 } = authSlice.actions;
 
-
-export default authSlice.reducer
+export default authSlice.reducer;
