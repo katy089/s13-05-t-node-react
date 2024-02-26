@@ -1,4 +1,5 @@
 import bgprofile from "../../assets/bgprofile.png";
+import Chat from "../Chat/Chat";
 
 const eventos = [
   {
@@ -122,7 +123,9 @@ const HomeContent = () => {
           </div>
         </div>
       </div>
-      <div className="w-4/5 md:w-1/4 bg-orange-500 flex flex-col mx-auto md:mx-0"></div>
+      <div className="w-4/5 md:w-1/4 bg-orange-500 flex flex-col mx-auto md:mx-0">
+        <Chat />
+      </div>
     </div>
   );
 };
