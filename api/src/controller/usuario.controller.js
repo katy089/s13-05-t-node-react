@@ -5,13 +5,13 @@ const usuarios = require('../models/usuarios.models.js')
 
 const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
-
+const usuarios = require('../models/usuarios.models')
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body
 
   try {
-   
+
     await serviceUser.signUp(nombre, correo, password, rest, res)
 
 
@@ -26,10 +26,10 @@ const signUp = async (req = request, res = response) => {
 }
 
 const logIn = async (req = request, res = response) => {
- 
+
   const { correo, password, ...rest } = req.body
   try {
-  
+
     await serviceUser.logIn(correo, password, rest, res)
 
 
@@ -48,7 +48,7 @@ const googleAuth = async (req, res = response) => {
   const { id_token, ultimaPosicion } = req.body
   try {
     const { correo, nombre, img } = await googleCheck(id_token)
-   
+
     await serviceUser.googleAuth(correo, nombre, img, ultimaPosicion, res)
 
   } catch (error) {
@@ -62,6 +62,7 @@ const googleAuth = async (req, res = response) => {
 }
 
 
+<<<<<<< HEAD
 /*  
   test13@gmail.com  / _id: 65d64275114bffc51bfab4e5
   brandon@gmail.com / _id: 65d66c03a3404872f147fe5f
@@ -96,9 +97,12 @@ const matchProfile = async (req = request, res = response) => {
 }
 
 const getUser = async (req, _) => {
+=======
+const getUser = async (req, res) => {
+>>>>>>> 78e2eefabbfec43d28ae974c070a8b489f42ae56
   const { id } = req.params
 
-  await serviceUser.getUser(id)
+  await serviceUser.getUser(id, res)
 
 }
 
@@ -106,7 +110,7 @@ const getUser = async (req, _) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe} = req.body;
+  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe } = req.body;
 
   try {
     const user = await usuarios.findOneAndUpdate(
