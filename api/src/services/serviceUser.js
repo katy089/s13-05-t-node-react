@@ -86,8 +86,8 @@ module.exports = {
     try {
       const salt = bycript.genSaltSync()
       let usuario = await Usuario.findOne({ correo })
-
-
+      let distancia = 'No tenemos tus coordenadas' 
+      
       if (!usuario) {
         const data = {
           nombre,
