@@ -8,7 +8,7 @@ import LOGOBLACK from "../../assets/LOGOBLACK.png";
 import { useEffect, useRef, useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { useDispatch } from "react-redux";
-import { revokeGoogleAccess } from "../../auxFunctions/logoutFunctions";
+import { revokeAccess } from "../../auxFunctions/logoutFunctions";
 import Swal from "sweetalert2";
 
 function NavBar() {
@@ -24,7 +24,7 @@ function NavBar() {
   };
 
   const handleLogout = () => {
-    revokeGoogleAccess(dispatch)
+    revokeAccess(dispatch)
       .then(() => {
         Swal.fire({
           icon: "success",
