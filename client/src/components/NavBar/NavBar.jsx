@@ -7,9 +7,10 @@ import { FiMessageCircle } from "react-icons/fi";
 import LOGOBLACK from "../../assets/LOGOBLACK.png";
 import { useEffect, useRef, useState } from "react";
 import { GrMenu } from "react-icons/gr";
-import { useDispatch } from "react-redux";
-import { revokeGoogleAccess } from "../../auxFunctions/logoutFunctions";
+import { useDispatch, useSelector } from "react-redux";
+import { revokeAccess } from "../../auxFunctions/logoutFunctions";
 import Swal from "sweetalert2";
+import { getFotos } from "../../redux/authSlice";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ function NavBar() {
   const menuRef = useRef(null);
   const menuHamburguesaRef = useRef(null);
   const dispatch = useDispatch();
+  const fotos = useSelector(getFotos);
+
+  const profilePhoto = fotos?.length > 0 ? fotos[0] : null;
 
   const showMenuHandler = (event) => {
     event.stopPropagation();
@@ -24,7 +28,7 @@ function NavBar() {
   };
 
   const handleLogout = () => {
-    revokeGoogleAccess(dispatch)
+    revokeAccess(dispatch)
       .then(() => {
         Swal.fire({
           icon: "success",
@@ -156,11 +160,15 @@ function NavBar() {
               role="button"
               className="btn hover:bg-inherit bg-inherit border-none btn-circle  avatar"
             >
-              <div className="w-8 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+              <div className="w-9 rounded-full">
+                {profilePhoto ? (
+                  <img alt="Perfil" src={profilePhoto} />
+                ) : (
+                  <img
+                    alt="Foto de perfil por defecto"
+                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  />
+                )}
               </div>
             </div>
             <ul
