@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
 import bgprofile from "../../assets/bgprofile.png";
 import Chat from "../Chat/Chat";
+import { getFotos } from "../../redux/authSlice";
 
 const eventos = [
   {
@@ -26,6 +28,10 @@ const eventos = [
 ];
 
 const HomeContent = () => {
+  const fotos = useSelector(getFotos);
+
+  const profilePhoto = fotos?.length > 0 ? fotos[0] : null;
+
   const handleClick = (redirectUrl) => {
     window.open(redirectUrl, "_blank");
   };
@@ -35,13 +41,24 @@ const HomeContent = () => {
       <div className="w-4/5 md:w-1/4  flex flex-col mx-auto md:mx-0 items-center">
         <div className="card w-full md:w-11/12 bg-base-100 shadow-lg image-full shadow-gray-500">
           <figure>
-            <img src={bgprofile} alt="Shoes" className="object-cover w-full" />
+            <img
+              src={bgprofile}
+              alt="foto de background"
+              className="object-cover w-full"
+            />
           </figure>
           <div className="card-body">
             <div className="flex flex-row space-x-8 border-b-2 border-white pb-4">
               <div className="avatar">
                 <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                  <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  {profilePhoto ? (
+                    <img alt="Perfil" src={profilePhoto} />
+                  ) : (
+                    <img
+                      alt="Foto de perfil por defecto"
+                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    />
+                  )}
                 </div>
               </div>
               <div className="flex flex-col m-auto">
