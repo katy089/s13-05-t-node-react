@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL_REGISTER_GENEROS } from '../config/api'
-import { useDispatch, useSelector } from 'react-redux'
-import { getId, setId } from "../redux/authSlice";
+// import { useDispatch, useSelector } from 'react-redux'
+// import { getId, setId } from "../redux/authSlice";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const useGeneros = () => {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const userGetId = useSelector(getId)
+    // const dispatch = useDispatch();
+    // const userGetId = useSelector(getId)
 
     let generos = []
 

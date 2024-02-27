@@ -8,17 +8,16 @@ import usePagination from "../../hooks/usePagination";
 
 
 const Register22 = () => {
+    
+    const { handleGeneroClick, handleRegister23 } = useGeneros()
 
-    const { dataBDD, handleGeneroClick, handleRegister23 } = useGeneros()
-
-    const itemsPerPage = 24; 
-    const { currentPage, paginate, nextPage, prevPage } = usePagination(itemsPerPage);
-
+    const { currentPage,
+        currentItems,
+        totalPage,
+        handleNextPage,
+        handlePrevPage 
+    } = usePagination();
    
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = dataBDD?.slice(indexOfFirstItem, indexOfLastItem);
-
     return (
         <div className="w-screen  min-h-[140vh] sm:min-h-screen flex bg-black ">
             <div className="relative">
@@ -98,11 +97,11 @@ const Register22 = () => {
                                 </button>
                             </div>
                             <div className="flex items-center justify-center mt-6">
-                                <button onClick={prevPage} disabled={currentPage === 1}>
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>
                                     Anterior
                                 </button>
                                 <span className="mx-2">{currentPage}</span>
-                                <button onClick={nextPage} disabled={currentItems?.length < itemsPerPage}>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPage}>
                                     Siguiente
                                 </button>
                             </div>
