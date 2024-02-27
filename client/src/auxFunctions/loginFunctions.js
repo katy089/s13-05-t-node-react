@@ -63,6 +63,10 @@ export const sendToBackend = (
         "emailTuneMatch",
         JSON.stringify(res.usuario.correo)
       );
+      localStorage.setItem(
+        "sessionData",  
+        JSON.stringify(res) // Guarda todos los datos de la respuesta en localStorage
+      );
       setEmailTuneMatch(res.usuario.correo);
     })
     .catch(handleLoginError);
