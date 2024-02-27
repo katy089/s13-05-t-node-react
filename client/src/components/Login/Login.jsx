@@ -10,11 +10,7 @@ import {
 } from "../../auxFunctions/loginFunctions";
 import Swal from "sweetalert2";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import { updateAll, login } from "../../redux/authSlice"
-import { useDispatch } from "react-redux"
-
-
-
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -42,11 +38,15 @@ const Login = () => {
 
     try {
       // Esperamos a que el usuario permita la geolocalización
-      await obtenerPosicion();
-      console.log(ultimaPosicion)
+      const position = await obtenerPosicion();
+      const { latitude, longitude } = position.coords;
 
       // Solicitud de autenticación
-      const response = await authenticateUser(correo, password, ultimaPosicion);
+      const response = await authenticateUser(correo, password, dispatch, {
+        lat: latitude,
+        lon: longitude,
+      });
+      // console.log("Esto es response en Login:", response);
       if (response.status === 200 && response.success) {
         // Pregunto al usuario si es mayor de  18 años antes de redirigir
         Swal.fire({
@@ -75,9 +75,7 @@ const Login = () => {
               imageAlt: "Custom image",
               text: "Conecta a través de la música🎷",
             });
-            console.log(response)
-            dispatch(updateAll(response.usuario))
-            dispatch(login())
+            console.log(response.usuario);
             navigate("/home");
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             // Si el usuario niega ser mayor de  18 años, muestro un mensaje de disculpa
@@ -123,6 +121,7 @@ const Login = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude: lat, longitude: lon } = position.coords;
+          // console.log("Esto es en obtenerPosicion:",position);
           setUltimaPosicion({ lat, lon });
           resolve(position);
         },
@@ -142,9 +141,11 @@ const Login = () => {
       sendToBackend(
         response,
         ultimaPosicion,
+        dispatch,
         setEmailTuneMatch,
         handleLoginError
       );
+
       Swal.fire({
         title: "¿Eres mayor de  18 años?",
         background: "#2c2c2c",
@@ -171,9 +172,7 @@ const Login = () => {
             imageAlt: "Custom image",
             text: "Conecta a través de la música🎷",
           });
-          console.log(response.usuario)
-          dispatch(updateAll(response.usuario))
-          dispatch(login())
+          console.log("Esto es en handleLoginSuccess:", response);
           navigate("/home");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Si el usuario niega ser mayor de  18 años, muestro un aleert de disculpa

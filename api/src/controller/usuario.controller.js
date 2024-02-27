@@ -1,15 +1,15 @@
 const { request, response } = require('express')
+const scoring = require('../../helpers/scoring')
 
 const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
-
-
+const usuarios = require('../models/usuarios.models')
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body
 
   try {
-   
+
     await serviceUser.signUp(nombre, correo, password, rest, res)
 
 
@@ -24,10 +24,10 @@ const signUp = async (req = request, res = response) => {
 }
 
 const logIn = async (req = request, res = response) => {
- 
+
   const { correo, password, ...rest } = req.body
   try {
-  
+
     await serviceUser.logIn(correo, password, rest, res)
 
 
@@ -46,7 +46,7 @@ const googleAuth = async (req, res = response) => {
   const { id_token, ultimaPosicion } = req.body
   try {
     const { correo, nombre, img } = await googleCheck(id_token)
-   
+
     await serviceUser.googleAuth(correo, nombre, img, ultimaPosicion, res)
 
   } catch (error) {
@@ -59,11 +59,43 @@ const googleAuth = async (req, res = response) => {
   }
 }
 
+/*  
+  test13@gmail.com  / _id: 65d64275114bffc51bfab4e5
+  brandon@gmail.com / _id: 65d66c03a3404872f147fe5f
+  test20@gmail.com / _id: 65d80f90447ba575bbcaf98a
+  test21@gmail.com / _id: 65d8101a447ba575bbcaf98c
+*/
+const matchProfile = async (req = request, res = response) => {
+  const start = new Date();
+  const { id } = req.body
+  try {
+    const fields = ['bandas', 'generos', 'ultimaPosicion']; 
+    const user = await usuarios.findOne({ _id: id }, fields);
+    const matchs = await usuarios.find({
+      _id: { $ne: user._id },
+      $or: [
+        { "generos": { $elemMatch: { $in: user.generos } } }, 
+        { "bandas": { $elemMatch: { $in: user.bandas } } }
+      ]
+    }, fields).limit(10)//.explain("executionStats");
+    // posibles problemas de performance: https://www.mongodb.com/docs/manual/reference/operator/query/in/#syntax
+    const match_list = scoring(user._doc, matchs)
+    
+    const end = new Date();
+    res.status(200).json({
+           match_list,
+           estimated_time: (end.getTime() - start.getTime()) + "ms"
+        })
 
-const getUser = async (req, _) => {
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+const getUser = async (req, res) => {
   const { id } = req.params
 
-  await serviceUser.getUser(id)
+  await serviceUser.getUser(id, res)
 
 }
 
@@ -71,7 +103,7 @@ const getUser = async (req, _) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe} = req.body;
+  const { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe } = req.body;
 
   try {
     const user = await usuarios.findOneAndUpdate(
@@ -94,5 +126,6 @@ module.exports = {
   logIn,
   googleAuth,
   getUser,
+  matchProfile,
   updateUser
 }
