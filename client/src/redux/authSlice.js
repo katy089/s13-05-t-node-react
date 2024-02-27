@@ -82,6 +82,7 @@ export const authSlice = createSlice({
 
 
 // selectores
+export const getId = (state) => state?.auth?.id
 export const getNombre = (state) => state?.auth?.nombre
 export const getCorreo = (state) => state?.auth?.correo
 export const getPassword = (state) => state?.auth?.password
