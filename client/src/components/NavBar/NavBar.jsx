@@ -166,7 +166,7 @@ function NavBar() {
                 ) : (
                   <img
                     alt="Foto de perfil por defecto"
-                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    src="https://images.pexels.com/photos/4472043/pexels-photo-4472043.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                   />
                 )}
               </div>
