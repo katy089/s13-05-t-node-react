@@ -28,7 +28,7 @@ function AppContent() {
     <Routes>
       <Route
         path={"/"}
-        element={!isLoggedIn ? <Login /> : <Navigate to={HOME} />}
+        element={!isLoggedIn ? <Login /> : <Navigate to={HOME} replace />}
       />
       <Route path={SIGNUP} element={<SignUp />} />
       <Route path={HOME} element={<Home />} />

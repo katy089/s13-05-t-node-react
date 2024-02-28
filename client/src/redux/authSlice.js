@@ -96,6 +96,7 @@ Por ejemplo, login establece el estado isLoggedIn en true, mientras que logout e
 // selectores
 /**Se definen selectores que proporcionan acceso a partes específicas del estado.
 Por ejemplo, getNombre, getCorreo, etc., devuelven las respectivas propiedades del estado de autenticación. */
+export const getId = (state) => state?.auth?.id;
 export const getNombre = (state) => state?.auth?.nombre;
 export const getCorreo = (state) => state?.auth?.correo;
 export const getPassword = (state) => state?.auth?.password;
@@ -108,7 +109,7 @@ export const getUltimaPosicion = (state) => state?.auth?.ultimaPosicion;
 export const getEnBuscaDe = (state) => state?.auth?.enBuscaDe;
 export const getActive = (state) => state?.auth?.active;
 export const getGoogleAuth = (state) => state.auth?.google;
-export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
+export const selectIsLoggedIn = (state) => state?.auth?.isLoggedIn;
 export const getAllState = (state) => state?.auth;
 
 // actions
