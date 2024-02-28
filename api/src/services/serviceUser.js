@@ -86,8 +86,8 @@ module.exports = {
     try {
       const salt = bycript.genSaltSync()
       let usuario = await Usuario.findOne({ correo })
-      let distancia = 'No tenemos tus coordenadas' 
-      
+      let distancia = 'No tenemos tus coordenadas'
+
       if (!usuario) {
         const data = {
           nombre,
@@ -149,5 +149,26 @@ module.exports = {
 
     }
 
+  },
+
+  updateUser: async (id, { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe }, res) => {
+    try {
+      const user = await Usuario.findOneAndUpdate(
+        { _id: id },
+        { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe },
+        { new: true }
+      );
+      if (!user) return res.json({ error: "No existe el usuario" });
+
+      res.json(user);
+    }
+    catch (error) {
+      return res.status(400).json({
+        error: `Se ha producido un error: ${error.message}`,
+        type: error.name,
+        stack: error.stack
+      })
+
+    }
   }
 } 
