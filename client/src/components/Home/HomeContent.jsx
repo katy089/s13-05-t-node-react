@@ -115,19 +115,32 @@ const HomeContent = () => {
             {tuneMatch.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {tuneMatch.map((match) => (
-                  <div key={match.id} className="rounded-md shadow-md">
-                    <div className="card-body items-center text-center">
-                      <img
-                        src={match.img}
-                        alt={match.nombre}
-                        className="rounded-full w-4/5 mx-auto"
-                      />
-                      <h2 className="card-title">{match.nombre}</h2>
-                      <p>
-                        {match.generos.map((genre) => `#${genre}`).join(" ")}
-                      </p>
+                  <div
+                    key={match.id}
+                    className="rounded-md shadow-md text-start relative snap-start w-36 h-56 z-10"
+                  >
+                    <div>
+                      <div className="relative h-56">
+                        <img
+                          src={match.img}
+                          alt={match.nombre}
+                          className="rounded-xl -z-10 object-cover w-full h-full"
+                        />
+                        <div
+                          className="absolute top-0 left-0 w-full h-full rounded-xl"
+                          style={{
+                            backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.0), rgba(0,0,0,0.8))`,
+                          }}
+                        ></div>
+                      </div>
+                      <div className="absolute bottom-2 left-2 text-white">
+                        <h2 className="card-title">{match.nombre}</h2>
+                        <p>
+                          {match.generos.map((genre) => `#${genre}`).join(" ")}
+                        </p>
 
-                      <p>{match.distancia} km</p>
+                        <p>{match.distancia} km</p>
+                      </div>
                     </div>
                   </div>
                 ))}
