@@ -4,6 +4,7 @@ const scoring = require('../../helpers/scoring')
 const googleCheck = require('../../helpers/googleCheck')
 const serviceUser = require('../services/serviceUser')
 const usuarios = require('../models/usuarios.models')
+const calcularDistancia = require('../../helpers/distance/haversine')
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body
@@ -67,7 +68,7 @@ const googleAuth = async (req, res = response) => {
 */
 const matchProfile = async (req = request, res = response) => {
   const start = new Date();
-  const { id } = req.body
+  const { id } = req.params
   try {
     const fields = ['bandas', 'generos', 'ultimaPosicion']; 
     const user = await usuarios.findOne({ _id: id }, fields);
@@ -89,6 +90,36 @@ const matchProfile = async (req = request, res = response) => {
 
   } catch (err) {
     console.log(err);
+  }
+}
+
+const getTuneMatch = async (req = request, res = response) => {
+  const { id } = req.params
+  try {
+    const fields = { tuneMatch: 1, ultimaPosicion: 1, _id: 0, bandas: 0, generos: 0 }
+    const { tuneMatch, ultimaPosicion: userUP } = await usuarios.findOne({ _id: id }, fields);
+    const match_ids = tuneMatch.map(o => o.id);
+    let user_profiles = null;
+
+    if(match_ids.length > 0){
+      user_profiles = await usuarios.find({ 
+        _id: { $in: match_ids } 
+      }, ['_id', 'nombre', 'fotos', 'generos', 'bandas', 'ultimaPosicion']);
+
+      user_profiles.forEach((p, i) => {
+        let distance = 'No es posible calcular la distancia';
+
+        if((userUP.lat != null && userUP.lon != null)
+          && (p['ultimaPosicion'].lat != null && p['ultimaPosicion'].lon != null)){
+            distance = calcularDistancia(p['ultimaPosicion'], userUP);
+        }
+        user_profiles[i]._doc['distancia'] = distance;
+      });
+    }
+
+    res.status(200).json({ tuneMatch: user_profiles })
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -127,5 +158,6 @@ module.exports = {
   googleAuth,
   getUser,
   matchProfile,
+  getTuneMatch,
   updateUser
 }
