@@ -1,103 +1,23 @@
 
 import LOGO from "../../assets/LOGO.png";
 import REGISTER22 from "../../assets/generos.png";
+import useGeneros from "../../hooks/useGeneros";
 import ButtonGenero from "./ButtonGenero";
-import { useNavigate } from "react-router-dom";
+import usePagination from "../../hooks/usePagination";
 
 
-const data = [
-    {
-        name: "Rock",
-    },
-    {
-        name: "Pop",
-    },
-    {
-        name: "Baterista",
-    },
-    {
-        name: "Cantante",
-    },
-    {
-        name: "Hip Hop",
-    },
-    {
-        name: "R&B",
-    },
-    {
-        name: "Electrónica",
-    },
-    {
-        name: "Jaz",
-    },
-    {
-        name: "Folk",
-    },
-    {
-        name: "Clásica",
-    },
-    {
-        name: "Funk",
-    },
-    {
-        name: "Blues",
-    },
-    {
-        name: "Metal",
-    },
-    {
-        name: "Country",
-    },
-    {
-        name: "Raggae",
-    },
-    {
-        name: "Reggaeton",
-    },
-    {
-        name: "Cumbia",
-    },
-    {
-        name: "Dance",
-    },
-    {
-        name: "Disco",
-    },
-    {
-        name: "80´s",
-    },
-    {
-        name: "Punk",
-    },
-    {
-        name: "Grunge",
-    },
-    {
-        name: "Lo-fi",
-    },
-    {
-        name: "Otro",
-    },
-];
 
 const Register22 = () => {
-    const navigate = useNavigate();
     
-    let aux = []
+    const { handleGeneroClick, handleRegister23 } = useGeneros()
 
-    const handleGeneroClick = (genero) => {
-        const arrayBefore = aux.length
-        aux = aux.filter(item => item !== genero)
-        const arrayCurrent = aux.length 
-        if (arrayBefore === arrayCurrent) { aux = [...aux, genero]}
-        console.log(aux)
-    };  
-
-    const register23 = () => {
-        console.log(aux)
-        navigate("/register2");
-    };
-
+    const { currentPage,
+        currentItems,
+        totalPage,
+        handleNextPage,
+        handlePrevPage 
+    } = usePagination();
+   
     return (
         <div className="w-screen  min-h-[140vh] sm:min-h-screen flex bg-black ">
             <div className="relative">
@@ -154,13 +74,13 @@ const Register22 = () => {
                             <h1 className="text-3xl text-center -mt-3">Escoge tus generos musicales preferidos!</h1>
                             <div className="flex items-center justify-center pt-6">
                                 <div className="grid grid-cols-3 gap-5 w-full">
-                                    {data.map((genero, index) => (
-                                        <ButtonGenero 
-                                        key={index} 
-                                        text={genero.name} 
-                                        onClick={() => handleGeneroClick(genero.name)}
-                                    />
-                 
+                                    {currentItems?.map((genero) => (
+                                        <ButtonGenero
+                                            key={genero?._id}
+                                            id={genero?._id}
+                                            text={genero?.name}
+                                            onClick={() => handleGeneroClick(genero?._id)}
+                                        />
                                     ))}
                                 </div>
                             </div>
@@ -171,8 +91,17 @@ const Register22 = () => {
                             <div className="flex items-center flex-col my-6">
                                 <button
                                     className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl"
-                                    onClick={register23}
+                                    onClick={handleRegister23}
                                 >
+                                    Siguiente
+                                </button>
+                            </div>
+                            <div className="flex items-center justify-center mt-6">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                                    Anterior
+                                </button>
+                                <span className="mx-2">{currentPage}</span>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPage}>
                                     Siguiente
                                 </button>
                             </div>
@@ -180,6 +109,7 @@ const Register22 = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }

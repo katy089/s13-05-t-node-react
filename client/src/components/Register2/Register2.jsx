@@ -2,7 +2,7 @@ import LOGO from "../../assets/LOGO.png";
 import REGISTER2 from "../../assets/REGISTER2.png";
 import ButtonReg from "../reusable-components/Buttons/ButtonReg";
 
-const data = [
+const dataAbout = [
   {
     name: "Guitarrista",
   },
@@ -95,7 +95,7 @@ function Register2() {
                 className="flex flex-col my-6 border-b-[3.5px] border-white pb-8"
               >
                 <div className="grid grid-cols-2 gap-5">
-                  {data.map((e) => (
+                  {dataAbout.map((e) => (
                     <ButtonReg key={e.name} text={e.name} />
                   ))}
                 </div>
@@ -119,4 +119,4 @@ function Register2() {
   );
 }
 
-export default Register2;
+export default {Register2, dataAbout};
