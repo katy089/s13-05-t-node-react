@@ -66,7 +66,7 @@ const useBands = () => {
 
         dispatch(setBandas(bands)) 
         await axios
-              .put(`${API_URL_UPDATE}/${id}`, { bands })
+              .put(`${API_URL_UPDATE}/${id}`, { bandas: bands })
               .then(async({data}) =>{
                    console.log(data)
               })
