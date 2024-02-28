@@ -2,7 +2,7 @@ import LOGO from "../../assets/LOGO.png";
 import REGISTER22 from "../../assets/loginbg.jpg";
 import useBands from "../../hooks/useBands";
 import ButtonBands from "./ButtonBands";
-import usePagination from "../../hooks/usePaginationBands";
+import usePaginationBands from "../../hooks/usePaginationBands";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
 const Register221 = () => {
@@ -18,7 +18,7 @@ const Register221 = () => {
         totalPage,
         handleNextPage,
         handlePrevPage
-    } = usePagination();
+    } = usePaginationBands();
 
     return (
         <div className="w-screen  min-h-[140vh] sm:min-h-screen flex bg-black ">
@@ -76,6 +76,7 @@ const Register221 = () => {
                             <h1 className="text-3xl text-center -mt-3">Escoge tus generos musicales preferidos!</h1>
                             <div className="flex items-center justify-center pt-6">
                                 <div className="grid grid-cols-3 gap-5 w-full">
+                                    {console.log(currentItems)}
                                     {currentItems?.map((band) => (
                                         <ButtonBands
                                             key={band?._id}
