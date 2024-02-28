@@ -46,8 +46,6 @@ Por ejemplo, login establece el estado isLoggedIn en true, mientras que logout e
       state.ultimaPosicion = {};
       state.enBuscaDe = [];
       state.active = false;
-      state.clientId = "";
-      state.credential = "";
       localStorage.removeItem("reduxState");
     },
     setId: (state, action) => {
