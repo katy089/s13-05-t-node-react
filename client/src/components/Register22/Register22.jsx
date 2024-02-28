@@ -6,8 +6,6 @@ import ButtonGenero from "./ButtonGenero";
 import usePagination from "../../hooks/usePagination";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
-
-
 const Register22 = () => {
     
     const { handleGeneroClick, handleRegister23 } = useGeneros()

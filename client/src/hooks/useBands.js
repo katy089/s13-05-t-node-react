@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL_REGISTER_BANDAS, API_URL_UPDATE } from '../config/api'
 import { useDispatch, useSelector } from 'react-redux'
-import { getId, setGeneros } from "../redux/authSlice";
+import { getId, setBandas } from "../redux/authSlice";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -15,22 +15,23 @@ const useBands = () => {
     let bands = []
     
     // Verificar si hay datos en localStorage para 'generos'
-    const storedGeneros = localStorage.getItem('generos');
+    const storedbands = localStorage.getItem('bands');
 
     // Si hay datos, usarlos; de lo contrario, inicializar con un array vacío
-    bands = storedGeneros ? JSON.parse(storedGeneros) : [];
+    bands = storedbands ? JSON.parse(storedbands) : [];
 
 
-    const [dataBDD, setDataBDD] = useState(null)
-    const [buttonGeneroStorege, setbuttonGeneroStorege] = useState(true)
+    const [bandBDD, setbandBDD] = useState(null)
+    // const [buttonbandStorege, setbuttonbandStorege] = useState(true)
 
     useEffect(()=>{
         const fetchData = async() =>{
             await axios
               .get(API_URL_REGISTER_BANDAS)
               .then(async({data}) => {
-                console.log(data)
-                setDataBDD(data?.bands)
+                console.log(data?.bands)
+                setbandBDD(data?.bands)
+                
               })
               .catch(async(error)=> {
                 if(error.response.status === 400){
@@ -47,22 +48,22 @@ const useBands = () => {
     },[])
 
 
-    const handleGeneroClick = (genero) => {
+    const handleBandClick = (band) => {
         const arrayBefore = bands.length
-        bands= bands.filter(item => item !== genero)
+        bands= bands.filter(item => item !== band)
         const arrayCurrent = bands.length 
-        if (arrayBefore === arrayCurrent) { bands = [...bands, genero]}
+        if (arrayBefore === arrayCurrent) { bands = [...bands, band]}
 
         // Guardar el array 'generos' en localStorage
-        localStorage.setItem('generos', JSON.stringify(bands));
+        localStorage.setItem('bands', JSON.stringify(bands));
         console.log(bands)
     }; 
 
 
-    const handleRegister23 = async() => {
+    const handleRegister = async() => {
         
 
-        dispatch(setGeneros(bands)) 
+        dispatch(setBandas(bands)) 
         await axios
               .put(`${API_URL_UPDATE}/${id}`, { bands })
               .then(async({data}) =>{
@@ -77,21 +78,16 @@ const useBands = () => {
               }) 
 
         // Limpiar 'generos' en localStorage después de usarlos
-        localStorage.removeItem('generos');
-        setbuttonGeneroStorege(false)
+        localStorage.removeItem('bands');
+        // setbuttonbandStorege(false)
 
-        navigate("/register221");
+        navigate("/register2");
     };
 
-
-
-
-
     return {
-        dataBDD,
-        handleGeneroClick,
-        handleRegister23,
-        buttonGeneroStorege
+        bandBDD,
+        handleBandClick,
+        handleRegister      
     }
 
 }

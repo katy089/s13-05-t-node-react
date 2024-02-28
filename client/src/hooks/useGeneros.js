@@ -30,6 +30,7 @@ const useGeneros = () => {
             await axios
               .get(API_URL_REGISTER_GENEROS)
               .then(async({data}) => {
+                console.log(data?.musicalGenres)
                 setDataBDD(data?.musicalGenres)
               })
               .catch(async(error)=> {

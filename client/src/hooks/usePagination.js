@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import useBands from '../hooks/useBands'
+import useGeneros from '../hooks/useGeneros'
 
 const usePagination = () => {
 
-  const { dataBDD } = useBands()
+  const { dataBDD } = useGeneros()
  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 24; 

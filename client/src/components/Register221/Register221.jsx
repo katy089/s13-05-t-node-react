@@ -2,14 +2,14 @@ import LOGO from "../../assets/LOGO.png";
 import REGISTER22 from "../../assets/loginbg.jpg";
 import useBands from "../../hooks/useBands";
 import ButtonBands from "./ButtonBands";
-import usePagination from "../../hooks/usePagination";
+import usePagination from "../../hooks/usePaginationBands";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
 const Register221 = () => {
 
     const { 
-        handleGeneroClick, 
-        handleRegister23 
+        handleBandClick,
+        handleRegister  
     } = useBands()
 
     const { 
@@ -76,12 +76,12 @@ const Register221 = () => {
                             <h1 className="text-3xl text-center -mt-3">Escoge tus generos musicales preferidos!</h1>
                             <div className="flex items-center justify-center pt-6">
                                 <div className="grid grid-cols-3 gap-5 w-full">
-                                    {currentItems?.map((genero) => (
+                                    {currentItems?.map((band) => (
                                         <ButtonBands
-                                            key={genero?._id}
-                                            id={genero?._id}
-                                            text={genero?.name}
-                                            onClick={() => handleGeneroClick(genero?._id)}
+                                            key={band?._id}
+                                            id={band?._id}
+                                            text={band?.name}
+                                            onClick={() => handleBandClick(band?._id)}
                                         />
                                     ))}
                                 </div>
@@ -93,7 +93,7 @@ const Register221 = () => {
                             <div className="flex items-center flex-col my-6">
                                 <button
                                     className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl"
-                                    onClick={handleRegister23}
+                                    onClick={handleRegister}
                                 >
                                     Siguiente
                                 </button>
