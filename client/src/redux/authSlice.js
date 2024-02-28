@@ -17,6 +17,7 @@ const initialState = {
   enBuscaDe: [],
   active: false,
   google: false,
+  aboutMe: []
 };
 
 /**Se crea un slice de Redux llamado authSlice utilizando la función createSlice de Redux Toolkit.
@@ -90,6 +91,9 @@ Por ejemplo, login establece el estado isLoggedIn en true, mientras que logout e
     updateAll: (state, action) => {
       return { ...state, ...action.payload };
     },
+    setAboutMe: (state, action) => {
+      state.aboutMe = action.payload;
+    },
   },
 });
 
@@ -111,6 +115,7 @@ export const getGoogleAuth = (state) => state.auth?.google;
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const getAllState = (state) => state?.auth;
 export const getId =  (state) => state?.auth.id;
+export const getAboutMe = (state) => state?.auth.aboutMe;
 
 // actions
 /**Todas las acciones definidas en reducers se exportan para que puedan ser utilizadas en otros lugares de la aplicación. */
@@ -131,6 +136,7 @@ export const {
   setActive,
   setGoogleAuth,
   updateAll,
+  setAboutMe
 } = authSlice.actions;
 
 /**El reducer (authSlice.reducer) se exporta como el valor predeterminado, lo que permite combinarlo con otros reducers utilizando combineReducers en el store de Redux. Que por ahora no está siendo utilizado pero se puede utilizar más adelante, si es necesario */
