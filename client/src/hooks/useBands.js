@@ -3,7 +3,8 @@ import axios from "axios";
 import { API_URL_REGISTER_BANDAS, API_URL_UPDATE } from '../config/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { getId, setBandas } from "../redux/authSlice";
-import { useEffect, useState } from "react";
+import { setBands } from "../redux/bandsSlice";
+import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const useBands = () => {
@@ -20,32 +21,32 @@ const useBands = () => {
     // Si hay datos, usarlos; de lo contrario, inicializar con un array vacío
     bands = storedbands ? JSON.parse(storedbands) : [];
 
+    useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(API_URL_REGISTER_BANDAS);
+            const data = response.data;
+            console.log(data)
 
-    const [bandBDD, setbandBDD] = useState(null)
-    // const [buttonbandStorege, setbuttonbandStorege] = useState(true)
-
-    useEffect(()=>{
-        const fetchData = async() =>{
-            await axios
-              .get(API_URL_REGISTER_BANDAS)
-              .then(async({data}) => {
-                console.log(data?.bands)
-                setbandBDD(data?.bands)
-                
-              })
-              .catch(async(error)=> {
-                if(error.response.status === 400){
-                   Swal.fire("Error", "Ocurrió un error", "error")
-                   return
-                }
-
-              }) 
+            if (data && data?.bands) {
+                console.log(data);
+                // setbandBDD(data.bands);
+                dispatch(setBands(data.bands))
+            } else {
+                console.error("Data or bands property is missing.");
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                Swal.fire("Error", "Ocurrió un error", "error");
+            } else {
+                console.error("An error occurred while fetching data:", error);
+            }
         }
+    };
 
-        fetchData()
-        
-        
-    },[])
+     fetchData()
+
+     },[]);
 
 
     const handleBandClick = (band) => {
@@ -78,14 +79,14 @@ const useBands = () => {
               }) 
 
         // Limpiar 'generos' en localStorage después de usarlos
-        localStorage.removeItem('bands');
-        // setbuttonbandStorege(false)
+        // localStorage.removeItem('bands');
+       
 
         navigate("/register2");
     };
 
     return {
-        bandBDD,
+
         handleBandClick,
         handleRegister      
     }

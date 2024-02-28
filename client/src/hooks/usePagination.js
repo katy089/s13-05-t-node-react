@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import useGeneros from '../hooks/useGeneros'
+// import useGeneros from '../hooks/useGeneros'
+import { useSelector } from 'react-redux'
+import { getGenres } from '../redux/genresSlice';
 
 const usePagination = () => {
 
-  const { dataBDD } = useGeneros()
+  // const { dataBDD } = useGeneros()
+  const dataBDD = useSelector(getGenres)
  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 24; 
