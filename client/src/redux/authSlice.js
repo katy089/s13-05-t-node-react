@@ -112,6 +112,7 @@ export const getActive = (state) => state?.auth?.active;
 export const getGoogleAuth = (state) => state.auth?.google;
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const getAllState = (state) => state?.auth;
+export const getId =  (state) => state?.auth.id;
 
 // actions
 /**Todas las acciones definidas en reducers se exportan para que puedan ser utilizadas en otros lugares de la aplicación. */

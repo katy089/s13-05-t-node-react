@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useGeneros from '../../hooks/useGeneros';
+import useGeneros from '../../hooks/useBands';
 
 /* eslint-disable react/prop-types */
 const ButtonGenero = ({ text, onClick }) => {
@@ -14,9 +14,9 @@ const ButtonGenero = ({ text, onClick }) => {
         localStorage.setItem(`buttonState_${text}`, isClicked);
         // Eliminar todo el contenido del localStorage
         // console.log(buttonGeneroStorege)
-        // if (!buttonGeneroStorege) { 
-        //     localStorage.clear() 
-        // }
+        if (!buttonGeneroStorege) { 
+            localStorage.clear() 
+        }
         
     }, [isClicked, text, buttonGeneroStorege]);
 

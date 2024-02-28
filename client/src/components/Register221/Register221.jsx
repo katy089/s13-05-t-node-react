@@ -1,25 +1,25 @@
-
 import LOGO from "../../assets/LOGO.png";
-import REGISTER22 from "../../assets/generos.png";
-import useGeneros from "../../hooks/useGeneros";
-import ButtonGenero from "./ButtonGenero";
+import REGISTER22 from "../../assets/loginbg.jpg";
+import useBands from "../../hooks/useBands";
+import ButtonBands from "./ButtonBands";
 import usePagination from "../../hooks/usePagination";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
+const Register221 = () => {
 
-
-const Register22 = () => {
-    
-    const { handleGeneroClick, handleRegister23 } = useGeneros()
+    const { 
+        handleGeneroClick, 
+        handleRegister23 
+    } = useBands()
 
     const { 
         currentPage,
         currentItems,
         totalPage,
         handleNextPage,
-        handlePrevPage 
+        handlePrevPage
     } = usePagination();
-   
+
     return (
         <div className="w-screen  min-h-[140vh] sm:min-h-screen flex bg-black ">
             <div className="relative">
@@ -54,7 +54,7 @@ const Register22 = () => {
                     <div className="flex flex-col sm:flex-row justify-between w-full h-[85vh]  px-2 sm:px-4 md:px-10 z-40 -mt-10">
                         <div className="place-content-start flex flex-col w-11/12 mx-auto justify-normal sm:justify-center sm:mx-0 sm:w-1/2 md:w-3/4 mb-4 sm:mb-0">
                             <h1 className="text-2xl sm:text-3xl md:text-6xl text-start py-10">
-                                <p>Cuentanos acerca de tus</p> 
+                                <p>Cuentanos acerca de tus</p>
                                 <p>géneros favoritos</p>
                             </h1>
                             <p className="text-base md:text-xl  md:pr-56">
@@ -77,17 +77,16 @@ const Register22 = () => {
                             <div className="flex items-center justify-center pt-6">
                                 <div className="grid grid-cols-3 gap-5 w-full">
                                     {currentItems?.map((genero) => (
-                                        <ButtonGenero
+                                        <ButtonBands
                                             key={genero?._id}
                                             id={genero?._id}
                                             text={genero?.name}
                                             onClick={() => handleGeneroClick(genero?._id)}
-                                          
                                         />
                                     ))}
                                 </div>
                             </div>
-                          
+
                             <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max px-1 bg-[#6C2B6D]">
                                 Puedes cambiar estos ajustes cuando quieras
                             </span>
@@ -101,7 +100,7 @@ const Register22 = () => {
                             </div>
                             <div className="flex items-center justify-center mt-6">
                                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                                    <ChevronsLeft/>
+                                    <ChevronsLeft />
                                 </button>
                                 <span className="mx-2">{currentPage}</span>
                                 <button onClick={handleNextPage} disabled={currentPage === totalPage}>
@@ -117,6 +116,4 @@ const Register22 = () => {
     );
 }
 
-export default Register22;
-
-
+export default Register221;

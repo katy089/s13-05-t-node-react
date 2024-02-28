@@ -1,29 +1,25 @@
 import { useState } from 'react';
-import useGeneros from '../hooks/useGeneros'
+import useBands from '../hooks/useBands'
 
 const usePagination = () => {
 
-  const { dataBDD } = useGeneros()
+  const { dataBDD } = useBands()
  
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12; 
+  const itemsPerPage = 24; 
     
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = dataBDD?.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPage = Math.ceil( dataBDD?.lenght / itemsPerPage)
+  const totalPage = Math.ceil( dataBDD?.length / itemsPerPage ) 
   
 
   const handleNextPage = () => {
-    if (currentPage < totalPage) {
-      setCurrentPage(currentPage + 1)
-    }
+       setCurrentPage(currentPage + 1)
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1){
-      setCurrentPage(currentPage -1);
-    }
+       setCurrentPage(currentPage - 1);
     
   };
 
