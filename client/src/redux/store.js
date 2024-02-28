@@ -1,5 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
+import bandsSlice from "./bandsSlice";
+import genresSlice from "./genresSlice"
+
 /**Se importa la función configureStore de la biblioteca @reduxjs/toolkit para configurar el store de Redux.
 También se importa el slice de autenticación (authSlice) que definimos en otro archivo y en el caso que hubiera más slices, se deben agregar acá tambien. */
 
@@ -15,6 +18,9 @@ preloadedState: Se pasa el estado persistido al store para que se cargue inicial
 export const store = configureStore({
   reducer: {
     auth: authSlice,
+    bands: bandsSlice,
+    genres: genresSlice
+
   },
   // eslint-disable-next-line no-undef
   devTools: process.env.NODE_ENV !== "production",
