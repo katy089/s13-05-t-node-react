@@ -23,31 +23,29 @@ const useGeneros = () => {
 
 
     useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(API_URL_REGISTER_GENEROS);
-            const data = response.data;
-            console.log(data)
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(API_URL_REGISTER_GENEROS);
+                const data = response.data;
+                console.log(data)
 
-            if (data && data?.musicalGenres) {
-                console.log(data);
-                dispatch(setGenres(data.musicalGenres))
-            } else {
-                console.error("Data or bands property is missing.");
+                if (data && data?.musicalGenres) {
+                    console.log(data);
+                    dispatch(setGenres(data.musicalGenres))
+                } else {
+                    console.error("Data or bands property is missing.");
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 400) {
+                    Swal.fire("Error", "Ocurrió un error", "error");
+                } else {
+                    console.error("An error occurred while fetching data:", error);
+                }
             }
-        } catch (error) {
-            if (error.response && error.response.status === 400) {
-                Swal.fire("Error", "Ocurrió un error", "error");
-            } else {
-                console.error("An error occurred while fetching data:", error);
-            }
-        }
-    };
+        };
 
-    fetchData();
-  }, []);
-
-
+        fetchData();
+    },[]);
 
 
     const handleGeneroClick = (genero) => {
