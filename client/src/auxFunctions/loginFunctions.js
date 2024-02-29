@@ -7,20 +7,41 @@ export const authenticateUser = async (correo, password) => {
   //eslint-disable-next-line
   // const dispatch = useDispatch();
   //console.log(correo , password);
+
+import { login, updateAll } from "../redux/authSlice";
+
+export const authenticateUser = async (
+  correo,
+  password,
+  dispatch,
+  ultimaPosicion
+) => {
+  // console.log(ultimaPosicion);
+
   try {
+    const body = {};
+    // Verifico si ultimaPosicion tiene valores que no son null
+    if (
+      ultimaPosicion &&
+      ultimaPosicion.lat !== null &&
+      ultimaPosicion.lon !== null
+    ) {
+      body.ultimaPosicion = ultimaPosicion;
+    }
+
     const response = await fetch(API_URL_LOGIN, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ correo, password }),
+      body: JSON.stringify({ correo, password, ...body }), // Incluyo ultimaPosicion solo si tiene valores válidos
     });
 
     // Verifica si response fue exitosa
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
-
+      dispatch(updateAll(data.usuario));
+      dispatch(login());
       return {
         status: response.status,
         success: true,
@@ -44,6 +65,7 @@ export const authenticateUser = async (correo, password) => {
 export const sendToBackend = (
   response,
   ultimaPosicion,
+  dispatch,
   setEmailTuneMatch,
   handleLoginError,
   dispatch
@@ -52,6 +74,8 @@ export const sendToBackend = (
     Object.keys(ultimaPosicion).length !== 0
       ? { id_token: response.credential, ultimaPosicion }
       : { id_token: response.credential };
+
+  console.log("Body antes de enviar la solicitud:", body);
 
   fetch(API_URL_GOOGLE, {
     method: "POST",
@@ -62,7 +86,8 @@ export const sendToBackend = (
   })
     .then((resp) => resp.json())
     .then((res) => {
-      console.log(res.usuario, "hola soy el primer res");
+      dispatch(updateAll(res.usuario));
+      dispatch(login());
       localStorage.setItem(
         "emailTuneMatch",
         JSON.stringify(res.usuario.correo)

@@ -21,6 +21,28 @@ paths:
         "500":
           description: Error al intentar conectar a la db
 
+    get:
+      summary: Obtener todos los generos musicales
+      tags:
+        - MusicalGenre
+      parameters:
+        - in: query
+          name: queryPage
+          schema:
+            type: string
+          description: Ingrese la pagina que quiere obtener de los resultados
+        - in: query
+          name: limit
+          schema:
+            type: string
+          description: Ingrese el limite de los resultados que quiere obtener
+
+      responses:
+        "201":
+          description: Se trajo correctamente los generos
+        "500":
+          description: Error al intentar conectar a la db
+
 components:
   schemas:
     MusicalGenre:
