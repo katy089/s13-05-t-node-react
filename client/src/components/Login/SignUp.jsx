@@ -93,7 +93,7 @@ const SignUp = () => {
             <p>comencemos!</p>
           </div>
 
-          <div className="absolute z-20 md:top-0 top-48 right-4 px-4 pt-2 pb-2 rounded-lg bg-gradient-to-b from-[#664c66] to-[#6d2c6c] w-11/12 md:w-96 ">
+          <div className="absolute z-20 md:-top-3 top-44 right-3 ms:left-2 px-4 pt-2 pb-2 rounded-lg bg-gradient-to-b from-[#664c66] to-[#6d2c6c] w-90 md:w-80  ">
             <form action="onSubmit" onSubmit={handleSubmit(onSubmit)}>
               <h1 className="text-center text-3xl pb-2">Crear Cuenta</h1>
               <div>

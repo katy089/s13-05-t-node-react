@@ -88,7 +88,8 @@ const Register221 = () => {
                                 </div>
                             </div>
 
-                            <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max px-1 bg-[#6C2B6D]">
+                         
+                            <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max bg-[#6C2B6D]">
                                 Puedes cambiar estos ajustes cuando quieras
                             </span>
                             <div className="flex items-center flex-col my-6">
@@ -108,6 +109,8 @@ const Register221 = () => {
                                     <ChevronsRight />
                                 </button>
                             </div>
+                           
+
                         </div>
                     </div>
                 </div>
