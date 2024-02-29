@@ -1,22 +1,56 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import bgprofile from "../../assets/bgprofile.png";
 import Chat from "../Chat/Chat";
-import { getFotos, getNombre } from "../../redux/authSlice";
-import { eventos, tuneMatch } from "./auxHome";
+import {
+  getFotos,
+  getId,
+  getNombre,
+  getTuneMatch,
+  logout,
+  selectIsLoggedIn,
+} from "../../redux/authSlice";
+import { eventos, obtenerDatosUsuario } from "./auxHome";
+import { useEffect, useState } from "react";
 
 const HomeContent = () => {
+  const userId = useSelector(getId);
+  const tunematch = useSelector(getTuneMatch);
+  // console.log("Este es el userId:", userId);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const fotos = useSelector(getFotos);
   const nombre = useSelector(getNombre);
   const nombreParaUser = nombre
     .replace(/\s/g, "")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
-
   const profilePhoto = fotos?.length > 0 ? fotos[0] : null;
+  const [datosUsuario, setDatosUsuario] = useState(null);
+  const dispatch = useDispatch();
 
   const handleClick = (redirectUrl) => {
     window.open(redirectUrl, "_blank");
   };
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      if (!isLoggedIn || !userId) {
+        if (isLoggedIn) {
+          // para evitar bucle infinito
+          dispatch(logout());
+        }
+        return;
+      } else {
+        try {
+          const datos = await obtenerDatosUsuario(tunematch);
+          setDatosUsuario(datos);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    };
+
+    obtenerDatos();
+  }, [dispatch, isLoggedIn, tunematch, userId]);
 
   return (
     <div
@@ -41,7 +75,7 @@ const HomeContent = () => {
                   ) : (
                     <img
                       alt="Foto de perfil por defecto"
-                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      src="https://images.pexels.com/photos/4472043/pexels-photo-4472043.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                     />
                   )}
                 </div>
@@ -111,10 +145,10 @@ const HomeContent = () => {
             checked
             readOnly
           />
-          <div role="tabpanel" className="tab-content">
-            {tuneMatch.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {tuneMatch.map((match) => (
+          <div role="tabpanel" className="tab-content mt-4">
+            {datosUsuario && datosUsuario.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {datosUsuario.map((match) => (
                   <div
                     key={match.id}
                     className="rounded-md shadow-md text-start relative snap-start w-36 h-56 z-10"
@@ -122,7 +156,11 @@ const HomeContent = () => {
                     <div>
                       <div className="relative h-56">
                         <img
-                          src={match.img}
+                          src={
+                            match.img
+                              ? match.img
+                              : "https://images.pexels.com/photos/11676200/pexels-photo-11676200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                          }
                           alt={match.nombre}
                           className="rounded-xl -z-10 object-cover w-full h-full"
                         />
@@ -134,12 +172,18 @@ const HomeContent = () => {
                         ></div>
                       </div>
                       <div className="absolute bottom-2 left-2 text-white">
-                        <h2 className="card-title">{match.nombre}</h2>
-                        <p>
-                          {match.generos.map((genre) => `#${genre}`).join(" ")}
+                        <h2 className="card-title text-sm">{match.nombre}</h2>
+                        <p className="text-xs">
+                          {match.generos
+                            .map((genre) => `#${genre.name}`)
+                            .join(" ")}
                         </p>
 
-                        <p>{match.distancia} km</p>
+                        <p className="text-xs">
+                          {match.bandas
+                            .map((band) => `#${band.name}`)
+                            .join(" ")}
+                        </p>
                       </div>
                     </div>
                   </div>
