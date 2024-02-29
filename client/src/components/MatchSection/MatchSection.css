@@ -1,5 +1,5 @@
 .swipe{
-    width: 32rem;
+    /* width: 20rem; */
     /* background-color: red; */
 
 }
@@ -8,4 +8,16 @@
     background-color: red;
     width: 100%;
     z-index: 99999;
+}
+.tab-white:is(input:checked) {
+    border-color: white !important;
+}
+.tab-white{
+    font-weight: 600!important;
+}
+.range{
+    --range-shdw: rgba(255, 255, 255, 0.374) !important;
+}
+.range-xs{
+    height: 0.5rem !important;
 }

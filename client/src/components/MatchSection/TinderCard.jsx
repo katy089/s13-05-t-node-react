@@ -51,10 +51,10 @@ console.log(music.generes.map((item) => {return item}));
 
   return (
     <>
-      <div className="cardContainer relative flex justify-center mt-3 w-full">
+      <div className="cardContainer relative flex justify-center mt-1 w-full">
         {characters.map((character) => (
           <TinderCard
-            className="swipe absolute bg-secundario h-full rounded-2xl"
+            className="swipe absolute bg-secundario lg:bg-white h-[39rem] w-11/12 rounded-2xl"
             key={character.name}
             onSwipe={(dir) => swiped(dir, character.name)}
             onCardLeftScreen={() => outOfFrame(character.name)}
@@ -79,19 +79,19 @@ console.log(music.generes.map((item) => {return item}));
               </div>
             </div>
 
-            <div className=" text-white p-4 flex flex-col ">
+            <div className=" text-white p-4 flex flex-col font-light text-sm">
               <div className="p-1 flex gap-3 capitalize">
                 {music.generes.map((item, i) => {
                   return <p key={i}>#{item}</p>;
                 })}
               </div>
-              <div className="bg-primario p-1 my-2 rounded-full w-full"></div>
+              <div className="bg-primario h-2 my-1 rounded-full w-full"></div>
               <div className="p-1 flex gap-3 capitalize">
                 {music.artists.map((item, i) => {
                   return <p key={i}>#{item}</p>;
                 })}
               </div>
-              <div className="bg-primario p-1 my-2 rounded-full w-full"></div>
+              <div className="bg-primario h-2 my-1 rounded-full w-full"></div>
               <div className="p-1 flex gap-3 capitalize">
                 {music.ocupation.map((item, i) => {
                   return <p key={i}>#{item}</p>;
@@ -100,7 +100,9 @@ console.log(music.generes.map((item) => {return item}));
               <textarea
                 placeholder="Bio"
                 className="textarea textarea-ghost textarea-xl w-full max-w-xl  my-3"
-              >{music.infoBio}</textarea>
+              >
+                {music.infoBio}
+              </textarea>
             </div>
           </TinderCard>
         ))}
@@ -111,6 +113,10 @@ console.log(music.generes.map((item) => {return item}));
         ) : (
           <h2 className="infoText absolute" />
         )}
+
+
+
+
         <div className="relative">relative</div>*/}
     </>
   );

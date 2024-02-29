@@ -1,16 +1,16 @@
-import { Music, Undo2, X } from "lucide-react";
+import { Heart , ChevronRight, X } from "lucide-react";
 
 const TinderCardButtons = () => {
   return (
-    <div className="min-w-full m-auto flex justify-between p-8">
-      <button className=" btn btn-circle btn-outline btn-primary bg-clearGray text-red-600  size-20 ">
+    <div className="min-w-full m-auto flex justify-between p-6">
+      <button className=" btn btn-circle btn-outline text-red-600 bg-clearGray size-12 ">
         <X />
       </button>
-      <button className=" btn btn-circle btn-outline  btn-primary bg-clearGray  size-20  ">
-        <Music />
+      <button className=" btn btn-circle btn-outline text-pink-600  bg-clearGray  size-12  ">
+        <Heart />
       </button>
-      <button className=" btn btn-circle btn-outline  btn-primary bg-clearGray size-20  ">
-        <Undo2 />
+      <button className=" btn btn-circle btn-outline text-green-600  bg-clearGray size-12  ">
+        <ChevronRight />
       </button>
     </div>
   );

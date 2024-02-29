@@ -9,10 +9,10 @@ const MatchSection = () => {
   const [tabState, setTabState] = useState(0);
 
   return (
-    <div className="w-screen grid grid-cols-7 grid-flow-auto h-screen">
+    <div className="max-w-screen grid grid-cols-7 grid-flow-auto h-2/4">
       {/* chats */}
       <div className="bg-terciario col-span-2">
-        <div className="bg-secundario grid grid-cols-3 p-3">
+        {/* <div className="bg-secundario grid grid-cols-3 p-3">
           <h2
             onClick={() => setTabState(0)}
             className={`hover:underline-offset: 8px ${
@@ -47,45 +47,75 @@ const MatchSection = () => {
             </div>
           </h2>
         </div>
+          {tabState === 1 ? <MessageList /> : <MatchCardsList />} */}
 
-        {tabState === 1 ? <MessageList /> : <MatchCardsList />}
+        <div
+          role="tablist"
+          className="tabs tabs-bordered bg-secundario text-base py-3"
+        >
+          <input
+            type="radio"
+            name="my_tabs_1"
+            role="tab"
+            className="tab tab-white text-white pb-2 font-semi-bold text-base"
+            aria-label="Matches"
+            read-only
+          />{" "}
+          <div role="tabpanel" className="tab-content primario ">
+            <MatchCardsList />
+          </div>
+          <input
+            type="radio"
+            name="my_tabs_1"
+            role="tab"
+            className="tab tab-white text-white pb-2 font-semi-bold text-base"
+            aria-label="Mensajes"
+            checked
+            read-only
+          />{" "}
+          <div role="tabpanel" className="tab-content primario ">
+            <MessageList />
+          </div>
+        </div>
       </div>
+
       {/* tinder card */}
       <div className="bg-slate-200 relative p-2 grid col-span-3 ">
         <TinderCards />
       </div>
+
       {/* datos matcheo */}
-      <div className="bg-black font-bold text-slate-200 items-center flex flex-col gap-4 p-4 col-span-2">
-        <h2>Tipo de cuenta</h2>
+
+      <div className="bg-black font-semibold text-slate-200 text-sm items-center flex flex-col gap-3 p-4 col-span-2 ">
+        <p className="font-bold text-base">Tipo de cuenta</p>
         <CustomButton
           className={
-            "bg-primario uppercase rounded-lg flex justify-center font-semi-bold p-3 w-full"
+            "bg-primario uppercase rounded-lg flex justify-center p-2 w-full"
           }
           text={"gratuita"}
         />
-        <h2>Ajustes de descubrimiento</h2>
-        <div className="bg-primario flex flex-col justify-between  p-4 w-full rounded-xl gap-3  capitalize">
-          <h2>Muéstrame</h2>
+        <p>Ajustes de descubrimiento</p>
+        <div className="bg-primario flex flex-col justify-between  p-4 w-full rounded-xl capitalize">
+          <p>Muéstrame</p>
           <div>
-            <ToggleCheckbox text="Hombres" classInfo={"toggle-primary"} />
-            <ToggleCheckbox text="Mujeres" classInfo={"toggle-primary"} />
-            <div className="divider divider-primary"></div>
-            <p className="text-sm flex items-end justify-between capitalize font-light">
+            <ToggleCheckbox text="Hombres" classInfo={"bg-slate-500 "} />
+            <ToggleCheckbox text="Mujeres" classInfo={"bg-slate-500"} />
+            <div className="bg-white opacity-45 p-1 my-2 rounded-full w-full"></div>{" "}
+            <p className="text-sm flex items-end justify-between capitalize">
               Músicos
-              <span className="badge badge-sm bg-black text-white p-2 font-light">
+              <span className="badge badge-sm bg-black text-white p-2 ">
                 instrumentos
               </span>
             </p>
-
-            <p className="text-sm flex items-end justify-between capitalize font-light">
+            <p className="text-sm flex items-end justify-between capitalize">
               Fan N°1
-              <span className="badge badge-sm bg-black text-white p-2 font-light">
+              <span className="badge badge-sm bg-black text-white p-2">
                 bandas
               </span>
             </p>
           </div>
         </div>
-        <div className="bg-primario flex items-start p-4 w-full rounded-xl gap-3  capitalize flex-col">
+        <div className="bg-primario flex items-start p-4 w-full rounded-xl gap-3 capitalize flex-col">
           <p>distancia máxima</p>
           <p>80km.</p>
           <input
@@ -96,7 +126,7 @@ const MatchSection = () => {
             className="range range-xs"
           />{" "}
         </div>
-        <div className="bg-primario flex items-start p-4 w-full rounded-xl gap-3 ">
+        <div className="bg-primario flex items-start p-4 w-full rounded-xl gap-3 capitalize flex-col">
           <p>rango de edad</p>
           <p>18-32</p>
           <input
@@ -107,7 +137,7 @@ const MatchSection = () => {
             className="range range-xs bg-primario"
           />{" "}
         </div>
-        <p>
+        <p className="text-xs text-slate-400 font-light">
           TuneMatch usa estas preferencias para sugerir matches. Algunas
           sugerencias pueden no estar dentro de tus parámetros de preferencia
         </p>

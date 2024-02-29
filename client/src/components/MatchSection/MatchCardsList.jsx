@@ -30,14 +30,10 @@ const db = [
 
 const MatchCardsList = () => {
   return (
-    <div className=" p-4 grid grid-cols-2 grid-rows-3 gap-4">
-      {
-        db.map((item, i )=>{
-          return (
-            <MatchCard key={i} item={item}/>
-          )
-        })
-      }
+    <div className="grid grid-cols-2 grid-flow-row-dense mt-4 min-h-screen bg-primario ">
+      {db.map((item, i) => {
+        return <MatchCard key={i} item={item} />;
+      })}
     </div>
   );
 }
