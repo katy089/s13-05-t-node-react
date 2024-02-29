@@ -1,5 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
+import MatchSection from '../pages/MatchSection';
+
 import {
   HOME,
   SIGNUP,
@@ -7,6 +9,7 @@ import {
   TERMS,
   PRIVACY,
   PAGESELECTION,
+  MATCHSECTION,
   PROFILE,
   REGISTER22,
   REGISTER221
