@@ -1,4 +1,13 @@
 import { API_URL_LOGIN, API_URL_GOOGLE } from "../config/api";
+import { updateAll } from "../redux/authSlice";
+// import { useDispatch } from "react-redux";
+// import { setId } from '../redux/authSlice'
+
+export const authenticateUser = async (correo, password) => {
+  //eslint-disable-next-line
+  // const dispatch = useDispatch();
+  //console.log(correo , password);
+
 import { login, updateAll } from "../redux/authSlice";
 
 export const authenticateUser = async (
@@ -8,6 +17,7 @@ export const authenticateUser = async (
   ultimaPosicion
 ) => {
   // console.log(ultimaPosicion);
+
   try {
     const body = {};
     // Verifico si ultimaPosicion tiene valores que no son null
@@ -30,7 +40,6 @@ export const authenticateUser = async (
     // Verifica si response fue exitosa
     if (response.ok) {
       const data = await response.json();
-      console.log("Esto es la data del usurio:", data);
       dispatch(updateAll(data.usuario));
       dispatch(login());
       return {
@@ -58,7 +67,8 @@ export const sendToBackend = (
   ultimaPosicion,
   dispatch,
   setEmailTuneMatch,
-  handleLoginError
+  handleLoginError,
+  dispatch
 ) => {
   const body =
     Object.keys(ultimaPosicion).length !== 0
@@ -76,20 +86,48 @@ export const sendToBackend = (
   })
     .then((resp) => resp.json())
     .then((res) => {
-      console.log("Respuesta del servidor:", res);
-
       dispatch(updateAll(res.usuario));
       dispatch(login());
-
       localStorage.setItem(
         "emailTuneMatch",
         JSON.stringify(res.usuario.correo)
       );
       localStorage.setItem(
-        "sessionData",  
+        "sessionData",
         JSON.stringify(res) // Guarda todos los datos de la respuesta en localStorage
       );
       setEmailTuneMatch(res.usuario.correo);
+
+      dispatch(updateAll(res.usuario));
     })
     .catch(handleLoginError);
 };
+
+export const handleSignOut = async () => {
+  window.google.accounts.id.disableAutoSelect(); // google queda como variable global si se pone el script en el index principal
+  window.google.accounts.id.revoke(
+    localStorage.getItem("emailTuneMatch"),
+    localStorage.getItem("sessionData"),
+    (done) => {
+      if (done) {
+        console.log("Revocación exitosa");
+        localStorage.removeItem("emailTuneMatch"); // colocar el correo en el storage puede no ser seguro, pero se necesita durante la sesion para poder cerrar
+        localStorage.removeItem("sessionData"); // colocar el correo en el storage puede no ser seguro, pero se necesita durante la sesion para poder cerrar
+        window.location.reload(); // en caso de que haya quedado algo en el navegador se elimina, pero no es tan necesario, podría funcionar sin reload()
+      } else {
+        console.error("Error al revocar el consentimiento");
+      }
+    }
+  );
+};
+
+/**
+ Botoncito que cierra sesión que se puede colocar en NavBar
+{
+  emailTuneMatch && (
+    <button id="g_id_signout" onClick={handleSignOut}>
+      Sign Out
+    </button>
+  );
+}
+ */
