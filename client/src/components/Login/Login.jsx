@@ -10,6 +10,8 @@ import {
 } from "../../auxFunctions/loginFunctions";
 import Swal from "sweetalert2";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import { useDispatch } from 'react-redux';
+import { updateAll } from "../../redux/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const Login = () => {
   const [emailTuneMatch, setEmailTuneMatch] = useState(null);
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleButton = () => {
     navigate("/signup");
@@ -41,6 +44,8 @@ const Login = () => {
       const response = await authenticateUser(correo, password, ultimaPosicion);
       if (response.status === 200 && response.success) {
         // Pregunto al usuario si es mayor de  18 años antes de redirigir
+        dispatch(updateAll(response.usuario));
+        console.log(response.usuario, "hola soy usuario")
         Swal.fire({
           title: "¿Eres mayor de  18 años?",
           background: "#2c2c2c",
@@ -127,12 +132,15 @@ const Login = () => {
       // Esperamos a que el usuario permita la geolocalización
       await obtenerPosicion();
 
+      console.log(response,"hola soy response yya")
+
       // envío la info al backend
       sendToBackend(
         response,
         ultimaPosicion,
         setEmailTuneMatch,
-        handleLoginError
+        handleLoginError,
+        dispatch
       );
       Swal.fire({
         title: "¿Eres mayor de  18 años?",

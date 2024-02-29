@@ -1,65 +1,31 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { dataImg } from "../../utils/datas";
 import ProfileCard from "./ProfileCard";
-
-const data = [
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  },
-  {
-    imageLink: `https://picsum.photos/seed/${Math.floor(Math.random() * 100)}/800/600`, 
-  }
-];
-
-
-
-
+import { useSelector } from "react-redux";
 
 function ProfileContent() {
-  const obtenerDatosLocalStorage = () => {
-    const datos = localStorage.getItem("sessionData");
-    return datos ? JSON.parse(datos) : null;
-  };
+  const datos = useSelector((state) => state.auth);
 
-  const [datos, setDatos] = useState(null);
+  const ultimaPosicionString = datos.ultimaPosicion
+    ? `Latitud: ${datos.ultimaPosicion.lat}, Longitud: ${datos.ultimaPosicion.lon}`
+    : "";
 
-  useEffect(() => {
-    // Obtener los datos del localStorage al montar el componente
-    const datosLocalStorage = obtenerDatosLocalStorage();
-    setDatos(datosLocalStorage);
-  }, []);
+  const randomGender = Math.random() < 0.5 ? "men" : "women";
+  const randomIndex = Math.floor(Math.random() * 100) + 1; // Sumamos 1 para evitar 0
+
+  const randomAvatarUrl = `https://randomuser.me/api/portraits/${randomGender}/${randomIndex}.jpg`;
 
   return (
     <div className="w-full h-full bg-white flex justify-center items-center">
       <ProfileCard
-        img={datos ? datos.usuario.fotos : ""}
-        nombre={datos ? datos.usuario.nombre : ""}
-        activo={true}
-        ultimaPosicion={datos?.usuario?.distancia ?? 0}// Valor predeterminado para última posición
-        generos={datos?.generos?.map((gen) => gen.nombre) ?? []} // Lista vacía si no hay géneros
-        bandas={datos?.bandas?.map((band) => band.nombre) ?? []} // Lista vacía si no hay bandas
-        miGenero={datos?.usuario?.genero ?? "Género Predeterminado"}
-        fotos={data.map((band) => band.imageLink)}
+        img={randomAvatarUrl}
+        nombre={datos.nombre}
+        activo={datos.active}
+        ultimaPosicion={ultimaPosicionString}
+        generos={datos?.generos?.map((gen) => gen.name) ?? []}
+        bandas={datos?.bandas?.map((gen) => gen.name) ?? []}
+        miGenero={datos.miGenero}
+        fotos={dataImg.map((band) => band.imageLink)}
       />
     </div>
   );

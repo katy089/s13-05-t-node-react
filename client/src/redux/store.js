@@ -7,3 +7,5 @@ export const store = configureStore({
     auth: authSlice,    
   },
 });
+
+console.log('Estado actual de Redux:', store.getState());
