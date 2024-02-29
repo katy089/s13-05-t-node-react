@@ -1,0 +1,56 @@
+paths:
+  /api/band:
+    post:
+      summary: Agregar una banda
+      tags:
+        - Band
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                status:
+                  type: string
+      responses:
+        "201":
+          description: Se agrego correctamente la banda
+        "500":
+          description: Error al intentar conectar a la db
+
+    get:
+      summary: Obtener todas las bandas
+      tags:
+        - Band
+      parameters:
+        - in: query
+          name: queryPage
+          schema:
+            type: string
+          description: Ingrese la pagina que quiere obtener de los resultados
+        - in: query
+          name: limit
+          schema:
+            type: string
+          description: Ingrese el limite de los resultados que quiere obtener
+
+      responses:
+        "201":
+          description: Se trajo correctamente las bandas
+        "500":
+          description: Error al intentar conectar a la db
+
+components:
+  schemas:
+    Band:
+      type: object
+      properties:
+        name:
+          type: String
+          description: nombre de la banda
+        status:
+          type: String
+          description: Estado de la banda en la base de datos (pending | active | closed)
