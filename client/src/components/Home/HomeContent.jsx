@@ -5,6 +5,7 @@ import {
   getFotos,
   getId,
   getNombre,
+  getTuneMatch,
   logout,
   selectIsLoggedIn,
 } from "../../redux/authSlice";
@@ -13,6 +14,7 @@ import { useEffect, useState } from "react";
 
 const HomeContent = () => {
   const userId = useSelector(getId);
+  const tunematch = useSelector(getTuneMatch);
   // console.log("Este es el userId:", userId);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const fotos = useSelector(getFotos);
@@ -31,11 +33,15 @@ const HomeContent = () => {
 
   useEffect(() => {
     const obtenerDatos = async () => {
-      if (!isLoggedIn) {
-        dispatch(logout());
+      if (!isLoggedIn || !userId) {
+        if (isLoggedIn) {
+          // para evitar bucle infinito
+          dispatch(logout());
+        }
+        return;
       } else {
         try {
-          const datos = await obtenerDatosUsuario(userId);
+          const datos = await obtenerDatosUsuario(tunematch);
           setDatosUsuario(datos);
         } catch (error) {
           console.error("Error:", error);
@@ -44,7 +50,7 @@ const HomeContent = () => {
     };
 
     obtenerDatos();
-  }, [dispatch, isLoggedIn, userId]);
+  }, [dispatch, isLoggedIn, tunematch, userId]);
 
   return (
     <div
