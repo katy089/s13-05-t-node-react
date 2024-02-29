@@ -79,7 +79,7 @@ const useBands = () => {
               }) 
 
         // Limpiar 'generos' en localStorage después de usarlos
-        // localStorage.removeItem('bands');
+        localStorage.removeItem('bands');
        
 
         navigate("/register2");
