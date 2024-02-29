@@ -86,8 +86,8 @@ module.exports = {
     try {
       const salt = bycript.genSaltSync()
       let usuario = await Usuario.findOne({ correo })
-      let distancia = 'No tenemos tus coordenadas' 
-      
+      let distancia = 'No tenemos tus coordenadas'
+
       if (!usuario) {
         const data = {
           nombre,
@@ -149,5 +149,65 @@ module.exports = {
 
     }
 
+  },
+
+  like: async (idUser, idLike, res) => {
+    try {
+      const [user, likeado] = await Promise.all([
+        Usuario.findOne({ _id: idUser, activo: true }),
+        Usuario.findOne({ _id: idLike, activo: true })
+      ])
+      if (!user || !likeado)
+        return res.status(404).json({
+          message: "No existe algún Id en la base de datos"
+        })
+      const likedUpdated = await Usuario.findOneAndUpdate(
+        { _id: idLike, 'likes.userId': { $ne: idUser } },
+        { $addToSet: { likes: { userId: idUser } } },
+        { new: true }
+      );
+
+      if (!likedUpdated) {
+        return res.status(200).json({
+          message: "Like ya existe para este usuario."
+        });
+      }
+
+      const CoincidenciasLikes = () => {
+        const coincidencia1 = user.likes.some(like => like.userId.toString() === idLike.toString())
+        const coincidencia2 = likedUpdated.likes.some(like => like.userId.toString() === idUser.toString())
+        return coincidencia1 && coincidencia2
+      };
+
+      const result = CoincidenciasLikes()
+
+      if (result) {
+        const [, TuneMatch] = await Promise.all([
+          Usuario.findByIdAndUpdate(idUser,
+            { $addToSet: { tuneMatch: idLike }, $pull: { likes: { userId: idLike } } }, { new: true }),
+          Usuario.findByIdAndUpdate(idLike,
+            { $addToSet: { tuneMatch: idUser }, $pull: { likes: { userId: idUser } } }, { new: true })
+        ])
+
+        const tuneMatch = TuneMatch.toJSON();
+        delete tuneMatch.correo;
+        delete tuneMatch.tuneMatch;
+
+        return res.status(200).json({
+          message: 'Tienes un TuneMatch!',
+          tuneMatch
+        })
+      }
+
+      return res.status(200).json({
+        message: "Like agregado con éxito."
+      });
+
+    } catch (e) {
+      console.log(e)
+      return res.status(500).json({
+        message: "Error interno del servidor"
+      })
+    }
   }
 } 

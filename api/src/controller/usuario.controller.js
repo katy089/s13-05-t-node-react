@@ -69,26 +69,35 @@ const matchProfile = async (req = request, res = response) => {
   const start = new Date();
   const { id } = req.body
   try {
-    const fields = ['bandas', 'generos', 'ultimaPosicion']; 
+    const fields = ['bandas', 'generos', 'ultimaPosicion'];
     const user = await usuarios.findOne({ _id: id }, fields);
     const matchs = await usuarios.find({
       _id: { $ne: user._id },
       $or: [
-        { "generos": { $elemMatch: { $in: user.generos } } }, 
+        { "generos": { $elemMatch: { $in: user.generos } } },
         { "bandas": { $elemMatch: { $in: user.bandas } } }
       ]
     }, fields).limit(10)//.explain("executionStats");
     // posibles problemas de performance: https://www.mongodb.com/docs/manual/reference/operator/query/in/#syntax
     const match_list = scoring(user._doc, matchs)
-    
+
     const end = new Date();
     res.status(200).json({
-           match_list,
-           estimated_time: (end.getTime() - start.getTime()) + "ms"
-        })
+      match_list,
+      estimated_time: (end.getTime() - start.getTime()) + "ms"
+    })
 
   } catch (err) {
     console.log(err);
+  }
+}
+
+const likes = async (req = request, res = response) => {
+  const { idUser, idLike } = req.body
+  try {
+    await serviceUser.like(idUser, idLike, res)
+  } catch (e) {
+    console.log(e)
   }
 }
 
@@ -127,5 +136,6 @@ module.exports = {
   googleAuth,
   getUser,
   matchProfile,
-  updateUser
+  updateUser,
+  likes
 }

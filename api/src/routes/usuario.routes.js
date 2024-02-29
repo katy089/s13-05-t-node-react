@@ -5,7 +5,8 @@ const {
   googleAuth,
   getUser,
   matchProfile,
-  updateUser
+  updateUser,
+  likes
 } = require('../controller/usuario.controller.js')
 
 const router = Router()
@@ -13,7 +14,8 @@ const router = Router()
 const {
   POST_SIGN_UP,
   POST_LOGIN,
-  POST_GOOGLE
+  POST_GOOGLE,
+  POST_LIKES
 } = require('../../helpers/checks')
 
 router.post('/sign-up', POST_SIGN_UP, signUp)
@@ -22,6 +24,7 @@ router.post('/google', POST_GOOGLE, googleAuth)
 router.get('/list/:id', getUser)
 router.get('/match', matchProfile)
 router.put('/:id', updateUser)
+router.post('/likes', POST_LIKES, likes)
 
 
 
