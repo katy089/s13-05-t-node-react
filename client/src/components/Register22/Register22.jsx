@@ -61,7 +61,7 @@ const Register22 = () => {
                                 mismos gustos. ¡Comparte tu pasión musical y
                                 descubre nuevas  experiencias con personas afines!
                             </p>
-                            <div className="flex items-center justify-center  my-5 sm:my-10"></div>
+                        <div className="flex items-center justify-center  my-5 sm:my-10"></div>
                         </div>
                         <div
                             className="place-content-end w-11/12 mx-auto sm:mx-0 sm:w-1/2 md:w-1/3 px-4 py-6 rounded-lg bg-opacity-95"

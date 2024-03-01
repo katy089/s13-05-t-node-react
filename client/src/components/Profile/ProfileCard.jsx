@@ -2,8 +2,13 @@
 import { CiLocationOn } from "react-icons/ci";
 import banner from "../../assets/banner.jpg";
 import ModalComponent from "../Modal/ModalComponent";
-import { bandasMusicales, generosMusicales, miGeneroX } from "../../utils/datas";
-
+import { 
+  bandasMusicales, 
+  // generosMusicales, 
+  miGeneroX 
+} from "../../utils/datas";
+import ModalGeneros from "../Modal/ModalGeneros";
+ 
 function ProfileCard({
   img,
   nombre,
@@ -90,13 +95,16 @@ function ProfileCard({
             <div className="w-full">
               <div className="flex gap-2">
                 <h2 className="text-gray-800 font-bold text-2xl">
-                  Mis Generos Favs
+                  Mis Generos Favs     
                 </h2>
-                <ModalComponent
-                  titulo={"Mis Géneros Favoritos"}
+                   <ModalGeneros        // <==========  en processo
+                     titulo={"Mis Géneros Favoritos"}            
+                   />                  
+                {/* <ModalComponent
+                  titulo={"Mis Géneros Favoritos"}   
                   id={2}
                   opciones={generosMusicales}
-                />
+                /> */}
               </div>
               <div className="flex gap-3 justify-center">
                 {generos && generos.length > 0 ? (
