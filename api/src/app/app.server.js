@@ -9,7 +9,7 @@ const swaggerUi = require('swagger-ui-express')
 
 
 
-class Backend {
+class ExpressServer {
     #PORT = process.env.PORT;
     #usuario = {
         route: "/api/usuario",
@@ -44,7 +44,7 @@ class Backend {
     }
 
     listen() {
-        this.app.listen(this.#PORT, message(this.#PORT));
+        this.setupSocket(this.app.listen(this.#PORT, message(this.#PORT)));
     }
 
     routes() {
@@ -62,12 +62,12 @@ class Backend {
         this.app.use(this.#band.route, this.#band.path);
         this.app.use(this.#musicalGenre.route, this.#musicalGenre.path);
     }
-    setupSocket() {
-        const server = http.createServer(this.app); // Crear el servidor HTTP utilizando tu aplicación Express
+    setupSocket(server) {
+        //const server = http.createServer(expressServer); // Crear el servidor HTTP utilizando tu aplicación Express
         const io = new Server(server, {
             // Crear una instancia de socket.io utilizando el servidor HTTP
             cors: {
-                origin: "http://localhost:8080",
+                //origin: "http://localhost:8080",
                 methods: ["GET", "POST"],
             },
         });
@@ -76,6 +76,7 @@ class Backend {
             console.log(`User Connected: ${socket.id}`);
 
             socket.on("join_room", (data) => {
+                console.log(data)
                 socket.join(data);
             });
 
@@ -87,4 +88,4 @@ class Backend {
 }
 
 
-module.exports = Backend;
+module.exports = ExpressServer;
