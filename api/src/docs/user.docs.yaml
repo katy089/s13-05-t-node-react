@@ -278,7 +278,7 @@ components:
         generos: ["Rock", "Pop"]
         tuneMatch: ["hfhnf65634bdhbdfjh", "hfhnf65634bdhbdfjh"]
         likes: [{userId: hfhnf65634bdhbdfjh, date: 1709296805778, status: "activo", intentos: 1}]
-        ultimaPosicion: { 1032, 1123 }
+        ultimaPosicion: { "lat": -31.9545644, "lon": -64.5696011 }
         enBuscaDe: ["Formar una banda"]
         activo: true
         google: false
