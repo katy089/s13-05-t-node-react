@@ -30,7 +30,7 @@ const useGeneros = () => {
                 console.log(data)
 
                 if (data && data?.musicalGenres) {
-                    console.log(data);
+                    // console.log(data);
                     dispatch(setGenres(data.musicalGenres))
                 } else {
                     console.error("Data or bands property is missing.");
