@@ -35,6 +35,10 @@ paths:
                   type: array
                   items:
                     type: string
+                likes:
+                  type: array
+                  items:
+                    type: object
                 ultimaPosicion:
                   type: object
                 enBuscaDe:
@@ -42,6 +46,8 @@ paths:
                   items:
                     type: string
                 activo:
+                  type: boolean
+                google:
                   type: boolean
       responses:
         "201":
@@ -184,12 +190,24 @@ paths:
                   type: array
                   items:
                     type: string
+                tuneMatch:
+                  type: array
+                  items:
+                    type: string
+                likes:
+                  type: array
+                  items:
+                    type: object
                 ultimaPosicion:
                   type: object
                 enBuscaDe:
                   type: array
                   items:
                     type: string
+                activo:
+                  type: boolean
+                google:
+                  type: boolean
 
       responses:
         "201":
@@ -233,6 +251,9 @@ components:
         tuneMatch:
           type: Array
           description: las personas con quien hizo match el usuario
+        likes:
+          type: Array
+          description: las personas que le dieron like a este usuario
         ultimaPosicion:
           type: Object
           description: La ultima ubicacion del usuario
@@ -242,6 +263,10 @@ components:
         activo:
           type: Boolean
           description: Si esta activo el usuario
+        google:
+          type: Boolean
+          description: Si inicio sesion con google o no
+
       example:
         _id: ObjectId("hfhnf65634bdhbdfjh")
         nombre: Santiago
@@ -252,9 +277,11 @@ components:
         bandas: ["AC/DC", "Aerosmith"]
         generos: ["Rock", "Pop"]
         tuneMatch: ["hfhnf65634bdhbdfjh", "hfhnf65634bdhbdfjh"]
+        likes: [{userId: hfhnf65634bdhbdfjh, date: 1709296805778, status: "activo", intentos: 1}]
         ultimaPosicion: { 1032, 1123 }
         enBuscaDe: ["Formar una banda"]
         activo: true
+        google: false
 
     Like:
       type: object
