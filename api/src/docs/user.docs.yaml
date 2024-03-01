@@ -42,13 +42,15 @@ paths:
                   items:
                     type: string
                 activo:
-                  type: boolean                   
+                  type: boolean
       responses:
         "201":
           description: Se registro correctamente el usuario
+        "400":
+          description: Error en la solicitud
         "500":
-          description: Error al intentar conectar a la db
-  
+          description: Error en el servidor
+
   /api/usuario/login:
     post:
       summary: Login de usuario
@@ -64,13 +66,37 @@ paths:
                 correo:
                   type: string
                 password:
-                  type: string               
+                  type: string
       responses:
-        "201":
-          description: Login correctamente el usuario
-        "500":
-          description: Error al intentar conectar a la db
+        "200":
+          description: Se realizo correctamente el login
+        "404":
+          description: No existe este usuario
+        "400":
+          description: Error en la solicitud
 
+  /api/usuario/likes:
+    post:
+      summary: Crear un like a un usuario
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idUser:
+                  type: string
+                idLike:
+                  type: string
+
+      responses:
+        "200":
+          description: Like agregado con éxito
+        "500":
+          description: Error del servidor
 
   /api/usuario/list/{userId}:
     get:
@@ -83,14 +109,45 @@ paths:
           description: id de usuario
           schema:
             type: String
-      
 
       responses:
-        "201":
-          description: Se trajo correctamente el usuario
-        "500":
-          description: Error al intentar conectar a la db
-  
+        "200":
+          description: Se obtuvo correctamente el usuario
+        "400":
+          description: Error en la solicitud
+
+
+  /api/usuario/match/profile/{userId}:
+    get:
+      summary: traer usuario matcheado
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          description: id de usuario
+          schema:
+            type: String
+
+      responses:
+        "200":
+          description: Se trajo correctamente la lista de matchs
+
+  /api/usuario/match/list/{userId}:
+    get:
+      summary: traer matchs de un usuario
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          description: id de usuario
+          schema:
+            type: String
+
+      responses:
+        "200":
+          description: Se trajo correctamente la lista de matchs
 
   /api/usuario/{userId}:
     put:
@@ -138,8 +195,11 @@ paths:
         "201":
           description: actualizacion del usuario correctamente
         "500":
-          description: Error al intentar conectar a la db
+          description: Error en el servidor
+        "400":
+          description: Error en la solicitud
 
+  
 
 components:
   schemas:
@@ -188,10 +248,20 @@ components:
         correo: santiago@gmail.com
         password: xxxxx
         miGenero: masculino
-        fotos: ['urlDeFoto','otraUrlDeFoto']
-        bandas: ['AC/DC','Aerosmith']
-        generos: ['Rock', 'Pop']
-        tuneMatch: ['hfhnf65634bdhbdfjh', 'hfhnf65634bdhbdfjh']
-        ultimaPosicion: {1032, 1123}
-        enBuscaDe: ['Formar una banda']
+        fotos: ["urlDeFoto", "otraUrlDeFoto"]
+        bandas: ["AC/DC", "Aerosmith"]
+        generos: ["Rock", "Pop"]
+        tuneMatch: ["hfhnf65634bdhbdfjh", "hfhnf65634bdhbdfjh"]
+        ultimaPosicion: { 1032, 1123 }
+        enBuscaDe: ["Formar una banda"]
         activo: true
+
+    Like:
+      type: object
+      properties:
+        idUser:
+          type: String
+          description: id del usuario que esta realizando el like
+        idLike:
+          type: String
+          description: id del usuario que recibe el like

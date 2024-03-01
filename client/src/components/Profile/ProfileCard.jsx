@@ -14,6 +14,7 @@ function ProfileCard({
   ultimaPosicion,
   fotos,
 }) {
+  
   return (
     <section className="w-screen bg-white ">
       <div className=" bg-gray-100 flex flex-col">
@@ -42,7 +43,7 @@ function ProfileCard({
               <h1 className="text-2xl text-black font-semibold mb-2">
                 {nombre}
               </h1>
-              <ModalComponent titulo={"Nombre"} id={1} />
+              <ModalComponent titulo={"Nombre"} id={1}  />
             </div>
             <div className="flex items-center gap-6 mb-4">
               {activo === true ? (
