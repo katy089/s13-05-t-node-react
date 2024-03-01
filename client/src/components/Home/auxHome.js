@@ -1,4 +1,5 @@
 import { API_URL_MATCHLIST } from "../../config/api";
+import axios from "axios";
 
 export const eventos = [
   {
@@ -24,32 +25,46 @@ export const eventos = [
   },
 ];
 
-export const obtenerDatosUsuario = async (userId) => {
-  const url = `${API_URL_MATCHLIST.replace(":id", userId)}`;
-  // console.log("Esto es la url:", url);
+export const obtenerDatosUsuario = async (tuneMatch) => {
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error("Error al obtener los datos del usuario");
+    let matchIds = [];
+    if (Array.isArray(tuneMatch)) {
+      // Verificar si tuneMatch es un array de objetos con una propiedad 'id'
+      if (
+        tuneMatch.length > 0 &&
+        typeof tuneMatch[0] === "object" &&
+        "id" in tuneMatch[0]
+      ) {
+        matchIds = tuneMatch.map((match) => match.id);
+      } else {
+        matchIds = tuneMatch; // Si no es un array de objetos, se asume que es un array de ids
+      }
+    } else {
+      throw new Error("El parametro tuneMatch DEBE ser un ARRAY."); //hasta ahi llegamos con las comprobaciones, mandenlo en un array ;D
     }
-    const data = await response.json();
-    // console.log("Esto es data:", data);
-    const matchIds = data.tuneMatch.map((match) => match.id);
+
     const perfilesUsuarios = await Promise.all(
       matchIds.map(async (id) => {
-        const perfilResponse = await fetch(
-          `${API_URL_MATCHLIST.replace(":id", id)}`
-        );
-        if (!perfilResponse.ok) {
+        try {
+          const perfilResponse = await axios.get(
+            API_URL_MATCHLIST.replace(":id", id)
+          );
+
+          if (!perfilResponse.data) {
+            throw new Error(
+              `Error al obtener el perfil del usuario con ID: ${id}`
+            );
+          }
+
+          return perfilResponse.data;
+        } catch (error) {
           throw new Error(
             `Error al obtener el perfil del usuario con ID: ${id}`
           );
         }
-        return await perfilResponse.json();
       })
     );
 
-    // console.log("Estos son los perfiles de usuario:", perfilesUsuarios);
     return perfilesUsuarios;
   } catch (error) {
     console.error("Error:", error);

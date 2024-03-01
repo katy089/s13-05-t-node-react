@@ -32,3 +32,5 @@ Dentro de esta función, el estado actual del store se guarda en el almacenamien
 store.subscribe(() => {
   localStorage.setItem("reduxState", JSON.stringify(store.getState()));
 });
+
+console.log('Estado actual de Redux:', store.getState());
