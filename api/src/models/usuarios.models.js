@@ -7,7 +7,7 @@ const UserSchema = Schema({
     type: String,
     required: [true, "Debe Ingresar un nombre de usuario"],
   },
-  
+
   correo: {
     type: String,
     required: [true, "Debe Ingresar un correo"],
@@ -38,7 +38,20 @@ const UserSchema = Schema({
   ],
 
   tuneMatch: {
-    type: [Schema.Types.Mixed],
+    type: [{
+      tuneMatchId: { type: Schema.Types.ObjectId, ref: "Usuario" },
+      nuevo: { type: Boolean, default: true }
+    }],
+    default: [],
+  },
+
+  likes: {
+    type: [{
+      userId: { type: Schema.Types.ObjectId, ref: "Usuario" },
+      date: { type: Date, default: Date.now },
+      status: { type: String, default: 'activo' },
+      intentos: { type: Number, default: 0 }
+    }],
     default: [],
   },
 
@@ -55,13 +68,15 @@ const UserSchema = Schema({
 
   enBuscaDe: [{ type: String }],
 
+  descripcion: { type: String },
+
   activo: { type: Boolean, default: true },
 
   google: { type: Boolean, default: false },
 });
 
 UserSchema.methods.toJSON = function () {
-  const { __v, _id: id, password, ...usuario } = this.toObject();
+  const { __v, _id: id, likes, password, ...usuario } = this.toObject();
   return { id, ...usuario };
 };
 

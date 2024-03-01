@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { PROFILE } from "./../../Router/Paths";
+import { HOME, PROFILE } from "./../../Router/Paths";
 import { RiHome6Line } from "react-icons/ri";
 import { FaHeart, FaRegBell } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
@@ -87,9 +87,14 @@ function NavBar() {
         <div className="flex items-center place-content-end space-x-2 w-full px-2">
           {/** Lista de Nav */}
           <ul className="md:flex md:flex-row hidden md:space-x-8">
-            <li className="btn btn-sm hover:bg-slate-600 hover:text-white rounded-[30px] bg-gray-500">
-              <RiHome6Line size={20} color="white" />
-              <span className=" text-white hidden sm:flex">Feed</span>
+            <li>
+              <Link
+                to={HOME}
+                className="btn btn-sm hover:bg-slate-600 hover:text-white rounded-[30px] bg-gray-500"
+              >
+                <RiHome6Line size={20} color="white" />
+                <span className=" text-white hidden sm:flex">Feed</span>
+              </Link>
             </li>
             <li className="btn btn-sm rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800">
               <FaHeart size={20} color="white" />
@@ -125,9 +130,14 @@ function NavBar() {
                 className="absolute top-9 bg-black left-0 w-full mt-2 shadow-lg rounded-b-md py-3 px-1 space-y-1 text-xs"
                 ref={menuRef}
               >
-                <li className="flex items-center btn btn-sm justify-center min-h-min rounded-[30px] bg-gray-500 p-1 hover:bg-slate-600 hover:text-white">
-                  <RiHome6Line size={20} color="white" />
-                  <span className=" text-white flex">Feed</span>
+                <li>
+                  <Link
+                    to={HOME}
+                    className="flex items-center btn btn-sm justify-center min-h-min rounded-[30px] bg-gray-500 p-1 hover:bg-slate-600 hover:text-white"
+                  >
+                    <RiHome6Line size={20} color="white" />
+                    <span className=" text-white flex">Feed</span>
+                  </Link>
                 </li>
                 <li className="flex items-center btn btn-sm justify-center min-h-min rounded-[30px] bg-teal-400 border-none shadow-none hover:bg-teal-800 p-1">
                   <FaHeart size={20} color="white" />
