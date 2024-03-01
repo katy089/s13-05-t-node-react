@@ -48,6 +48,17 @@ module.exports = {
 
     try {
       const usuario = await Usuario.findOne({ correo, activo: true });
+      const tuneMatchesNuevos = usuario.tuneMatch.filter(x => x.nuevo === true);
+      const newTunMatchs = [];
+
+      if (tuneMatchesNuevos.length > 0) {
+        await Promise.all(tuneMatchesNuevos.map(async x => {
+          newTunMatchs.push(x);
+          await Usuario.findByIdAndUpdate(usuario._id,
+            { $set: { 'tuneMatch.$[elem].nuevo': false } },
+            { arrayFilters: [{ 'elem.nuevo': true }] })
+        }))
+      }
 
       if ("ultimaPosicion" in rest) {
         const { ultimaPosicion } = rest;
@@ -55,6 +66,7 @@ module.exports = {
         await usuario.save();
         distancia = calcularDistancia(ultimaPosicion, coordTuneMatch);
       }
+
       if (!usuario)
         return res.status(404).json({
           message: "No existe este usuario",
@@ -65,6 +77,16 @@ module.exports = {
         return res.status(400).json({
           message: "Contraseña incorrecta",
         });
+
+      if (newTunMatchs.length > 0) {
+        return res.status(200).json({
+          message: `Gracias por volver ${usuario.nombre}, ${newTunMatchs.length === 1 ? "Tienes un nuevo TuneMatch" : `Tienes ${newTunMatchs.length} nuevos TuneMatches`
+            }`,
+          usuario,
+          distancia,
+          newTunMatchs: newTunMatchs
+        });
+      }
 
       return res.status(200).json({
         message: `Gracias por volver ${usuario.nombre}`,
@@ -96,6 +118,8 @@ module.exports = {
         };
         usuario = new Usuario(data);
 
+
+
         if (ultimaPosicion) {
           distancia = calcularDistancia(ultimaPosicion, coordTuneMatch);
           usuario.ultimaPosicion = ultimaPosicion;
@@ -109,10 +133,30 @@ module.exports = {
         });
       }
       if (usuario && usuario.google) {
+        const tuneMatchesNuevos = usuario.tuneMatch.filter(x => x.nuevo === true);
+        const newTunMatchs = [];
+
+        if (tuneMatchesNuevos.length > 0) {
+          await Promise.all(tuneMatchesNuevos.map(async x => {
+            newTunMatchs.push(x);
+            await Usuario.findByIdAndUpdate(usuario._id,
+              { $set: { 'tuneMatch.$[elem].nuevo': false } },
+              { arrayFilters: [{ 'elem.nuevo': true }] })
+          }))
+        }
         if (ultimaPosicion) {
           usuario.ultimaPosicion = ultimaPosicion;
           await usuario.save();
           distancia = calcularDistancia(ultimaPosicion, coordTuneMatch);
+        }
+        if (newTunMatchs.length > 0) {
+          return res.status(200).json({
+            message: `Gracias por volver ${usuario.nombre}, ${tuneMatchesNuevos.length === 1 ? "Tienes un nuevo TuneMatch" : `Tienes ${tuneMatchesNuevos.length} nuevos TuneMatches`
+              }`,
+            usuario,
+            distancia,
+            newTunMatchs: tuneMatchesNuevos
+          });
         }
         return res.status(200).json({
           message: `Gracias por volver ${usuario.nombre}`,
@@ -222,11 +266,14 @@ module.exports = {
       const [user, likeado] = await Promise.all([
         Usuario.findOne({ _id: idUser, activo: true }),
         Usuario.findOne({ _id: idLike, activo: true })
-      ])
-      if (!user || !likeado)
+      ]);
+
+      if (!user || !likeado) {
         return res.status(404).json({
           message: "No existe algún Id en la base de datos"
-        })
+        });
+      }
+
       const likedUpdated = await Usuario.findOneAndUpdate(
         { _id: idLike, 'likes.userId': { $ne: idUser } },
         { $addToSet: { likes: { userId: idUser } } },
@@ -235,34 +282,48 @@ module.exports = {
 
       if (!likedUpdated) {
         return res.status(200).json({
-          message: "Like ya existe para este usuario."
+          message: "Ya le has dado like a este usuario."
         });
       }
 
-      const CoincidenciasLikes = () => {
-        const coincidencia1 = user.likes.some(like => like.userId.toString() === idLike.toString())
-        const coincidencia2 = likedUpdated.likes.some(like => like.userId.toString() === idUser.toString())
-        return coincidencia1 && coincidencia2
-      };
+      const coincidencia1 = user.likes.some(like => like.userId.toString() === idLike.toString());
+      const coincidencia2 = likedUpdated.likes.some(like => like.userId.toString() === idUser.toString());
 
-      const result = CoincidenciasLikes()
+      if (coincidencia1 && coincidencia2) {
+        const alreadyMatched = user.tuneMatch.some(match => match.tuneMatchId.toString() === idLike.toString()) &&
+          likeado.tuneMatch.some(match => match.tuneMatchId.toString() === idUser.toString());
 
-      if (result) {
-        const [, TuneMatch] = await Promise.all([
+        if (alreadyMatched) return res.status(200).json({
+          message: 'Ambos usuarios ya están en el TuneMatch del otro.'
+        });
+
+        const [, likeadoUpdate] = await Promise.all([
           Usuario.findByIdAndUpdate(idUser,
-            { $addToSet: { tuneMatch: idLike }, $pull: { likes: { userId: idLike } } }, { new: true }),
+            {
+              $addToSet: { 'tuneMatch': { tuneMatchId: idLike, nuevo: false, new: true } },
+              $pull: { likes: { userId: idLike } }
+            },
+            { new: true }
+          ),
           Usuario.findByIdAndUpdate(idLike,
-            { $addToSet: { tuneMatch: idUser }, $pull: { likes: { userId: idUser } } }, { new: true })
-        ])
+            {
+              $addToSet: { 'tuneMatch': { tuneMatchId: idUser, new: true } },
+              $pull: { likes: { userId: idUser } }
+            },
+            { new: true }
+          )
+        ]);
 
-        const tuneMatch = TuneMatch.toJSON();
-        delete tuneMatch.correo;
-        delete tuneMatch.tuneMatch;
+        const tuneMatchLikeado = likeadoUpdate.tuneMatch.find(match => match.tuneMatchId.toString() === idUser.toString());
 
         return res.status(200).json({
           message: 'Tienes un TuneMatch!',
-          tuneMatch
-        })
+          tuneMatch: {
+            id: likeadoUpdate._id,
+            tuneMatchId: tuneMatchLikeado.tuneMatchId,
+            nuevo: tuneMatchLikeado.nuevo
+          }
+        });
       }
 
       return res.status(200).json({
@@ -270,13 +331,14 @@ module.exports = {
       });
 
     } catch (e) {
-      console.log(e)
+      console.error(e);
       return res.status(500).json({
         message: "Error interno del servidor"
-      })
+      });
     }
   },
-    
+
+
   updateUser: async (
     id,
     { nombre, miGenero, distancia, bandas, generos, fotos, enBuscaDe },
@@ -299,5 +361,34 @@ module.exports = {
       });
     }
   },
+  undoTuneMatch: async (req, res) => {
+    try {
+      const { idUser, idLike } = req.body;
+      const [user, likeado] = await Promise.all([
+        Usuario.findOne({ _id: idUser, activo: true }),
+        Usuario.findOne({ _id: idLike, activo: true })
+      ])
+
+      if (!user || !likeado) {
+        return res.status(404).json({
+          message: "Uno o ambos usuarios no existen en la base de datos"
+        })
+      }
+      const [userUpdate] = await Promise.all([
+        Usuario.findByIdAndUpdate(idUser, { $pull: { tuneMatch: { tuneMatchId: idLike } } }, { new: true }),
+        Usuario.findByIdAndUpdate(idLike, { $pull: { tuneMatch: { tuneMatchId: idUser } } }, { new: true })
+      ])
+
+      return res.status(200).json({
+        message: "TuneMatch deshecho correctamente " + userUpdate.nombre,
+      })
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Error interno del servidor"
+      })
+    }
+  }
+
 };
 
