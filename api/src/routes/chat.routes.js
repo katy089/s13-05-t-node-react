@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const {
-    accessChat,
-    fetchChats,
-    createGroupChat,
-    removeFromGroup,
-    addToGroup,
-    renameGroup,
-} = require("../controller/message.controller.js");
+  accessChat,
+  fetchChats,
+  createGroupChat,
+  removeFromGroup,
+  addToGroup,
+  renameGroup,
+} = require("../controller/chat.controller.js");
 
 const messageRoutes = Router();
 
