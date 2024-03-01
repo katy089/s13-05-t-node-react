@@ -35,8 +35,17 @@ paths:
                   type: array
                   items:
                     type: string
+                likes:
+                  type: array
+                  items:
+                    type: object
                 ultimaPosicion:
                   type: object
+                  properties:
+                    lat:
+                      type: string
+                    lon:
+                      type: string
                 enBuscaDe:
                   type: array
                   items:
@@ -46,6 +55,8 @@ paths:
       responses:
         "201":
           description: Se registro correctamente el usuario
+        "400":
+          description: Error en la solicitud
         "500":
           description: Error al intentar conectar a la db
   
@@ -82,7 +93,7 @@ paths:
           in: path
           description: id de usuario
           schema:
-            type: String
+            type: string
       
 
       responses:
@@ -102,7 +113,7 @@ paths:
           in: path
           description: id de usuario
           schema:
-            type: String
+            type: string
 
       requestBody:
         required: true
@@ -127,12 +138,29 @@ paths:
                   type: array
                   items:
                     type: string
+                tuneMatch:
+                  type: array
+                  items:
+                    type: string
+                likes:
+                  type: array
+                  items:
+                    type: object
                 ultimaPosicion:
                   type: object
+                  properties:
+                    lat:
+                      type: string
+                    lon:
+                      type: string
                 enBuscaDe:
                   type: array
                   items:
                     type: string
+                activo:
+                  type: boolean
+                google:
+                  type: boolean
 
       responses:
         "201":
@@ -140,6 +168,7 @@ paths:
         "500":
           description: Error al intentar conectar a la db
 
+  
 
 components:
   schemas:
@@ -147,43 +176,62 @@ components:
       type: object
       properties:
         _id:
-          type: ObjectId
+          type: string
           description: id autogenerado
         nombre:
-          type: String
+          type: string
           description: el nombre del usuario
         correo:
-          type: String
+          type: string
           description: el correo del usuario
         password:
-          type: String
+          type: string
           description: password del usuario
         miGenero:
-          type: String
+          type: string
           description: El sexo del usuario
         fotos:
-          type: Array
+          type: array
           description: las fotos del usuario
+          items:
+            type: string
         bandas:
-          type: Array
-          description: bandas elejidas del usuario
+          type: array
+          description: bandas elegidas del usuario
+          items:
+            type: string
         generos:
-          type: Array
-          description: los generos elejidos del usuario
+          type: array
+          description: los generos elegidos del usuario
+          items:
+            type: string
         tuneMatch:
-          type: Array
+          type: array
           description: las personas con quien hizo match el usuario
+          items:
+            type: string
         ultimaPosicion:
-          type: Object
+          type: object
           description: La ultima ubicacion del usuario
+          properties:
+            lat:
+              type: string
+            lon:
+              type: string
         enBuscaDe:
-          type: Array
+          type: array
           description: Lo que busca el usuario con nuestra aplicacion
+          items:
+            type: string
         activo:
-          type: Boolean
+          type: boolean
           description: Si esta activo el usuario
+        google:
+          type: Boolean
+          description: Si inicio sesion con google o no
+
       example:
-        _id: ObjectId("hfhnf65634bdhbdfjh")
+        _id: "hfhnf65634bdhbdfjh"
         nombre: Santiago
         correo: santiago@gmail.com
         password: xxxxx
@@ -192,6 +240,19 @@ components:
         bandas: ['AC/DC','Aerosmith']
         generos: ['Rock', 'Pop']
         tuneMatch: ['hfhnf65634bdhbdfjh', 'hfhnf65634bdhbdfjh']
-        ultimaPosicion: {1032, 1123}
+        ultimaPosicion:
+          lat: -32.5534
+          lon: -30.666
         enBuscaDe: ['Formar una banda']
         activo: true
+        google: false
+
+    Like:
+      type: object
+      properties:
+        idUser:
+          type: String
+          description: id del usuario que esta realizando el like
+        idLike:
+          type: String
+          description: id del usuario que recibe el like
