@@ -1,14 +1,7 @@
 import { API_URL_LOGIN, API_URL_GOOGLE } from "../config/api";
-import { updateAll } from "../redux/authSlice";
+import { updateAll, login } from "../redux/authSlice";
 // import { useDispatch } from "react-redux";
 // import { setId } from '../redux/authSlice'
-
-export const authenticateUser = async (correo, password) => {
-  //eslint-disable-next-line
-  // const dispatch = useDispatch();
-  //console.log(correo , password);
-
-import { login, updateAll } from "../redux/authSlice";
 
 export const authenticateUser = async (
   correo,
@@ -67,8 +60,7 @@ export const sendToBackend = (
   ultimaPosicion,
   dispatch,
   setEmailTuneMatch,
-  handleLoginError,
-  dispatch
+  handleLoginError
 ) => {
   const body =
     Object.keys(ultimaPosicion).length !== 0
