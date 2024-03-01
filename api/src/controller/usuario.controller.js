@@ -92,7 +92,7 @@ const likes = async (req = request, res = response) => {
   try {
     await serviceUser.like(idUser, idLike, res)
   } catch (e) {
-    console.log(e)
+    console.log({ message: e })
   }
 }
 
@@ -120,6 +120,14 @@ const updateUser = async (req, res) => {
   }
 };
 
+const undo = async (req = request, res = response) => {
+  try {
+    await serviceUser.undoTuneMatch(req, res)
+  } catch (e) {
+    console.log({ message: e })
+  }
+}
+
 module.exports = {
   signUp,
   logIn,
@@ -129,4 +137,5 @@ module.exports = {
   updateUser,
   likes,
   getTuneMatch,
+  undo
 };

@@ -39,8 +39,8 @@ const UserSchema = Schema({
 
   tuneMatch: {
     type: [{
-      type: Schema.Types.ObjectId,
-      ref: "Usuario"
+      tuneMatchId: { type: Schema.Types.ObjectId, ref: "Usuario" },
+      nuevo: { type: Boolean, default: true }
     }],
     default: [],
   },
@@ -55,9 +55,6 @@ const UserSchema = Schema({
     default: [],
   },
 
-
-
-
   ultimaPosicion: {
     lat: {
       type: Number,
@@ -70,6 +67,8 @@ const UserSchema = Schema({
   },
 
   enBuscaDe: [{ type: String }],
+
+  descripcion: { type: String },
 
   activo: { type: Boolean, default: true },
 
