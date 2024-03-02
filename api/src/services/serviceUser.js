@@ -300,14 +300,42 @@ module.exports = {
         const [, likeadoUpdate] = await Promise.all([
           Usuario.findByIdAndUpdate(idUser,
             {
-              $addToSet: { 'tuneMatch': { tuneMatchId: idLike, nuevo: false, new: true } },
+              $addToSet: {
+                'tuneMatch':
+                {
+                  tuneMatchId: idLike,
+                  nuevo: false,
+                  nombre: likeado.nombre,
+                  generos: likeado.generos,
+                  bandas: likeado.bandas,
+                  miGenero: likeado.miGenero,
+                  fotos: likeado.fotos,
+                  enBuscaDe: likeado.enBuscaDe,
+                  descripcion: likeado.descripcion,
+                  ultimaPosicion: likeado.ultimaPosicion,
+                  new: true
+                }
+              },
               $pull: { likes: { userId: idLike } }
             },
             { new: true }
           ),
           Usuario.findByIdAndUpdate(idLike,
             {
-              $addToSet: { 'tuneMatch': { tuneMatchId: idUser, new: true } },
+              $addToSet: {
+                'tuneMatch': {
+                  tuneMatchId: idUser,
+                  nombre: user.nombre,
+                  generos: user.generos,
+                  bandas: user.bandas,
+                  miGenero: user.miGenero,
+                  fotos: user.fotos,
+                  enBuscaDe: user.enBuscaDe,
+                  descripcion: user.descripcion,
+                  ultimaPosicion: user.ultimaPosicion,
+                  new: true
+                }
+              },
               $pull: { likes: { userId: idUser } }
             },
             { new: true }
@@ -319,9 +347,16 @@ module.exports = {
         return res.status(200).json({
           message: 'Tienes un TuneMatch!',
           tuneMatch: {
-            id: likeadoUpdate._id,
             tuneMatchId: tuneMatchLikeado.tuneMatchId,
-            nuevo: tuneMatchLikeado.nuevo
+            nombre: tuneMatchLikeado.nombre,
+            generos: tuneMatchLikeado.generos,
+            bandas: tuneMatchLikeado.bandas,
+            miGenero: tuneMatchLikeado.miGenero,
+            fotos: tuneMatchLikeado.fotos,
+            enBuscaDe: tuneMatchLikeado.enBuscaDe,
+            descripcion: tuneMatchLikeado.descripcion,
+            ultimaPosicion: tuneMatchLikeado.ultimaPosicion,
+
           }
         });
       }
