@@ -61,7 +61,7 @@ const Register22 = () => {
                                 mismos gustos. ¡Comparte tu pasión musical y
                                 descubre nuevas  experiencias con personas afines!
                             </p>
-                            <div className="flex items-center justify-center  my-5 sm:my-10"></div>
+                        <div className="flex items-center justify-center  my-5 sm:my-10"></div>
                         </div>
                         <div
                             className="place-content-end w-11/12 mx-auto sm:mx-0 sm:w-1/2 md:w-1/3 px-4 py-6 rounded-lg bg-opacity-95"
@@ -86,7 +86,7 @@ const Register22 = () => {
                                 </div>
                             </div>
                           
-                            <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max px-1 bg-[#6C2B6D]">
+                            <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max  bg-[#6C2B6D]">
                                 Puedes cambiar estos ajustes cuando quieras
                             </span>
                             <div className="flex items-center flex-col my-6">

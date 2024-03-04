@@ -106,11 +106,6 @@ UserSchema.methods.toJSON = function () {
   return { id, ...usuario };
 };
 
-UserSchema.pre("findOne", function () {
-  this.populate("generos");
-  this.populate("bandas");
-});
-
 UserSchema.plugin(paginate)
 module.exports = model("Usuario", UserSchema);
 

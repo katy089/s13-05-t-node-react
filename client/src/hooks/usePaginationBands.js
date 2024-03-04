@@ -8,7 +8,7 @@ const usePaginationBands = () => {
   
  
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 24; 
+  const itemsPerPage = 15; 
     
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

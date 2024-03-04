@@ -27,10 +27,10 @@ const useGeneros = () => {
             try {
                 const response = await axios.get(API_URL_REGISTER_GENEROS);
                 const data = response.data;
-                console.log(data)
+                // console.log(data)
 
                 if (data && data?.musicalGenres) {
-                    console.log(data);
+                    // console.log(data);
                     dispatch(setGenres(data.musicalGenres))
                 } else {
                     console.error("Data or bands property is missing.");
@@ -62,7 +62,6 @@ const useGeneros = () => {
 
     const handleRegister23 = async() => {
         
-
         dispatch(setGeneros(generos)) 
         await axios
               .put(`${API_URL_UPDATE}/${id}`, { generos })
@@ -84,13 +83,42 @@ const useGeneros = () => {
         navigate("/register221");
     };
 
+    const handleReloaded = () => {
+        localStorage.removeItem('generos');
+    }
 
+    const handleUpdateGenres = async() => {
 
+        try {
+            
+            const response = await axios.put(`${API_URL_UPDATE}/${id}`, { generos })
+            const data = response.data
+            console.log(data)
+            
+            if (data) {
+                console.log(data.generos);
+                dispatch(setGeneros(data.generos))
+            } else {
+                console.error("Genero no se actualizo");
+            }
+            
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                Swal.fire("Error", "Ocurrió un error", "error");
+            } else {
+                console.error("Se produjo un error al obtener datos:", error);
+            }
+            
+        }
+
+    } 
 
 
     return {
         handleGeneroClick,
         handleRegister23,
+        handleReloaded,
+        handleUpdateGenres
         // buttonGeneroStorege
     }
 
