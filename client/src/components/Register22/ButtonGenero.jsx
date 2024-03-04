@@ -12,6 +12,7 @@ const ButtonGenero = ({ text, onClick }) => {
     useEffect(() => {
         // Guardar el estado en localStorage cada vez que cambie
         localStorage.setItem(`buttonState_${text}`, isClicked);
+       
         // Eliminar todo el contenido del localStorage
         // console.log(buttonGeneroStorege)
         // if (!buttonGeneroStorege) { 

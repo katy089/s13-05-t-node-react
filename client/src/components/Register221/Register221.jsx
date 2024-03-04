@@ -73,10 +73,10 @@ const Register221 = () => {
                                 backgroundPosition: "center",
                             }}
                         >
-                            <h1 className="text-3xl text-center -mt-3">Escoge tus generos musicales preferidos!</h1>
+                            <h1 className="text-3xl text-center -mt-3">Escoge tus bandas favoritas!</h1>
                             <div className="flex items-center justify-center pt-6">
                                 <div className="grid grid-cols-3 gap-5 w-full">
-                                    {console.log(currentItems)}
+                                    
                                     {currentItems?.map((band) => (
                                         <ButtonBands
                                             key={band?._id}
@@ -88,7 +88,8 @@ const Register221 = () => {
                                 </div>
                             </div>
 
-                            <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max px-1 bg-[#6C2B6D]">
+                         
+                            <span className=" pt-14 -mt-[38px] flex items-center justify-center mx-auto text-center w-max bg-[#6C2B6D]">
                                 Puedes cambiar estos ajustes cuando quieras
                             </span>
                             <div className="flex items-center flex-col my-6">
@@ -108,6 +109,8 @@ const Register221 = () => {
                                     <ChevronsRight />
                                 </button>
                             </div>
+                           
+
                         </div>
                     </div>
                 </div>
