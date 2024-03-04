@@ -29,17 +29,17 @@ const useBands = () => {
             console.log(data)
 
             if (data && data?.bands) {
-                console.log(data);
+                // console.log(data);
                 // setbandBDD(data.bands);
                 dispatch(setBands(data.bands))
             } else {
-                console.error("Data or bands property is missing.");
+                console.error("Faltan datos o propiedad de bandas.");
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 Swal.fire("Error", "Ocurrió un error", "error");
             } else {
-                console.error("An error occurred while fetching data:", error);
+                console.error("Se produjo un error al obtener datos:", error);
             }
         }
     };
@@ -79,16 +79,49 @@ const useBands = () => {
               }) 
 
         // Limpiar 'generos' en localStorage después de usarlos
-        localStorage.removeItem('bands');
+        // localStorage.removeItem('bands');
        
 
         navigate("/register2");
     };
 
+        const handleReloadedBands = () => {
+        localStorage.removeItem('bands');
+    }
+
+    const handleUpdateBands = async() => {
+
+        
+        try {
+            
+            const response = await axios.put(`${API_URL_UPDATE}/${id}`, { bandas: bands })
+            const data = response.data
+            console.log(data)
+            
+            if (data) {
+                console.log(data.bandas);
+                dispatch(setBandas(data.bandas))
+            } else {
+                console.error("Genero no se actualizo");
+            }
+            
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                Swal.fire("Error", "Ocurrió un error", "error");
+            } else {
+                console.error("Se produjo un error al obtener datos:", error);
+            }
+            
+        }
+
+    }
+
     return {
 
         handleBandClick,
-        handleRegister      
+        handleRegister,
+        handleReloadedBands,
+        handleUpdateBands      
     }
 
 }

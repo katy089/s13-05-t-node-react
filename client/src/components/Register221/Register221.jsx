@@ -73,10 +73,10 @@ const Register221 = () => {
                                 backgroundPosition: "center",
                             }}
                         >
-                            <h1 className="text-3xl text-center -mt-3">Escoge tus generos musicales preferidos!</h1>
+                            <h1 className="text-3xl text-center -mt-3">Escoge tus bandas favoritas!</h1>
                             <div className="flex items-center justify-center pt-6">
                                 <div className="grid grid-cols-3 gap-5 w-full">
-                                    {console.log(currentItems)}
+                                    
                                     {currentItems?.map((band) => (
                                         <ButtonBands
                                             key={band?._id}

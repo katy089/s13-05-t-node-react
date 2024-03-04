@@ -8,6 +8,9 @@ import {
   miGeneroX 
 } from "../../utils/datas";
 import ModalGeneros from "../Modal/ModalGeneros";
+import useGeneros from "../../hooks/useGeneros";
+import ModalBandas from "../Modal/ModalBandas";
+import useBands from "../../hooks/useBands";
  
 function ProfileCard({
   img,
@@ -16,9 +19,13 @@ function ProfileCard({
   generos,
   activo,
   miGenero,
-  ultimaPosicion,
+  // ultimaPosicion,
   fotos,
 }) {
+
+   const { handleReloaded } = useGeneros()
+   const { handleReloadedBands } = useBands()
+
   
   return (
     <section className="w-screen bg-white ">
@@ -72,9 +79,9 @@ function ProfileCard({
                 )}
                 <ModalComponent titulo={"Genero"} id={5} generos={miGeneroX} />
               </div>
-              <span className="flex items-center bg-slate-600 text-white text-sm font-bold rounded-full px-3 py-1">
+              {/* <span className="flex items-center bg-slate-600 text-white text-sm font-bold rounded-full px-3 py-1">
                 <CiLocationOn /> a {ultimaPosicion} km de distancia
-              </span>
+              </span> */}
             </div>
             {/* Name */}
 
@@ -98,13 +105,10 @@ function ProfileCard({
                   Mis Generos Favs     
                 </h2>
                    <ModalGeneros        // <==========  en processo
-                     titulo={"Mis Géneros Favoritos"}            
-                   />                  
-                {/* <ModalComponent
-                  titulo={"Mis Géneros Favoritos"}   
-                  id={2}
-                  opciones={generosMusicales}
-                /> */}
+                     titulo={"Mis Géneros Favoritos"} 
+                     onClick={handleReloadedBands}
+                />                  
+
               </div>
               <div className="flex gap-3 justify-center">
                 {generos && generos.length > 0 ? (
@@ -125,13 +129,12 @@ function ProfileCard({
             {/* Bands */}
             <div className="w-full">
               <div className="flex gap-2">
-                <h2 className="text-gray-800 font-bold text-2xl">
-                  Mis Bandas Favs
-                </h2>
-                <ModalComponent
+                <h2 className="text-gray-800 font-bold text-2xl">                
+                  Mis Bandas Favs                      
+                </h2>   
+                <ModalBandas                   
                   titulo={"Mis Bandas Favoritas"}
-                  id={3}
-                  opciones={bandasMusicales}
+                  onClick={handleReloaded}
                 />
               </div>
               <div className="flex gap-3 justify-center">

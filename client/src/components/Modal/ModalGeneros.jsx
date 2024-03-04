@@ -6,7 +6,6 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { useState } from "react";
 
 
-
 const ModalGeneros = () => {
     
     const closeModal = () => setShowModal(false);
@@ -14,7 +13,7 @@ const ModalGeneros = () => {
 
     const [showModal, setShowModal] = useState(false);
 
-    const { handleGeneroClick, handleRegister23 } = useGeneros()
+    const { handleGeneroClick, handleUpdateGenres } = useGeneros()
 
     const {
         currentPage,
@@ -35,14 +34,19 @@ const ModalGeneros = () => {
 
                     <div className=" bg-[#6C2B6D] px-4 pt-4 pb-2  rounded-lg 
                      w-90 md:w-80 ">
-                    <div >
-                        <button
-                            className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 bg-[#38709e]"
-                            onClick={closeModal}
-                        >
-                            ✕
-                        </button>
-                        <div className="grid grid-cols-3 gap-5 w-full  mt-4 ">
+                    {/* <div > */}
+                        <p className="text-l text-center ">Escoge tus generos musicales preferidos!</p>
+                        <div className="relative z-10 -top-14 right-2 justify-end">
+                            <button
+                                className="btn btn-circle btn-ghost btn-sm bg-[#BB7EBC] text-white"
+                                onClick={closeModal}
+                            >
+                                ✕
+                            </button>
+
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-5 w-full -mt-3 ">
                             {currentItems?.map((genero) => (
                                 <ButtonGenero
                                     key={genero?._id}
@@ -52,7 +56,7 @@ const ModalGeneros = () => {
                                 />
                             ))}
                         </div>
-                    </div>
+                    {/* </div> */}
                     <div className="flex items-center justify-center mt-4 mb-4">
                         <button onClick={handlePrevPage} disabled={currentPage === 1}>
                             <ChevronsLeft />
@@ -64,9 +68,9 @@ const ModalGeneros = () => {
                     </div>
                     <button
                         className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl mb-4"
-                        onClick={handleRegister23}
+                        onClick={handleUpdateGenres}
                     >
-                        Siguiente
+                        Guardar
                     </button>
         </div>   
         </dialog>
