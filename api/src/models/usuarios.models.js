@@ -62,7 +62,15 @@ const UserSchema = Schema({
     }],
     default: [],
   },
-
+  misLikes: {
+    type: [{
+      likedId: { type: Schema.Types.ObjectId, ref: "Usuario" },
+      date: { type: Date, default: Date.now },
+      nombre: { type: String },
+      fotos: [{ type: String }]
+    }],
+    default: []
+  },
   likes: {
     type: [{
       userId: { type: Schema.Types.ObjectId, ref: "Usuario" },
