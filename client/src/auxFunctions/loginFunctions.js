@@ -104,7 +104,7 @@ export const handleSignOut = async () => {
       if (done) {
         console.log("Revocación exitosa");
         localStorage.removeItem("emailTuneMatch"); // colocar el correo en el storage puede no ser seguro, pero se necesita durante la sesion para poder cerrar
-        localStorage.removeItem("sessionData"); // colocar el correo en el storage puede no ser seguro, pero se necesita durante la sesion para poder cerrar
+        localStorage.removeItem("sessionData");
         window.location.reload(); // en caso de que haya quedado algo en el navegador se elimina, pero no es tan necesario, podría funcionar sin reload()
       } else {
         console.error("Error al revocar el consentimiento");
@@ -112,14 +112,3 @@ export const handleSignOut = async () => {
     }
   );
 };
-
-/**
- Botoncito que cierra sesión que se puede colocar en NavBar
-{
-  emailTuneMatch && (
-    <button id="g_id_signout" onClick={handleSignOut}>
-      Sign Out
-    </button>
-  );
-}
- */

@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 import { useDispatch } from "react-redux";
 import { updateAll } from "../../redux/authSlice";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Login = () => {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleButton = () => {
     navigate("/signup");
@@ -139,7 +141,7 @@ const Login = () => {
       // Esperamos a que el usuario permita la geolocalización
       await obtenerPosicion();
 
-      console.log(response, "hola soy response yya");
+      // console.log(response, "hola soy response yya");
 
       // envío la info al backend
       sendToBackend(
@@ -299,19 +301,28 @@ const Login = () => {
                     placeholder="email@example.com"
                   />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col relative">
                   <label htmlFor="password">Contraseña</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    style={{
-                      backgroundImage: ` linear-gradient(180deg, rgba(169,181,180,1) 0%, rgba(154,201,196,1) 34%)`,
-                    }}
-                    className="outline-none appearance-none border-none rounded-lg px-2 py-2 text-black placeholder:text-gray-500"
-                    placeholder="Introduce tu contraseña"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      style={{
+                        backgroundImage: `linear-gradient(180deg, rgba(169,181,180,1) 0%, rgba(154,201,196,1) 34%)`,
+                      }}
+                      className="outline-none appearance-none border-none rounded-lg px-2 py-2 text-black placeholder:text-gray-500 w-full"
+                      placeholder="Introduce tu contraseña"
+                    />
+                    <button
+                      className="absolute inset-y-0 right-0 flex items-center pr-2"
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <FaEye /> : <FaEyeSlash />}
+                    </button>
+                  </div>
                 </div>
                 <div className="flex items-center justify-center text-center my-6">
                   <button

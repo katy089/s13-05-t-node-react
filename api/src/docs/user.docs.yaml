@@ -41,6 +41,11 @@ paths:
                     type: object
                 ultimaPosicion:
                   type: object
+                  properties:
+                    lat:
+                      type: string
+                    lon:
+                      type: string
                 enBuscaDe:
                   type: array
                   items:
@@ -114,7 +119,12 @@ paths:
           in: path
           description: id de usuario
           schema:
+<<<<<<< HEAD
+            type: string
+      
+=======
             type: String
+>>>>>>> 1f7e0ae3e17d30be8bff8ae6b7b5db6a7ad02f19
 
       responses:
         "200":
@@ -165,7 +175,7 @@ paths:
           in: path
           description: id de usuario
           schema:
-            type: String
+            type: string
 
       requestBody:
         required: true
@@ -200,6 +210,11 @@ paths:
                     type: object
                 ultimaPosicion:
                   type: object
+                  properties:
+                    lat:
+                      type: string
+                    lon:
+                      type: string
                 enBuscaDe:
                   type: array
                   items:
@@ -225,54 +240,82 @@ components:
       type: object
       properties:
         _id:
-          type: ObjectId
+          type: string
           description: id autogenerado
         nombre:
-          type: String
+          type: string
           description: el nombre del usuario
         correo:
-          type: String
+          type: string
           description: el correo del usuario
         password:
-          type: String
+          type: string
           description: password del usuario
         miGenero:
-          type: String
+          type: string
           description: El sexo del usuario
         fotos:
-          type: Array
+          type: array
           description: las fotos del usuario
+          items:
+            type: string
         bandas:
-          type: Array
-          description: bandas elejidas del usuario
+          type: array
+          description: bandas elegidas del usuario
+          items:
+            type: string
         generos:
-          type: Array
-          description: los generos elejidos del usuario
+          type: array
+          description: los generos elegidos del usuario
+          items:
+            type: string
         tuneMatch:
-          type: Array
+          type: array
           description: las personas con quien hizo match el usuario
+<<<<<<< HEAD
+          items:
+            type: string
+=======
         likes:
           type: Array
           description: las personas que le dieron like a este usuario
+>>>>>>> 1f7e0ae3e17d30be8bff8ae6b7b5db6a7ad02f19
         ultimaPosicion:
-          type: Object
+          type: object
           description: La ultima ubicacion del usuario
+          properties:
+            lat:
+              type: string
+            lon:
+              type: string
         enBuscaDe:
-          type: Array
+          type: array
           description: Lo que busca el usuario con nuestra aplicacion
+          items:
+            type: string
         activo:
-          type: Boolean
+          type: boolean
           description: Si esta activo el usuario
         google:
           type: Boolean
           description: Si inicio sesion con google o no
 
       example:
-        _id: ObjectId("hfhnf65634bdhbdfjh")
+        _id: "hfhnf65634bdhbdfjh"
         nombre: Santiago
         correo: santiago@gmail.com
         password: xxxxx
         miGenero: masculino
+<<<<<<< HEAD
+        fotos: ['urlDeFoto','otraUrlDeFoto']
+        bandas: ['AC/DC','Aerosmith']
+        generos: ['Rock', 'Pop']
+        tuneMatch: ['hfhnf65634bdhbdfjh', 'hfhnf65634bdhbdfjh']
+        ultimaPosicion:
+          lat: -32.5534
+          lon: -30.666
+        enBuscaDe: ['Formar una banda']
+=======
         fotos: ["urlDeFoto", "otraUrlDeFoto"]
         bandas: ["AC/DC", "Aerosmith"]
         generos: ["Rock", "Pop"]
@@ -280,6 +323,7 @@ components:
         likes: [{userId: hfhnf65634bdhbdfjh, date: 1709296805778, status: "activo", intentos: 1}]
         ultimaPosicion: { "lat": -31.9545644, "lon": -64.5696011 }
         enBuscaDe: ["Formar una banda"]
+>>>>>>> 1f7e0ae3e17d30be8bff8ae6b7b5db6a7ad02f19
         activo: true
         google: false
 

@@ -9,7 +9,9 @@ import {
   PAGESELECTION,
   PROFILE,
   REGISTER22,
-  REGISTER221
+  REGISTER221,
+  MATCH,
+  CHAT,
 } from "../Router/Paths";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
@@ -22,6 +24,8 @@ import Register22 from "./Register22/Register22";
 import Register221 from "./Register221/Register221";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../redux/authSlice";
+import MatchPage from "../pages/MatchPage";
+import ChatPage from "../pages/ChatPage";
 
 function AppContent() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -41,6 +45,8 @@ function AppContent() {
       <Route path={PROFILE} element={<Profile />} />
       <Route path={REGISTER22} element={<Register22 />} />
       <Route path={REGISTER221} element={<Register221 />} />
+      <Route path={MATCH} element={<MatchPage />} />
+      <Route path={CHAT} element={<ChatPage />} />
     </Routes>
   );
 }

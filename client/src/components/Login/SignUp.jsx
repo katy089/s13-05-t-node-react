@@ -14,36 +14,30 @@ import useLoginGoogle from "../../hooks/useLoginGoogle";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  
-  const { 
-    handleRegister, 
-    showPassword, 
-    setShowPassword, 
-    repeatShowPassword, 
-    setRepeatShowPassword 
+
+  const {
+    handleRegister,
+    showPassword,
+    setShowPassword,
+    repeatShowPassword,
+    setRepeatShowPassword,
   } = useRegister();
 
-  const { 
-    handleLoginSuccess,
-    handleLoginError
-  } = useLoginGoogle
-  
-  
+  const { handleLoginSuccess, handleLoginError } = useLoginGoogle();
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async(data) => {
-    
+  const onSubmit = async (data) => {
     handleRegister(data);
   };
 
   const handleLogin = () => {
     navigate("/");
   };
-
 
   const handleTerms = () => {
     navigate("/terms");
@@ -119,7 +113,7 @@ const SignUp = () => {
               <div className="flex flex-col">
                 <Input
                   labelText="Contraseña"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Introduce al menos 6 caracteres"
                   name="password"
                   register={register}
@@ -136,7 +130,7 @@ const SignUp = () => {
               <div className="flex flex-col -mt-6">
                 <Input
                   labelText="Repetir Contraseña"
-                  type={repeatShowPassword ? 'text' : 'password'}
+                  type={repeatShowPassword ? "text" : "password"}
                   placeholder="Introduce al menos 6 caracteres"
                   name="repeatPassword"
                   register={register}
@@ -152,49 +146,49 @@ const SignUp = () => {
               <div className=" bg-[#BB7EBC] hover:text-[#BB7EBC] btn border-none w-full text-white rounded-3xl">
                 <RegisterButton text="Registrarse" />
               </div>
-            <p className="flex items-center justify-center pt-4">
-              o continua con
-            </p>
+              <p className="flex items-center justify-center pt-4">
+                o continua con
+              </p>
 
               <div className="flex items-center flex-col my-2 ">
-              <GoogleLogin
-                onSuccess={handleLoginSuccess}
-                onFailure={handleLoginError}
-                theme="filled_black"
-                size="medium"
-                text="signin_with"
-                shape="pill"
+                <GoogleLogin
+                  onSuccess={handleLoginSuccess}
+                  onFailure={handleLoginError}
+                  theme="filled_black"
+                  size="medium"
+                  text="signin_with"
+                  shape="pill"
                 />
-              <div> 
-               <p className="mt-3 text-sm w-full flex flex-wrap items-center justify-center ">
-                 Al continuar, aceptas los
-                <CustomButton
-                  onClick={handleTerms}
-                  text={"Términos de uso"}
-                  className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
-                />
-                y{" "}
-                <CustomButton
-                  text={"Política de privacidad "}
-                  onClick={handlePrivacy}
-                  className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
-                />
-                  de <b className="mx-1">TuneMatch </b>
-                  <InputTer 
-                  register={register} 
-                    error={errors.email?.message}
+                <div>
+                  <p className="mt-3 text-sm w-full flex flex-wrap items-center justify-center ">
+                    Al continuar, aceptas los
+                    <CustomButton
+                      onClick={handleTerms}
+                      text={"Términos de uso"}
+                      className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
+                    />
+                    y{" "}
+                    <CustomButton
+                      text={"Política de privacidad "}
+                      onClick={handlePrivacy}
+                      className="font-bold mx-1 hover:text-gray-400 transition-colors duration-300 ease-in-out"
+                    />
+                    de <b className="mx-1">TuneMatch </b>
+                    <InputTer
+                      register={register}
+                      error={errors.email?.message}
+                    />
+                  </p>
+                </div>
+                <div className="flex items-center space-x-1 mt-2 text-sm">
+                  <p>¿Tienes cuenta?</p>
+                  <CustomButton
+                    className="hover:text-gray-400"
+                    onClick={handleLogin}
+                    text={<b> Inicia sesion!</b>}
                   />
-              </p>
-              </div> 
-              <div className="flex items-center space-x-1 mt-2 text-sm">
-                <p>¿Tienes cuenta?</p>
-                <CustomButton
-                  className="hover:text-gray-400"
-                  onClick={handleLogin}
-                  text={<b> Inicia sesion!</b>}
-                />
+                </div>
               </div>
-            </div>
             </form>
           </div>
         </div>

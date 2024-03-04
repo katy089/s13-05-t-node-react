@@ -39,8 +39,26 @@ const UserSchema = Schema({
 
   tuneMatch: {
     type: [{
-      type: Schema.Types.ObjectId,
-      ref: "Usuario"
+      tuneMatchId: { type: Schema.Types.ObjectId, ref: "Usuario" },
+      nuevo: { type: Boolean, default: true },
+      nombre: { type: String },
+      generos: [{ type: String }],
+      bandas: [{ type: String }],
+      fotos: [{ type: String }],
+      miGenero: { type: String },
+      enBuscaDe: [{ type: String }],
+      descripcion: { type: String },
+      ultimaPosicion: {
+        lat: {
+          type: Number,
+          default: null,
+        },
+        lon: {
+          type: Number,
+          default: null,
+        },
+      },
+
     }],
     default: [],
   },
@@ -55,9 +73,6 @@ const UserSchema = Schema({
     default: [],
   },
 
-
-
-
   ultimaPosicion: {
     lat: {
       type: Number,
@@ -71,6 +86,8 @@ const UserSchema = Schema({
 
   enBuscaDe: [{ type: String }],
 
+  descripcion: { type: String },
+
   activo: { type: Boolean, default: true },
 
   google: { type: Boolean, default: false },
@@ -80,11 +97,6 @@ UserSchema.methods.toJSON = function () {
   const { __v, _id: id, likes, password, ...usuario } = this.toObject();
   return { id, ...usuario };
 };
-
-UserSchema.pre("findOne", function () {
-  this.populate("generos");
-  this.populate("bandas");
-});
 
 UserSchema.plugin(paginate)
 module.exports = model("Usuario", UserSchema);
