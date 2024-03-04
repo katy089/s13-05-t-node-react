@@ -1,7 +1,9 @@
 const { request, response } = require("express");
+const Usuario = require("../models/usuarios.models");
 
 const googleCheck = require("../../helpers/googleCheck");
 const serviceUser = require("../services/serviceUser");
+const savingImage = require("../../helpers/cloudinary");
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body;
@@ -128,6 +130,25 @@ const undo = async (req = request, res = response) => {
   }
 }
 
+const imagen = async (req = request, res = response) => {
+  try {
+    const { id } = req.body
+    const image = req.file
+    const url = await savingImage(image.path)
+    await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
+    return res.status(201).json({
+      message: 'Imagen subida correctamente',
+      url
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Problema al subir la imagen',
+      error: error.message,
+    })
+  }
+}
+
 module.exports = {
   signUp,
   logIn,
@@ -137,5 +158,6 @@ module.exports = {
   updateUser,
   likes,
   getTuneMatch,
-  undo
+  undo,
+  imagen
 };
