@@ -181,10 +181,10 @@ module.exports = {
       let match_list = [];
       const user = await Usuario.findOne({ _id: id }, fields);
 
-      if(!user){
+      if (!user) {
         res.status(404).json({ message: 'no se ha encontrado el usuario solicitado' });
       } else {
-          const matchs = await Usuario.find(
+        const matchs = await Usuario.find(
           {
             id: { $ne: user._id },
             $or: [
@@ -194,7 +194,7 @@ module.exports = {
           },
           fields
         ).limit(10);
-        if(matchs.length > 0) match_list = scoring(user._doc, matchs);
+        if (matchs.length > 0) match_list = scoring(user._doc, matchs);
       }
 
       const end = new Date();
@@ -279,17 +279,25 @@ module.exports = {
         });
       }
 
-      const likedUpdated = await Usuario.findOneAndUpdate(
-        { _id: idLike, 'likes.userId': { $ne: idUser } },
-        { $addToSet: { likes: { userId: idUser } } },
-        { new: true }
-      );
+      const [likedUpdated, myOwnLikes] = await Promise.all([
+        Usuario.findOneAndUpdate(
+          { _id: idLike, 'likes.userId': { $ne: idUser } },
+          { $addToSet: { likes: { userId: idUser } } },
+          { new: true }),
+        Usuario.findOneAndUpdate(
+          { _id: idUser, 'misLikes.likedId': { $ne: idLike } },
+          { $push: { misLikes: { likedId: idLike, nombre: likeado.nombre, fotos: likeado.fotos } } },
+          { new: true }
+        )
+      ])
+      if (!likedUpdated || !myOwnLikes) return res.status(200).json({
+        message: "Ya le has dado like a este usuario."
+      })
 
-      if (!likedUpdated) {
-        return res.status(200).json({
-          message: "Ya le has dado like a este usuario."
-        });
-      }
+
+
+
+
 
       const coincidencia1 = user.likes.some(like => like.userId.toString() === idLike.toString());
       const coincidencia2 = likedUpdated.likes.some(like => like.userId.toString() === idUser.toString());
