@@ -35,7 +35,7 @@ function Chat() {
   }, []);
 
   return (
-    <div className="border-2 rounded-lg mt-6 sm:mt-0 h-[85vh] sm:min-h-[98%] flex flex-col bg-gray-200">
+    <div className="border-2 rounded-lg mt-6 sm:mt-0 h-[85vh] sm:max-h-[95%] flex flex-col bg-gray-200">
       <div className="w-full bg-[#BB7EBC] h-20 shadow-lg  rounded-t-lg flex items-center space-x-4">
         <div className="pl-4">
           {profilePhoto ? (
