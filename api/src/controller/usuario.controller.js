@@ -1,5 +1,6 @@
 const { request, response } = require("express");
 const Usuario = require("../models/usuarios.models");
+const fs = require('fs')
 
 const googleCheck = require("../../helpers/googleCheck");
 const serviceUser = require("../services/serviceUser");
@@ -111,8 +112,11 @@ const imagen = async (req = request, res = response) => {
   try {
     const { id } = req.body
     const image = req.file
+
     const url = await savingImage(image.path)
     await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
+    const archivos = fs.readdirSync('uploads/')
+    archivos.map(x => fs.unlinkSync(`uploads/${x}`))
     return res.status(201).json({
       message: 'Imagen subida correctamente',
       url
