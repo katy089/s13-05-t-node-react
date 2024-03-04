@@ -40,7 +40,25 @@ const UserSchema = Schema({
   tuneMatch: {
     type: [{
       tuneMatchId: { type: Schema.Types.ObjectId, ref: "Usuario" },
-      nuevo: { type: Boolean, default: true }
+      nuevo: { type: Boolean, default: true },
+      nombre: { type: String },
+      generos: [{ type: String }],
+      bandas: [{ type: String }],
+      fotos: [{ type: String }],
+      miGenero: { type: String },
+      enBuscaDe: [{ type: String }],
+      descripcion: { type: String },
+      ultimaPosicion: {
+        lat: {
+          type: Number,
+          default: null,
+        },
+        lon: {
+          type: Number,
+          default: null,
+        },
+      },
+
     }],
     default: [],
   },

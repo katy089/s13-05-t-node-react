@@ -1,4 +1,7 @@
 const { Router } = require('express')
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 const {
   signUp,
   logIn,
@@ -8,7 +11,8 @@ const {
   updateUser,
   likes,
   getTuneMatch,
-  undo
+  undo,
+  imagen
 } = require('../controller/usuario.controller.js')
 
 const router = Router()
@@ -29,6 +33,7 @@ router.get('/match/list/:id', getTuneMatch)
 router.put('/:id', updateUser)
 router.post('/likes', POST_LIKES, likes)
 router.post('/undo', POST_LIKES, undo)
+router.post('/imagen', upload.single('image'), imagen)
 
 
 
