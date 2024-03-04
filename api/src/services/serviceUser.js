@@ -178,19 +178,24 @@ module.exports = {
 
     try {
       const fields = ["bandas", "generos", "ultimaPosicion"];
+      let match_list = [];
       const user = await Usuario.findOne({ _id: id }, fields);
-      const matchs = await Usuario.find(
-        {
-          _id: { $ne: user._id },
-          $or: [
-            { generos: { $elemMatch: { $in: user.generos } } },
-            { bandas: { $elemMatch: { $in: user.bandas } } },
-          ],
-        },
-        fields
-      ).limit(10); //.explain("executionStats");
-      // posibles problemas de performance: https://www.mongodb.com/docs/manual/reference/operator/query/in/#syntax
-      const match_list = scoring(user._doc, matchs);
+
+      if(!user){
+        res.status(404).json({ message: 'no se ha encontrado el usuario solicitado' });
+      } else {
+          const matchs = await Usuario.find(
+          {
+            id: { $ne: user._id },
+            $or: [
+              { generos: { $elemMatch: { $in: user.generos } } },
+              { bandas: { $elemMatch: { $in: user.bandas } } },
+            ],
+          },
+          fields
+        ).limit(10);
+        if(matchs.length > 0) match_list = scoring(user._doc, matchs);
+      }
 
       const end = new Date();
       res.status(200).json({
