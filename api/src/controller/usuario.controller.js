@@ -1,7 +1,9 @@
 const { request, response } = require("express");
+const Usuario = require("../models/usuarios.models");
 
 const googleCheck = require("../../helpers/googleCheck");
 const serviceUser = require("../services/serviceUser");
+const savingImage = require("../../helpers/cloudinary");
 
 const signUp = async (req = request, res = response) => {
   const { nombre, correo, password, ...rest } = req.body;
@@ -45,35 +47,12 @@ const googleAuth = async (req, res = response) => {
   }
 };
 
-/*  
-  test13@gmail.com  / _id: 65d64275114bffc51bfab4e5
-  brandon@gmail.com / _id: 65d66c03a3404872f147fe5f
-  test20@gmail.com / _id: 65d80f90447ba575bbcaf98a
-  test21@gmail.com / _id: 65d8101a447ba575bbcaf98c
-*/
 const matchProfile = async (req = request, res = response) => {
-  const start = new Date();
-  const { id } = req.body
+  const { id } = req.params
   try {
-    const fields = ['bandas', 'generos', 'ultimaPosicion'];
-    const user = await usuarios.findOne({ _id: id }, fields);
-    const matchs = await usuarios.find({
-      _id: { $ne: user._id },
-      $or: [
-        { "generos": { $elemMatch: { $in: user.generos } } },
-        { "bandas": { $elemMatch: { $in: user.bandas } } }
-      ]
-    }, fields).limit(10)//.explain("executionStats");
-    // posibles problemas de performance: https://www.mongodb.com/docs/manual/reference/operator/query/in/#syntax
-    const match_list = scoring(user._doc, matchs)
-
-    const end = new Date();
-    res.status(200).json({
-      match_list,
-      estimated_time: (end.getTime() - start.getTime()) + "ms"
-    })
-
+    await serviceUser.matchProfile(id, res);
   } catch (err) {
+    res.status(500).json({ error: err });
     console.log(err);
   }
 }
@@ -92,7 +71,7 @@ const likes = async (req = request, res = response) => {
   try {
     await serviceUser.like(idUser, idLike, res)
   } catch (e) {
-    console.log(e)
+    console.log({ message: e })
   }
 }
 
@@ -120,6 +99,33 @@ const updateUser = async (req, res) => {
   }
 };
 
+const undo = async (req = request, res = response) => {
+  try {
+    await serviceUser.undoTuneMatch(req, res)
+  } catch (e) {
+    console.log({ message: e })
+  }
+}
+
+const imagen = async (req = request, res = response) => {
+  try {
+    const { id } = req.body
+    const image = req.file
+    const url = await savingImage(image.path)
+    await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
+    return res.status(201).json({
+      message: 'Imagen subida correctamente',
+      url
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Problema al subir la imagen',
+      error: error.message,
+    })
+  }
+}
+
 module.exports = {
   signUp,
   logIn,
@@ -129,4 +135,6 @@ module.exports = {
   updateUser,
   likes,
   getTuneMatch,
+  undo,
+  imagen
 };
