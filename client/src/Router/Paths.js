@@ -9,3 +9,4 @@ export const PROFILE = "/profile";
 export const REGISTER22 = "/register22";
 export const REGISTER221 = "/register221";
 export const MATCH = "/match";
+export const CHAT = "/chat";
