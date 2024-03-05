@@ -110,6 +110,11 @@ module.exports = {
       let usuario = await Usuario.findOne({ correo });
       let distancia = "No tenemos tus coordenadas";
 
+      if (usuario.activo === true && usuario.google === false)
+        return res.status(400).json({
+          message: "Este correo ya está registrado, ingrese con su contraseña en el login"
+        })
+
       if (!usuario) {
         const data = {
           nombre,
