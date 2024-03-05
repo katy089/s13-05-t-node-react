@@ -1,4 +1,6 @@
-const Usuario = require("../models/usuarios.models");
+const Usuario = require('../models/usuarios.models')
+
+
 
 const bycript = require("bcryptjs");
 const scoring = require("../../helpers/scoring");
