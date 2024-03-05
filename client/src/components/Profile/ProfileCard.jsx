@@ -2,15 +2,16 @@
 // import { CiLocationOn } from "react-icons/ci";
 import banner from "../../assets/banner.jpg";
 import ModalComponent from "../Modal/ModalComponent";
-// import {
-//   // bandasMusicales,
-//   // generosMusicales,
-//   //miGeneroX,
-// } from "../../utils/datas";
+import {
+  // bandasMusicales,
+  // generosMusicales,
+  // miGeneroX,
+} from "../../utils/datas";
 import ModalGeneros from "../Modal/ModalGeneros";
 import useGeneros from "../../hooks/useGeneros";
 import ModalBandas from "../Modal/ModalBandas";
 import useBands from "../../hooks/useBands";
+import ModalNombre from "../Modal/ModalNombre";
 function ProfileCard({
   img,
   nombre,
@@ -63,7 +64,8 @@ function ProfileCard({
               <h1 className="text-2xl text-black font-semibold mb-2">
                 {nombre}
               </h1>
-              <ModalComponent titulo={"Nombre"} id={1} />
+              {/* <ModalComponent titulo={"Nombre"} id={1} /> */}
+              <ModalNombre titulo={"Nombre"} />
             </div>
             <div className="flex items-center gap-6 mb-4">
               {activo === true ? (
@@ -112,7 +114,7 @@ function ProfileCard({
                 <h2 className="text-gray-800 font-bold text-2xl">
                   Mis Generos Favs
                 </h2>
-                <ModalGeneros // <==========  en processo
+                <ModalGeneros 
                   titulo={"Mis Géneros Favoritos"}
                   onClick={handleReloadedBands}
                 />
