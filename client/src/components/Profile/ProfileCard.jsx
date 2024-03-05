@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
-import { CiLocationOn } from "react-icons/ci";
+// import { CiLocationOn } from "react-icons/ci";
 import banner from "../../assets/banner.jpg";
 import ModalComponent from "../Modal/ModalComponent";
-import { 
-  bandasMusicales, 
-  // generosMusicales, 
-  miGeneroX 
+import {
+  // bandasMusicales,
+  // generosMusicales,
+  miGeneroX,
 } from "../../utils/datas";
 import ModalGeneros from "../Modal/ModalGeneros";
 import useGeneros from "../../hooks/useGeneros";
 import ModalBandas from "../Modal/ModalBandas";
 import useBands from "../../hooks/useBands";
- 
+
 function ProfileCard({
   img,
   nombre,
@@ -22,11 +22,20 @@ function ProfileCard({
   // ultimaPosicion,
   fotos,
 }) {
+  const { handleReloaded } = useGeneros();
+  const { handleReloadedBands } = useBands();
 
-   const { handleReloaded } = useGeneros()
-   const { handleReloadedBands } = useBands()
+  const MAX_LENGTH = 10;
 
-  
+  const displayGeneros =
+    generos.length > MAX_LENGTH
+      ? `${generos.substring(0, MAX_LENGTH)}...`
+      : generos;
+  const displayBandas =
+    bandas.length > MAX_LENGTH
+      ? `${bandas.substring(0, MAX_LENGTH)}...`
+      : bandas;
+
   return (
     <section className="w-screen bg-white ">
       <div className=" bg-gray-100 flex flex-col">
@@ -49,13 +58,13 @@ function ProfileCard({
 
         {/* Info */}
         <div className="flex-grow flex flex-col items-center gap-10 py-6">
-          <div className="w-[65%] flex flex-col items-center gap-4">
+          <div className="w-[80%] md:w-[50%] lg:[50%] flex flex-col items-center gap-4">
             {/* Status */}
             <div className="flex gap-2">
               <h1 className="text-2xl text-black font-semibold mb-2">
                 {nombre}
               </h1>
-              <ModalComponent titulo={"Nombre"} id={1}  />
+              <ModalComponent titulo={"Nombre"} id={1} />
             </div>
             <div className="flex items-center gap-6 mb-4">
               {activo === true ? (
@@ -102,22 +111,23 @@ function ProfileCard({
             <div className="w-full">
               <div className="flex gap-2">
                 <h2 className="text-gray-800 font-bold text-2xl">
-                  Mis Generos Favs     
+                  Mis Generos Favs
                 </h2>
-                   <ModalGeneros        // <==========  en processo
-                     titulo={"Mis Géneros Favoritos"} 
-                     onClick={handleReloadedBands}
-                />                  
-
+                <ModalGeneros // <==========  en processo
+                  titulo={"Mis Géneros Favoritos"}
+                  onClick={handleReloadedBands}
+                />
               </div>
-              <div className="flex gap-3 justify-center">
-                {generos && generos.length > 0 ? (
-                  generos.map((genero, index) => (
+              <div className="flex flex-wrap justify-center gap-3">
+                {displayGeneros && displayGeneros.length > 0 ? (
+                  displayGeneros.map((genero, index) => (
                     <span
                       key={index}
-                      className="bg-[#BB7EBC] text-white text-sm font-bold rounded-full px-3 py-1 gap-4"
+                      className="bg-[#BB7EBC] text-white text-sm font-bold rounded-full px-3 py-1 mb-3 mr-3 truncate"
+                      style={{ maxWidth: "calc(33.3333% - 1rem)" }} // Definir el ancho máximo de cada elemento
+                      title={genero}
                     >
-                      # {genero}
+                      #{genero}
                     </span>
                   ))
                 ) : (
@@ -129,22 +139,24 @@ function ProfileCard({
             {/* Bands */}
             <div className="w-full">
               <div className="flex gap-2">
-                <h2 className="text-gray-800 font-bold text-2xl">                
-                  Mis Bandas Favs                      
-                </h2>   
-                <ModalBandas                   
+                <h2 className="text-gray-800 font-bold text-2xl">
+                  Mis Bandas Favs
+                </h2>
+                <ModalBandas
                   titulo={"Mis Bandas Favoritas"}
                   onClick={handleReloaded}
                 />
               </div>
-              <div className="flex gap-3 justify-center">
-                {bandas && bandas.length > 0 ? (
-                  bandas.map((bandas, index) => (
+              <div className="flex flex-wrap justify-center gap-3">
+                {displayBandas && displayBandas.length > 0 ? (
+                  displayBandas.map((banda, index) => (
                     <span
                       key={index}
-                      className="bg-[#BB7EBC] text-white text-sm font-bold rounded-full px-3 py-1 gap-4"
+                      className="bg-[#BB7EBC] text-white text-sm font-bold rounded-full px-3 py-1 mb-3 mr-3 truncate"
+                      style={{ maxWidth: "calc(33.3333% - 1rem)" }} // Definir el ancho máximo de cada elemento
+                      title={banda}
                     >
-                      # {bandas}
+                      #{banda}
                     </span>
                   ))
                 ) : (
