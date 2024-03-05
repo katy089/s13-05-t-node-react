@@ -1,20 +1,47 @@
-const { Router } = require("express");
-const {
-  accessChat,
-  fetchChats,
-  createGroupChat,
-  removeFromGroup,
-  addToGroup,
-  renameGroup,
-} = require("../controller/chat.controller.js");
+const router = require("express").Router();
+const Conversation = require("../models/chat.models.js");
 
-const messageRoutes = Router();
+//new conv
 
-messageRoutes.route("/").post(accessChat);
-messageRoutes.route("/").get(fetchChats);
-messageRoutes.route("/group").post(createGroupChat);
-messageRoutes.route("/rename").put(renameGroup);
-messageRoutes.route("/groupremove").put(removeFromGroup);
-messageRoutes.route("/groupadd").put(addToGroup);
+router.post("/", async (req, res) => {
+    const newConversation = new Conversation({
+        members: [req.body.senderId, req.body.receiverId],
+    });
 
-module.exports = messageRoutes;
+    try {
+        const savedConversation = await newConversation.save();
+        res.status(200).json(savedConversation);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+//get conv of a user
+
+router.get("/:userId", async (req, res) => {
+    try {
+        const conversation = await Conversation.find({
+            members: { $in: [req.params.userId] },
+        });
+        res.status(200).json(conversation);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// get conv includes two userId
+
+router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
+    try {
+        const conversation = await Conversation.findOne({
+            members: {
+                $all: [req.params.firstUserId, req.params.secondUserId],
+            },
+        });
+        res.status(200).json(conversation);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+module.exports = router;

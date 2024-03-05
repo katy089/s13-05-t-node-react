@@ -1,13 +1,13 @@
-const express = require('express')
-const cors = require('cors')
+const express = require("express");
+const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
-const connection = require('../dataBase/connection.dataBase.js')
-const message = require('../../helpers/message.js')
-const openapiSpecification = require('../utils/swagger.utils')
-const swaggerUi = require('swagger-ui-express')
-
-
+const conversationRoute = require("../routes/chat.routes.js");
+const messageRoute = require("../routes/message.routes.js");
+const connection = require("../dataBase/connection.dataBase.js");
+const message = require("../../helpers/message.js");
+const openapiSpecification = require("../utils/swagger.utils");
+const swaggerUi = require("swagger-ui-express");
 
 class ExpressServer {
     #PORT = process.env.PORT;
@@ -58,6 +58,7 @@ class ExpressServer {
                 `<a href="${process.env.URL_BACK}/docs">Ir a la documentacion</a>`
             )
         );
+        this.app.use("/api/messages", messageRoute);
         this.app.use(
             "/docs",
             swaggerUi.serve,
@@ -78,20 +79,48 @@ class ExpressServer {
             },
         });
 
-        io.on("connection", (socket) => {
-            console.log(`User Connected: ${socket.id}`);
+        let users = [];
 
-            socket.on("join_room", (data) => {
-                console.log(data)
-                socket.join(data);
+        const addUser = (userId, socketId) => {
+            !users.some((user) => user.userId === userId) &&
+                users.push({ userId, socketId });
+        };
+
+        const removeUser = (socketId) => {
+            users = users.filter((user) => user.socketId !== socketId);
+        };
+
+        const getUser = (userId) => {
+            return users.find((user) => user.userId === userId);
+        };
+
+        io.on("connection", (socket) => {
+            //when ceonnect
+            console.log("a user connected.");
+
+            //take userId and socketId from user
+            socket.on("addUser", (userId) => {
+                addUser(userId, socket.id);
+                io.emit("getUsers", users);
             });
 
-            socket.on("send_message", (data) => {
-                socket.to(data.room).emit("receive_message", data);
+            //send and get message
+            socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+                const user = getUser(receiverId);
+                io.to(user.socketId).emit("getMessage", {
+                    senderId,
+                    text,
+                });
+            });
+
+            //when disconnect
+            socket.on("disconnect", () => {
+                console.log("a user disconnected!");
+                removeUser(socket.id);
+                io.emit("getUsers", users);
             });
         });
     }
 }
-
 
 module.exports = ExpressServer;
