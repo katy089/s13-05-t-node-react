@@ -2,7 +2,7 @@
 import { dataImg } from "../../utils/datas";
 import ProfileCard from "./ProfileCard";
 import { useSelector } from "react-redux";
-import { getGeneros, getBandas } from '../../redux/authSlice'
+import { getGeneros, getBandas, getNombre, getActive } from '../../redux/authSlice'
 import { getGenres } from '../../redux/genresSlice'
 import { getBands } from '../../redux/bandsSlice'
 
@@ -13,8 +13,12 @@ function ProfileContent() {
   const genres = useSelector(getGenres)
   const bandas = useSelector(getBandas)
   const bands = useSelector(getBands)
-  
+  const nombre = useSelector(getNombre)
+  const active = useSelector(getActive)
 
+
+
+  
   // const ultimaPosicionString = datos.ultimaPosicion
   //   ? `Latitud: ${datos.ultimaPosicion.lat}, Longitud: ${datos.ultimaPosicion.lon}`
   //   : "";
@@ -28,8 +32,8 @@ function ProfileContent() {
     <div className="w-full h-full bg-white flex justify-center items-center">
       <ProfileCard
         img={randomAvatarUrl}
-        nombre={datos.nombre}
-        activo={datos.active}
+        nombre={nombre}
+        activo={active}
         // ultimaPosicion={ultimaPosicionString}
         generos={genres?.filter(genre => generos?.includes(genre._id)).map(genre => genre.name) ?? []}
         // bandas={datos?.bandas?.map((gen) => gen.name) ?? []}

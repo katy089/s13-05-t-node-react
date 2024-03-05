@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
-import { CiLocationOn } from "react-icons/ci";
+// import { CiLocationOn } from "react-icons/ci";
 import banner from "../../assets/banner.jpg";
 import ModalComponent from "../Modal/ModalComponent";
-import { 
-  bandasMusicales, 
-  // generosMusicales, 
-  miGeneroX 
-} from "../../utils/datas";
+// import { 
+//   // bandasMusicales, 
+//   // generosMusicales, 
+//   //miGeneroX 
+// } from "../../utils/datas";
 import ModalGeneros from "../Modal/ModalGeneros";
 import useGeneros from "../../hooks/useGeneros";
 import ModalBandas from "../Modal/ModalBandas";
 import useBands from "../../hooks/useBands";
+import ModalNombre from "../Modal/ModalNombre";
  
 function ProfileCard({
   img,
@@ -54,8 +55,9 @@ function ProfileCard({
             <div className="flex gap-2">
               <h1 className="text-2xl text-black font-semibold mb-2">
                 {nombre}
-              </h1>
-              <ModalComponent titulo={"Nombre"} id={1}  />
+               </h1>
+              {/* <ModalComponent titulo={"Nombre"} id={1}  />   */}
+              <ModalNombre  />          
             </div>
             <div className="flex items-center gap-6 mb-4">
               {activo === true ? (
@@ -77,7 +79,7 @@ function ProfileCard({
                     Hombre
                   </span>
                 )}
-                <ModalComponent titulo={"Genero"} id={5} generos={miGeneroX} />
+               
               </div>
               {/* <span className="flex items-center bg-slate-600 text-white text-sm font-bold rounded-full px-3 py-1">
                 <CiLocationOn /> a {ultimaPosicion} km de distancia
@@ -104,7 +106,7 @@ function ProfileCard({
                 <h2 className="text-gray-800 font-bold text-2xl">
                   Mis Generos Favs     
                 </h2>
-                   <ModalGeneros        // <==========  en processo
+                   <ModalGeneros        
                      titulo={"Mis Géneros Favoritos"} 
                      onClick={handleReloadedBands}
                 />                  
