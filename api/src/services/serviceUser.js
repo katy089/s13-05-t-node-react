@@ -184,7 +184,7 @@ module.exports = {
     const start = new Date();
 
     try {
-      const fields = ["bandas", "generos", "ultimaPosicion"];
+      const fields = ["nombre", "bandas", "generos", "ultimaPosicion"];
       let match_list = [];
       const user = await Usuario.findOne({ _id: id }, fields);
 
@@ -193,11 +193,14 @@ module.exports = {
       } else {
         const matchs = await Usuario.find(
           {
-            id: { $ne: user._id },
-            $or: [
-              { generos: { $elemMatch: { $in: user.generos } } },
-              { bandas: { $elemMatch: { $in: user.bandas } } },
-            ],
+            $and: [
+              { _id: { $ne: user.id } },
+              { $or: [
+                { generos: { $elemMatch: { $in: user.generos } } },
+                { bandas: { $elemMatch: { $in: user.bandas } } },
+               ] 
+              }
+            ]
           },
           fields
         ).limit(10);

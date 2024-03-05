@@ -78,7 +78,6 @@ const likes = async (req = request, res = response) => {
 
 const getUser = async (req, res) => {
   const { id } = req.params;
-
   await serviceUser.getUser(id, res);
 };
 
