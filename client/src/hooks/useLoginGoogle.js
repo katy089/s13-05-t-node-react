@@ -25,7 +25,6 @@ const useLoginGoogle = () => {
       if (id) {
         dispatch(updateAll(data.usuario));
         dispatch(login());
-        navigate("/register22");
 
         Swal.fire({
           title: "Bienvenido a TuneMatch!",
@@ -39,7 +38,7 @@ const useLoginGoogle = () => {
           text: "Conecta a través de la música🎷",
         });
         console.log("Esto es en handleLoginSuccess:", response);
-        navigate("/home");
+        navigate("/register22");
       }
     } catch (error) {
       console.error("Google login error:", error);
