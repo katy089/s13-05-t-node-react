@@ -175,11 +175,11 @@ module.exports = {
     }
   },
 
-  matchProfile: async (id, res) => {
+  matchProfile: async (id, generos, bandas, res) => {
     const start = new Date();
 
     try {
-      const fields = ["nombre", "bandas", "generos", "ultimaPosicion"];
+      const fields = ["nombre", "bandas", "generos", "ultimaPosicion", "fotos"];
       let match_list = [];
       const user = await Usuario.findOne({ _id: id }, fields);
 
@@ -198,7 +198,7 @@ module.exports = {
             ]
           },
           fields
-        ).limit(10);
+        );
         if (matchs.length > 0) match_list = scoring(user._doc, matchs);
       }
 
