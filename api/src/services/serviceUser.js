@@ -175,7 +175,7 @@ module.exports = {
     }
   },
 
-  matchProfile: async (id, generos, bandas, res) => {
+  matchProfile: async (id, res) => {
     const start = new Date();
 
     try {
