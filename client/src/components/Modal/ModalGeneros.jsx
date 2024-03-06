@@ -12,7 +12,6 @@ const ModalGeneros = () => {
     const openModal = () => setShowModal(true);
 
     const [showModal, setShowModal] = useState(false);
-
     const { handleGeneroClick, handleUpdateGenres } = useGeneros()
 
     const {
@@ -33,7 +32,7 @@ const ModalGeneros = () => {
         <dialog  className="modal" open>
 
                     <div className=" bg-[#6C2B6D] px-4 pt-4 pb-2  rounded-lg 
-                     w-90 md:w-80 ">
+                     w-90 md:w-80 text-white ">
                     {/* <div > */}
                         <p className="text-l text-center ">Escoge tus generos musicales preferidos!</p>
                         <div className="relative z-10 -top-14 right-2 justify-end">
