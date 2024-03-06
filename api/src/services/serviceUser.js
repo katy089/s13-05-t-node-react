@@ -175,7 +175,7 @@ module.exports = {
     }
   },
 
-  matchProfile: async (id, res) => {
+  matchProfile: async (id, generos, bandas, res) => {
     const start = new Date();
 
     try {
@@ -191,8 +191,8 @@ module.exports = {
             $and: [
               { _id: { $ne: user.id } },
               { $or: [
-                { generos: { $elemMatch: { $in: user.generos } } },
-                { bandas: { $elemMatch: { $in: user.bandas } } },
+                { generos: { $elemMatch: { $in: (generos.length > 0 ? generos : user.generos) } } },
+                { bandas: { $elemMatch: { $in: (bandas.length > 0 ? bandas : user.bandas) } } },
                ] 
               }
             ]

@@ -31,6 +31,11 @@ class ExpressServer {
         path: require("../routes/chat.routes.js"),
     };
 
+    #message = {
+        route: "/api/message",
+        path: require("../routes/message.routes.js"),
+    };
+
     constructor() {
         this.app = express();
         this.middlewares();
@@ -67,6 +72,7 @@ class ExpressServer {
         this.app.use(this.#band.route, this.#band.path);
         this.app.use(this.#musicalGenre.route, this.#musicalGenre.path);
         this.app.use(this.#chat.route, this.#chat.path);
+        this.app.use(this.#message.route, this.#message.path);
     }
     setupSocket(server) {
         //const server = http.createServer(expressServer); // Crear el servidor HTTP utilizando tu aplicación Express
