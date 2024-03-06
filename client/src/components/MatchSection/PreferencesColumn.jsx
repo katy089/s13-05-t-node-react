@@ -1,13 +1,31 @@
 import useBands from "../../hooks/useBands";
 import useGeneros from "../../hooks/useGeneros";
 import ModalGeneros from "../Modal/ModalGeneros";
+<<<<<<< HEAD
 import CustomButton from "../reusable-components/forms/CustomButton";
+=======
+>>>>>>> 2093a2e081021a0947c744d56a7d3e62e57c0ad2
 import ModalBandas from "../Modal/ModalBandas";
+import CustomButton from "../reusable-components/forms/CustomButton";
+// import { useSelector } from "react-redux";
+// import { getGeneros, getBandas } from '../../redux/authSlice'
+// import { getGenres } from '../../redux/genresSlice'
+// import { getBands } from '../../redux/bandsSlice'
 
 const PreferencesColumn = () => {
+<<<<<<< HEAD
   const { handleReloaded } = useGeneros();
   const { handleReloadedBands } = useBands();
 
+=======
+  // const datos = useSelector((state) => state.auth);
+  const { handleReloaded } = useGeneros();
+  const { handleReloadedBands } = useBands();
+  // const generos = useSelector(getGeneros)
+  // const genres = useSelector(getGenres)
+  // const bandas = useSelector(getBandas)
+  // const bands = useSelector(getBands)
+>>>>>>> 2093a2e081021a0947c744d56a7d3e62e57c0ad2
 
 
 
