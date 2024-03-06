@@ -32,7 +32,7 @@ router.get('/match/list/:id', getTuneMatch)
 router.put('/:id', updateUser)
 router.post('/likes', POST_LIKES, likes)
 router.post('/undo', POST_LIKES, undo)
-router.post('/imagen', POST_IMAGE, imagen)
+router.post('/imagen', imagen)
 
 
 
