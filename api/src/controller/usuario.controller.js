@@ -78,7 +78,6 @@ const likes = async (req = request, res = response) => {
 
 const getUser = async (req, res) => {
   const { id } = req.params;
-
   await serviceUser.getUser(id, res);
 };
 
@@ -108,15 +107,11 @@ const undo = async (req = request, res = response) => {
   }
 }
 
-const imagen = async (req = request, res = response) => {
+const imagen = async (req, res) => {
   try {
-    const { id } = req.body
-    const image = req.file
-
-    const url = await savingImage(image.path)
+    const { id, image } = req.body
+    const url = await savingImage(image)
     await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
-    const archivos = fs.readdirSync('uploads/')
-    archivos.map(x => fs.unlinkSync(`uploads/${x}`))
     return res.status(201).json({
       message: 'Imagen subida correctamente',
       url
