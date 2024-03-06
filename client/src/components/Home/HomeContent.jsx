@@ -38,6 +38,7 @@ const HomeContent = () => {
         if (isLoggedIn) {
           // para evitar bucle infinito
           dispatch(logout());
+
         }
         return;
       } else {
