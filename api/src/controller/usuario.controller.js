@@ -110,8 +110,13 @@ const undo = async (req = request, res = response) => {
 const imagen = async (req, res) => {
   try {
     const { id, image } = req.body
+    const user = await Usuario.findOne({ _id: id, activo: true })
+    if (!user) return res.status(400).json({
+      message: "No existe un usuario con el id proporcionado"
+    })
     const url = await savingImage(image)
     await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
+
     return res.status(201).json({
       message: 'Imagen subida correctamente',
       url
