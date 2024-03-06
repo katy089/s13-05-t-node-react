@@ -17,8 +17,8 @@ const PreferencesColumn = () => {
   // const bandas = useSelector(getBandas)
   // const bands = useSelector(getBands)
 
-
-
+// modificar el customHook que modifica las bandas y generos para que pregunte si ya hay bandas o generos agregados, si es asi debe agregar (agregar a lo que ya hay si ya vio que habia un estado previo) y/o eliminar segun lo que mande en el put, (para eso tmb tiene que saber qué eliminé en el momento que elimine algo) en este caso tmb agregar un sweet alert para avisar del cambio y cerrar el modal al submit
+// si el usuario es nuevo el array de bandas o generos esta vacio y funciona como antes, y si esta modificando desde match al encontrar ya un array, lo modifica segun lo que le manden y avisa que ya se hizo la actualizacion
 
   return (
     <div className="font-semibold text-slate-200 text-sm items-center flex flex-col gap-3 p-4 w-full h-[89.5vh]">
@@ -38,7 +38,7 @@ const PreferencesColumn = () => {
         <div>
           <p className="text-sm flex items-end justify-between capitalize mb-3">
             Bandas
-            <button
+            <div
               className="badge badge-sm bg-black text-white p-2"
             >
                 <ModalBandas
@@ -46,13 +46,13 @@ const PreferencesColumn = () => {
                   onClick={handleReloaded}
                 />
                <p className="ml-2">Cambiar</p> 
-              </button>
+              </div>
           </p>
 
           <p className="text-sm flex items-end justify-between capitalize mb-2">
             Géneros
             
-            <button
+            <div
               className="badge badge-sm bg-black text-white p-2"
             >
               <ModalGeneros 
@@ -61,7 +61,7 @@ const PreferencesColumn = () => {
                   
                 />
                <p className="ml-2">Cambiar</p> 
-              </button>            
+              </div>            
           </p>
         </div>
       </div>
