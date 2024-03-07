@@ -49,9 +49,16 @@ const googleAuth = async (req, res = response) => {
 };
 
 const matchProfile = async (req = request, res = response) => {
-  const { id } = req.params
+  let generos = bandas = [];
+  const { id } = req.body;
+  if("generos" in req.body){
+    generos = req.body.generos;
+  }
+  if("bandas" in req.body){
+    bandas = req.body.bandas;
+  }
   try {
-    await serviceUser.matchProfile(id, res);
+    await serviceUser.matchProfile(id, generos, bandas, res);
   } catch (err) {
     res.status(500).json({ error: err });
     console.log(err);
@@ -78,7 +85,6 @@ const likes = async (req = request, res = response) => {
 
 const getUser = async (req, res) => {
   const { id } = req.params;
-
   await serviceUser.getUser(id, res);
 };
 
@@ -108,10 +114,16 @@ const undo = async (req = request, res = response) => {
   }
 }
 
+
 const imagen = async (req = request, res = response) => {
   try {
     const { id } = req.body
     const image = req.file
+    const user = await Usuario.findOne({ _id: id, activo: true })
+
+    if (!user) return res.status(400).json({
+      message: "No existe un usuario con el id proporcionado"
+    })
 
     const url = await savingImage(image.path)
     await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })

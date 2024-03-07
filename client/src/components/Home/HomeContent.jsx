@@ -27,6 +27,16 @@ const HomeContent = () => {
   const profilePhoto = fotos?.length > 0 ? fotos[0] : null;
   const [datosUsuario, setDatosUsuario] = useState(null);
   const dispatch = useDispatch();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [chatSection, setChatSection] = useState(null);
+
+  useEffect(() => {
+    if(selectedUser != null){
+      setChatSection(<div className="w-4/5 md:w-1/4 flex flex-col mx-auto"><Chat selectedUser={selectedUser} /></div>);
+    } else {
+      setChatSection(null);
+    }
+ }, [selectedUser]);
 
   const handleClick = (redirectUrl) => {
     window.open(redirectUrl, "_blank");
@@ -38,6 +48,7 @@ const HomeContent = () => {
         if (isLoggedIn) {
           // para evitar bucle infinito
           dispatch(logout());
+
         }
         return;
       } else {
@@ -65,11 +76,9 @@ const HomeContent = () => {
         />
       </div>
       <div className="w-4/5 md:w-2/5 mx-auto">
-        <MiddleColumnHome datosUsuario={datosUsuario} />
+        <MiddleColumnHome datosUsuario={datosUsuario} setSelectedUser={setSelectedUser} />
       </div>
-      <div className="w-4/5 md:w-1/4 flex flex-col mx-auto">
-        <Chat />
-      </div>
+      {chatSection}
     </div>
   );
 };

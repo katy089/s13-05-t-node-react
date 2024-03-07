@@ -1,4 +1,6 @@
-const Usuario = require("../models/usuarios.models");
+const Usuario = require('../models/usuarios.models')
+
+
 
 const bycript = require("bcryptjs");
 const scoring = require("../../helpers/scoring");
@@ -108,6 +110,11 @@ module.exports = {
       let usuario = await Usuario.findOne({ correo });
       let distancia = "No tenemos tus coordenadas";
 
+      if (usuario.activo === true && usuario.google === false)
+        return res.status(400).json({
+          message: "Este correo ya está registrado, ingrese con su contraseña en el login"
+        })
+
       if (!usuario) {
         const data = {
           nombre,
@@ -173,11 +180,11 @@ module.exports = {
     }
   },
 
-  matchProfile: async (id, res) => {
+  matchProfile: async (id, generos, bandas, res) => {
     const start = new Date();
 
     try {
-      const fields = ["bandas", "generos", "ultimaPosicion"];
+      const fields = ["nombre", "bandas", "generos", "ultimaPosicion", "fotos"];
       let match_list = [];
       const user = await Usuario.findOne({ _id: id }, fields);
 
@@ -186,14 +193,17 @@ module.exports = {
       } else {
         const matchs = await Usuario.find(
           {
-            id: { $ne: user._id },
-            $or: [
-              { generos: { $elemMatch: { $in: user.generos } } },
-              { bandas: { $elemMatch: { $in: user.bandas } } },
-            ],
+            $and: [
+              { _id: { $ne: user.id } },
+              { $or: [
+                { generos: { $elemMatch: { $in: (generos.length > 0 ? generos : user.generos) } } },
+                { bandas: { $elemMatch: { $in: (bandas.length > 0 ? bandas : user.bandas) } } },
+               ] 
+              }
+            ]
           },
           fields
-        ).limit(10);
+        );
         if (matchs.length > 0) match_list = scoring(user._doc, matchs);
       }
 

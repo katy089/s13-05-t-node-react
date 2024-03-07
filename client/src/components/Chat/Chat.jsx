@@ -1,38 +1,66 @@
 import io from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { getId, selectIsLoggedIn } from "../../redux/authSlice";
 import { useSelector } from "react-redux";
 import { getFotos } from "../../redux/authSlice";
 import { BsFillSendFill } from "react-icons/bs";
+import { API_URL_CHAT } from "../../config/api";
 
-const socket = io.connect("http://localhost:8080");
-
-function Chat() {
-  //Room State
-  const [room, setRoom] = useState("");
-
+const Chat = (props) => {
+  const { selectedUser } = props;
   // Messages States
-  const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
-
+  const [newMessage, setMessage] = useState("");
+  const [messagesReceived, setMessagesReceived] = useState([]);
   /**Ajustar esto para que llegue la foto del usuario matcheado */
   const fotos = useSelector(getFotos);
   const profilePhoto = fotos?.length > 0 ? fotos[0] : null;
 
-  // const joinRoom = () => {
-  //   if (room !== "") {
-  //     socket.emit("join_room", room);
-  //   }
-  // };
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userId = useSelector(getId);
+  const socket = useRef();
 
-  const sendMessage = () => {
-    socket.emit("send_message", { message, room });
-  };
+  //limpiar chat al cambiar de usuario
+  useEffect(() => {
+    setMessagesReceived([]);
+  }, [selectedUser]);
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
+    if(isLoggedIn){
+      socket.current = io.connect(API_URL_CHAT);
+      //socket.current = io.connect("localhost:8080");
+      socket.current.on("getMessage", (data) => {
+        setMessagesReceived((prev) => [...prev, data]);
+      });
+    }
+  }, [])
+
+  useEffect(() => {
+    if(isLoggedIn){
+      socket.current.emit("addUser", userId);
+    }
+  }, [])
+
+  // conversationId: 65e8d1c03082f0269bd7026c
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    const message = {
+      sender: userId,
+      text: newMessage,
+      conversationId: "65e8d1c03082f0269bd7026c"
+    };
+
+    socket.current.emit("sendMessage", { 
+      senderId: message.sender,
+      receiverId: selectedUser.id,
+      text: message.text
     });
-  }, []);
+    setMessagesReceived([...messagesReceived, { senderId: message.sender, text: message.text }]);
+    setMessage("")
+  };
+
+  const isUserMessage = (senderId) => {
+    return senderId === userId;
+  };
 
   return (
     <div className="border-2 rounded-lg mt-6 sm:mt-0 h-[85vh] sm:max-h-[95%] flex flex-col bg-gray-200">
@@ -53,21 +81,29 @@ function Chat() {
           )}
         </div>
         <div>
-          <h1 className="text-white font-semibold">Nombre de Usuario</h1>
+          <h1 className="text-white font-semibold">{selectedUser.nombre}</h1>
         </div>
       </div>
-      {/* <input
-        placeholder="Room Number..."
-        onChange={(event) => {
-          setRoom(event.target.value);
-        }}
-        className=""
-      />
-      <button onClick={joinRoom}> Join Room</button> */}
-      <div className="px-2 flex-grow">
-        <p className="py-2 px-4 bg-white text-slate-600 max-w-min rounded-t-2xl rounded-br-2xl my-2">
-          Amo TuneMatch!{messageReceived}
-        </p>
+      <div className="flex-grow overflow-auto">
+        <div className="px-2 flex flex-col">
+          {
+            messagesReceived.map((m) => {
+              if(isUserMessage(m.senderId)){
+                return <div className="flex justify-end">
+                          <p className="py-2 px-4 max-w-min bg-lime-400 text-slate-600 rounded-t-2xl rounded-bl-2xl my-2">
+                            {m.text}
+                          </p>
+                        </div>; 
+              } else {
+                return  <div className="flex justify-start">
+                          <p className="py-2 px-4 max-w-min bg-white text-slate-600 rounded-t-2xl rounded-br-2xl my-2">
+                            {m.text}
+                          </p>
+                        </div>; 
+              }
+            })
+          }
+          </div>
       </div>
       <div className="bottom-0 bg-white h-12 flex items-center px-4 justify-between">
         <input
@@ -75,6 +111,7 @@ function Chat() {
           onChange={(event) => {
             setMessage(event.target.value);
           }}
+          value={newMessage}
           className="bg-transparent text-slate-600 outline-none"
         />
         <button

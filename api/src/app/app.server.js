@@ -1,13 +1,13 @@
-const express = require('express')
-const cors = require('cors')
+const express = require("express");
+const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
-const connection = require('../dataBase/connection.dataBase.js')
-const message = require('../../helpers/message.js')
-const openapiSpecification = require('../utils/swagger.utils')
-const swaggerUi = require('swagger-ui-express')
-
-
+const conversationRoute = require("../routes/chat.routes.js");
+const messageRoute = require("../routes/message.routes.js");
+const connection = require("../dataBase/connection.dataBase.js");
+const message = require("../../helpers/message.js");
+const openapiSpecification = require("../utils/swagger.utils");
+const swaggerUi = require("swagger-ui-express");
 
 class ExpressServer {
     #PORT = process.env.PORT;
@@ -29,6 +29,11 @@ class ExpressServer {
     #chat = {
         route: "/api/chat",
         path: require("../routes/chat.routes.js"),
+    };
+
+    #message = {
+        route: "/api/message",
+        path: require("../routes/message.routes.js"),
     };
 
     constructor() {
@@ -58,6 +63,7 @@ class ExpressServer {
                 `<a href="${process.env.URL_BACK}/docs">Ir a la documentacion</a>`
             )
         );
+        this.app.use("/api/messages", messageRoute);
         this.app.use(
             "/docs",
             swaggerUi.serve,
@@ -67,31 +73,59 @@ class ExpressServer {
         this.app.use(this.#band.route, this.#band.path);
         this.app.use(this.#musicalGenre.route, this.#musicalGenre.path);
         this.app.use(this.#chat.route, this.#chat.path);
+        this.app.use(this.#message.route, this.#message.path);
     }
     setupSocket(server) {
-        //const server = http.createServer(expressServer); // Crear el servidor HTTP utilizando tu aplicación Express
-        const io = new Server(server, {
-            // Crear una instancia de socket.io utilizando el servidor HTTP
-            cors: {
-                //origin: "http://localhost:8080",
-                methods: ["GET", "POST"],
-            },
-        });
+        const io = new Server(server, { cors: { methods: ["GET", "POST"] } });
+
+        let users = [];
+
+        const addUser = (userId, socketId) => {
+            if(users.some((user) => user.userId === userId)){
+                const idx = users.findIndex(u => u.userId === userId);
+                if (idx !== -1) users[idx].socketId = socketId;
+            } else {
+                users.push({ userId, socketId });
+            }
+        };
+
+        const removeUser = (socketId) => {
+            users = users.filter((user) => user.socketId !== socketId);
+        };
+
+        const getUser = (userId) => {
+            return users.find((user) => user.userId === userId);
+        };
 
         io.on("connection", (socket) => {
-            console.log(`User Connected: ${socket.id}`);
+            //when ceonnect
+            console.log("a user connected with socket_id: " + socket.id);
 
-            socket.on("join_room", (data) => {
-                console.log(data)
-                socket.join(data);
+            //take userId and socketId from user
+            socket.on("addUser", (userId) => {
+                addUser(userId, socket.id);
+                io.emit("getUsers", users);
             });
 
-            socket.on("send_message", (data) => {
-                socket.to(data.room).emit("receive_message", data);
+            //send and get message
+            socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+                const user = getUser(receiverId);
+                if(user){
+                    io.to(user.socketId).emit("getMessage", {
+                        senderId,
+                        text,
+                    });
+                }
+            });
+
+            //when disconnect
+            socket.on("disconnect", () => {
+                console.log("a user disconnected!");
+                removeUser(socket.id);
+                io.emit("getUsers", users);
             });
         });
     }
 }
-
 
 module.exports = ExpressServer;
