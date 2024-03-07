@@ -19,7 +19,7 @@ const Register22 = () => {
     } = usePagination();
    
     return (
-        <div className="w-screen  min-h-[140vh] sm:min-h-screen flex bg-black ">
+        <div className="w-screen  min-h-[100vh] sm:min-h-screen flex bg-black ">
             <div className="relative">
                 <div
                     className="absolute top-0 left-0 w-0 h-0 border-solid border-transparent border-r-[35vw] border-b-[100vh] border-black bg-black z-10"
@@ -50,7 +50,7 @@ const Register22 = () => {
                     }}
                 >
                     <div className="flex flex-col sm:flex-row justify-between w-full h-[85vh]  px-2 sm:px-4 md:px-10 z-40 -mt-10">
-                        <div className="place-content-start flex flex-col w-11/12 mx-auto justify-normal sm:justify-center sm:mx-0 sm:w-1/2 md:w-3/4 mb-4 sm:mb-0">
+                        <div className="place-content-start flex flex-col w-11/12 mx-auto justify-normal sm:justify-center sm:mx-0 sm:w-1/2 md:w-3/4 mb-[-1rem] sm:mb-0">
                             <h1 className="text-2xl sm:text-3xl md:text-6xl text-start py-10">
                                 <p>Cuentanos acerca de tus</p> 
                                 <p>géneros favoritos</p>

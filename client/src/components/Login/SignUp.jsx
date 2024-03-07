@@ -47,7 +47,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className=" bg-black w-screen min-h-[140vh] sm:min-h-screen flex">
+    <div className=" bg-black w-screen min-h-[100vh] sm:min-h-screen flex">
       <ScrollToTop />
 
       <div className="relative">
