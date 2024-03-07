@@ -6,6 +6,8 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { useState } from "react";
 // import Swal from "sweetalert2";
 
+//import Swal from "sweetalert2";
+
 const ModalGeneros = () => {
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
