@@ -34,7 +34,7 @@ function ProfileContent() {
       <ProfileCard
         img={datos.fotos.length === 0 ? randomAvatarUrl : datos.fotos[0]}
         nombre={nombre}
-        activo={active}
+        activo={true}
         // ultimaPosicion={ultimaPosicionString}
         generos={genres?.filter(genre => generos?.includes(genre._id)).map(genre => genre.name) ?? []}
         // bandas={datos?.bandas?.map((gen) => gen.name) ?? []}
