@@ -31,6 +31,11 @@ class ExpressServer {
         path: require("../routes/chat.routes.js"),
     };
 
+    #message = {
+        route: "/api/message",
+        path: require("../routes/message.routes.js"),
+    };
+
     constructor() {
         this.app = express();
         this.middlewares();
@@ -68,22 +73,20 @@ class ExpressServer {
         this.app.use(this.#band.route, this.#band.path);
         this.app.use(this.#musicalGenre.route, this.#musicalGenre.path);
         this.app.use(this.#chat.route, this.#chat.path);
+        this.app.use(this.#message.route, this.#message.path);
     }
     setupSocket(server) {
-        //const server = http.createServer(expressServer); // Crear el servidor HTTP utilizando tu aplicación Express
-        const io = new Server(server, {
-            // Crear una instancia de socket.io utilizando el servidor HTTP
-            cors: {
-                //origin: "http://localhost:8080",
-                methods: ["GET", "POST"],
-            },
-        });
+        const io = new Server(server, { cors: { methods: ["GET", "POST"] } });
 
         let users = [];
 
         const addUser = (userId, socketId) => {
-            !users.some((user) => user.userId === userId) &&
+            if(users.some((user) => user.userId === userId)){
+                const idx = users.findIndex(u => u.userId === userId);
+                if (idx !== -1) users[idx].socketId = socketId;
+            } else {
                 users.push({ userId, socketId });
+            }
         };
 
         const removeUser = (socketId) => {
@@ -96,7 +99,7 @@ class ExpressServer {
 
         io.on("connection", (socket) => {
             //when ceonnect
-            console.log("a user connected.");
+            console.log("a user connected with socket_id: " + socket.id);
 
             //take userId and socketId from user
             socket.on("addUser", (userId) => {
@@ -107,10 +110,12 @@ class ExpressServer {
             //send and get message
             socket.on("sendMessage", ({ senderId, receiverId, text }) => {
                 const user = getUser(receiverId);
-                io.to(user.socketId).emit("getMessage", {
-                    senderId,
-                    text,
-                });
+                if(user){
+                    io.to(user.socketId).emit("getMessage", {
+                        senderId,
+                        text,
+                    });
+                }
             });
 
             //when disconnect
