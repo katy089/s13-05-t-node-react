@@ -161,6 +161,7 @@ const MiddleColumnHome = (props) => {
 
 MiddleColumnHome.propTypes = {
   datosUsuario: PropTypes.array,
+  setSelectedUser: PropTypes.func,
 };
 
 export default MiddleColumnHome;
