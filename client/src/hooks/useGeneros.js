@@ -79,7 +79,7 @@ const useGeneros = () => {
               }) 
 
         // Limpiar 'generos' en localStorage después de usarlos
-        // localStorage.removeItem('generos');
+        localStorage.removeItem('generos');
         // setbuttonGeneroStorege(false)
         navigate("/register221");
     };
@@ -94,7 +94,7 @@ const useGeneros = () => {
             
             const response = await axios.put(`${API_URL_UPDATE}/${id}`, { generos })
             const data = response.data
-            console.log(data)
+            console.log(data, 'hola jeje')
             
             if (data) {
                 console.log(data.generos);
