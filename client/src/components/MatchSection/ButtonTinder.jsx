@@ -1,12 +1,15 @@
 import { Heart, ChevronLeft } from "lucide-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ButtonTinder = ({ matchId, onLike }) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     onLike(matchId); // Pasar matchId como argumento
     setIsModalOpen(true);
+    setTimeout(() => navigate('/home'), 2000)
   };
 
   const closeModal = () => {
