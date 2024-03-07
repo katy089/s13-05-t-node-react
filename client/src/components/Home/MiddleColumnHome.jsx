@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import CustomButton from "../reusable-components/forms/CustomButton";
 
 const MiddleColumnHome = (props) => {
-  const { datosUsuario } = props;
+  const { datosUsuario, setSelectedUser } = props;
   const navigate = useNavigate();
 
   const handleDiscover = () => {
     navigate("/match");
+  };
+  const handleGetUser = ({ nombre, id }) => {
+    setSelectedUser({ nombre, id});
   };
   return (
     <div className="flex flex-col mx-auto">
@@ -27,7 +30,8 @@ const MiddleColumnHome = (props) => {
               {datosUsuario.map((match) => (
                 <div
                   key={match.id}
-                  className="rounded-md shadow-md text-start relative snap-start w-36 h-56 z-10"
+                  onClick={() => handleGetUser(match)}
+                  className="rounded-md shadow-md text-start relative snap-start w-36 h-56 z-10 hover:cursor-pointer hover:opacity-50"
                 >
                   <div>
                     <div className="relative h-56">
