@@ -8,6 +8,7 @@ import { getNombre } from "../../redux/authSlice";
 import { useSelector } from "react-redux";
 
 const ModalNombre = () => {
+  console.log('Este es el modal que no hace nada')
   const datos = useSelector((state) => state.auth);
   const nombre = useSelector(getNombre);
 
