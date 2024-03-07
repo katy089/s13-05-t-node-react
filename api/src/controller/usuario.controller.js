@@ -49,16 +49,9 @@ const googleAuth = async (req, res = response) => {
 };
 
 const matchProfile = async (req = request, res = response) => {
-  let generos = bandas = [];
-  const { id } = req.body;
-  if("generos" in req.body){
-    generos = req.body.generos;
-  }
-  if("bandas" in req.body){
-    bandas = req.body.bandas;
-  }
+  const { id } = req.params;
   try {
-    await serviceUser.matchProfile(id, generos, bandas, res);
+    await serviceUser.matchProfile(id, res);
   } catch (err) {
     res.status(500).json({ error: err });
     console.log(err);
