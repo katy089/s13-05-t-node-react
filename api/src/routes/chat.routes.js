@@ -1,20 +1,20 @@
-const { Router } = require("express");
+const router = require("express").Router();
 const {
-  accessChat,
-  fetchChats,
-  createGroupChat,
-  removeFromGroup,
-  addToGroup,
-  renameGroup,
+    newConversation,
+    getUserIDconversation,
+    getUsersInConversation,
 } = require("../controller/chat.controller.js");
 
-const messageRoutes = Router();
+//new conv
 
-messageRoutes.route("/").post(accessChat);
-messageRoutes.route("/").get(fetchChats);
-messageRoutes.route("/group").post(createGroupChat);
-messageRoutes.route("/rename").put(renameGroup);
-messageRoutes.route("/groupremove").put(removeFromGroup);
-messageRoutes.route("/groupadd").put(addToGroup);
+router.post("/", newConversation);
 
-module.exports = messageRoutes;
+//get conv of a user
+
+router.get("/:userId", getUserIDconversation);
+
+// get conv includes two userId
+
+router.get("/find/:firstUserId/:secondUserId", getUsersInConversation);
+
+module.exports = router;
