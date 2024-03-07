@@ -44,7 +44,7 @@ const Register2 = () => {
   const { handleAboutClick, handleHome } = useAboutMe()
 
   return (
-    <div className="w-screen min-h-[140vh] sm:min-h-screen flex bg-black">
+    <div className="w-screen min-h-[100vh] sm:min-h-screen flex bg-black">
       <div className="relative">
         <div
           className="absolute top-0 left-0 w-0 h-0 border-solid border-transparent border-r-[35vw] border-b-[100vh] border-black bg-black z-10"
@@ -69,7 +69,7 @@ const Register2 = () => {
           }}
         >
           <div className="flex flex-col sm:flex-row justify-between w-full h-[85vh]  px-2 sm:px-4 md:px-10 z-40">
-            <div className="place-content-start flex flex-col w-11/12 mx-auto justify-normal sm:justify-center sm:mx-0 sm:w-1/2 md:w-3/4 mb-4 sm:mb-0">
+            <div className="place-content-start flex flex-col w-11/12 mx-auto justify-normal sm:justify-center sm:mx-0 sm:w-1/2 md:w-3/4 mb-[-1rem] sm:mb-0">
               <h1 className="text-2xl sm:text-3xl md:text-6xl text-start py-10">
                 Cuentanos Acerca de Ti y Tu Relación con la Música
               </h1>
@@ -85,12 +85,13 @@ const Register2 = () => {
               <div className="flex items-center justify-center  my-5 sm:my-10"></div>
             </div>
             <div
-              className="place-content-end w-11/12 mx-auto sm:mx-0 sm:w-1/2 md:w-1/3 px-4 py-6
+              className="place-content-end w-11/12 mx-auto sm:mx-0 sm:w-1/2 md:w-1/3  px-4 py-6
            rounded-lg bg-opacity-95"
               style={{
                 backgroundImage: ` linear-gradient(180deg, rgba(102,77,102,1) 0%, rgba(108,43,109,0.9808298319327731) 34%)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                
               }}
             >
               <h1 className="text-3xl text-center">¡Háblanos de ti!</h1>

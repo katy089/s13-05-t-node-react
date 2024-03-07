@@ -217,7 +217,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen min-h-[150vh] sm:min-h-screen flex bg-black">
+    <div className="w-screen min-h-[100vh] sm:min-h-screen flex bg-black">
       <ScrollToTop />
       <div className="relative">
         <div

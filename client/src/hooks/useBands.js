@@ -26,7 +26,7 @@ const useBands = () => {
         try {
             const response = await axios.get(API_URL_REGISTER_BANDAS);
             const data = response.data;
-            console.log(data)
+            // console.log(data)
 
             if (data && data?.bands) {
                 // console.log(data);
