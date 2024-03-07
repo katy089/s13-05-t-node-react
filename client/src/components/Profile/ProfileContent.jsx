@@ -8,6 +8,7 @@ import { getBands } from '../../redux/bandsSlice'
 
 function ProfileContent() {
   const datos = useSelector((state) => state.auth);
+  console.log('info de datos', datos)
 
   const generos = useSelector(getGeneros)
   const genres = useSelector(getGenres)
@@ -18,7 +19,7 @@ function ProfileContent() {
 
 
 
-  
+
   // const ultimaPosicionString = datos.ultimaPosicion
   //   ? `Latitud: ${datos.ultimaPosicion.lat}, Longitud: ${datos.ultimaPosicion.lon}`
   //   : "";
@@ -31,7 +32,7 @@ function ProfileContent() {
   return (
     <div className="w-full h-full bg-white flex justify-center items-center">
       <ProfileCard
-        img={randomAvatarUrl}
+        img={datos.fotos.length === 0 ? randomAvatarUrl : datos.fotos[0]}
         nombre={nombre}
         activo={active}
         // ultimaPosicion={ultimaPosicionString}
