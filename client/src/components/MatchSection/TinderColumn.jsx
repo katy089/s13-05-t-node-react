@@ -4,28 +4,40 @@ import TinderCard from "react-tinder-card";
 import ButtonTinder from "./ButtonTinder";
 import useTunematchList from "../../hooks/useTunematchList";
 import useGetNombres from "../../hooks/useGetNombres";
+import ScoreIndicator from "./ScoreIndicator";
+import useLikes from "../../hooks/useLikes";
+import { useSelector } from "react-redux";
+import { getId } from "../../redux/authSlice";
 
 const TinderColumn = () => {
+  // eslint-disable-next-line no-unused-vars
   const [lastDirection, setLastDirection] = useState();
   const { matchList, loading, error } = useTunematchList();
   const { bandas, generos } = useGetNombres();
-
-  const swiped = (direction, idToDelete) => {
-    console.log("removing: " + idToDelete);
-    console.log(direction, idToDelete);
-    setLastDirection(direction);
-  };
+  const { isLiking, likeError, handleLike } = useLikes();
+  const userId = useSelector(getId);
 
   const outOfFrame = (id) => {
     console.log(id + " left the screen!");
   };
 
-  if (loading) return <div>Cargando...</div>;
-  /**Acá voy a poner un spinner */
+  const handleClickLike = (matchId) => {
+    handleLike(userId, matchId);
+  };
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center  h-[80vh] w-4/5 sm:w-4/6 md:w-4/5 mx-auto mt-4 relative">
+        <div className="absolute inset-0 z-0 backdrop-filter backdrop-blur-lg bg-[#00000015] rounded-2xl"></div>
+        <div className="z-10">
+          <span className="loading loading-spinner loading-lg text-secondary"></span>
+        </div>
+      </div>
+    );
 
   if (error) return <div>Error: {error.message}</div>;
   /**Acá disparar un alert en vez de esto*/
-  console.log("matchList:", matchList);
+  // console.log("matchList:", matchList);
 
   return (
     <>
@@ -33,26 +45,37 @@ const TinderColumn = () => {
         {matchList.length > 0 ? (
           matchList.map((match) => (
             <TinderCard
-              className="swipe absolute bg-[#6C2B6D] rounded-2xl h-[80vh] w-4/5"
+              className="swipe absolute bg-[#6C2B6D] rounded-2xl h-[80vh] w-4/5 sm:w-4/6 md:w-4/5"
               key={match.id}
-              onSwipe={(dir) => swiped(dir, match.id)}
+              onSwipe={(dir) => {
+                // ...
+                if (dir === "right") {
+                  handleLike(userId, match.id);
+                }
+              }}
               onCardLeftScreen={() => outOfFrame(match.id)}
-              preventSwipe={["left", "right"]}
+              preventSwipe={["up", "down"]}
+              flickOnSwipe={true}
             >
               <div
                 style={{
-                  backgroundImage: `url(https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=600)`,
+                  backgroundImage:
+                    match.fotos && match.fotos.length > 0
+                      ? `url(${match.fotos[0]})`
+                      : `url(https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=600)`,
                   width: "100%",
                   height: "60%",
                 }}
                 className="card relative  bg-center bg-cover p-5 shadow-md shadow-gray-600"
               >
                 <h2 className="text-white">{match.nombre}</h2>
-                <p className="text-white font-light text-xs ">{match.score}</p>
-                <p className="text-white font-light text-xs ">Guitarrista</p>
-                <p>{lastDirection}</p>
                 <div className="absolute bottom-0 right-0 left-0 z-20">
-                  <ButtonTinder />
+                  <ButtonTinder
+                    matchId={match.id}
+                    onLike={handleClickLike}
+                    isLiking={isLiking}
+                    likeError={likeError}
+                  />
                 </div>
                 <div
                   className="absolute top-0 left-0 w-full h-full rounded-xl"
@@ -63,6 +86,7 @@ const TinderColumn = () => {
               </div>
 
               <div className=" text-white p-4 flex flex-col font-light text-sm bg-[#6C2B6D] rounded-b-2xl">
+                <p className="px-4 font-semibold">Preferencias Musicales</p>
                 {/* Mostrar géneros si existen */}
                 {match.generos && match.generos.length > 0 && (
                   <>
@@ -97,11 +121,9 @@ const TinderColumn = () => {
                     </p>
                   ))}
                 <hr className="w-full rounded-full bg-[#FB98FD] h-[4px] border-[#FB98FD]" />
-                {/* <textarea
-                  placeholder="Bio"
-                  className="textarea bg-[#2C2C2C] textarea-xl w-full my-1 outline-none"
-                  defaultValue="Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus iure ex"
-                /> */}
+                <div className="w-24 h-2/4 rounded-full bg-black flex items-center mx-auto mt-3">
+                  <ScoreIndicator score={match.score} />
+                </div>
               </div>
             </TinderCard>
           ))

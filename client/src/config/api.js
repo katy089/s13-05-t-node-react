@@ -9,6 +9,8 @@ export const API_URL_GOOGLE = API_URL_BASE + "/usuario/google";
 export const API_URL_UPDATE = API_URL_BASE + "/usuario";
 export const API_URL_TUNEMATCHLIST =
   API_URL_BASE + "/usuario/match/profile/:id";
+export const API_URL_LIKES = API_URL_BASE + "/usuario/likes";
+export const API_URL_UNDO = API_URL_BASE + "/usuario/undo";
 
 //---------------------------------------------------------------------------
 
