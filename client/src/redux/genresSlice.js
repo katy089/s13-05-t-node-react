@@ -14,18 +14,24 @@ export const genresSlice = createSlice({
     setGenres: (state, action) => {
       state.genres = action.payload;
     },
-   
+
+    updateAllGenres: (state, action) => {
+      return  {
+        ...state, ...action.payload
+      }
+    },
   },
 });
 
 // selectores
 export const getGenres = (state) => state?.genres?.genres;
-
+export const getUpdateGenres = (state) => state?.genres //trae toodo lo anterior
 
 // actions
 export const {
  
-  setGenres
+  setGenres,
+  updateAllGenres
   
 } = genresSlice.actions;
 
