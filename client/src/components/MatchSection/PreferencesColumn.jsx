@@ -24,7 +24,7 @@ const PreferencesColumn = () => {
         <hr className="w-full rounded-full h-[5px] bg-white opacity-45 my-5" />
 
         <div>
-          <p className="text-sm flex items-end justify-between capitalize mb-3 text-white">
+          <div className="text-sm flex items-end justify-between capitalize mb-3 text-white">
             Bandas
             <div className="badge badge-sm bg-black text-white p-1 pl-2 py-3">
               <ModalBandas
@@ -33,9 +33,9 @@ const PreferencesColumn = () => {
               />
               <span className="p-3">Cambiar</span>
             </div>
-          </p>
+          </div>
 
-          <p className="text-sm flex items-end justify-between capitalize mb-2 text-white">
+          <div className="text-sm flex items-end justify-between capitalize mb-2 text-white">
             Géneros
             <div className="badge badge-sm bg-black text-white p-1 pl-2 py-3">
               <ModalGeneros
@@ -44,7 +44,7 @@ const PreferencesColumn = () => {
               />
               <span className="p-3 ">Cambiar</span>
             </div>
-          </p>
+          </div>
         </div>
       </div>
       <div className="flex flex-grow items-baseline justify-normal my-7">
