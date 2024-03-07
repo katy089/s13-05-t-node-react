@@ -14,6 +14,8 @@ const MiddleColumnHome = (props) => {
   const handleGetUser = ({ nombre, id }) => {
     setSelectedUser({ nombre, id });
   };
+
+
   return (
     <div className="flex flex-col mx-auto">
       <div role="tablist" className="tabs tabs-bordered  w-full">
@@ -39,8 +41,8 @@ const MiddleColumnHome = (props) => {
                     <div className="relative h-56">
                       <img
                         src={
-                          match.img
-                            ? match.img
+                          match.fotos[0]
+                            ? match.fotos[0]
                             : "https://images.pexels.com/photos/11676200/pexels-photo-11676200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         }
                         alt={match.nombre}

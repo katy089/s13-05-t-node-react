@@ -4,6 +4,8 @@ import usePagination from "../../hooks/usePagination";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { FaPenToSquare } from "react-icons/fa6";
 import { useState } from "react";
+// import Swal from "sweetalert2";
+
 //import Swal from "sweetalert2";
 
 const ModalGeneros = () => {
@@ -72,9 +74,10 @@ const ModalGeneros = () => {
             <button
               className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl mb-4"
               onClick={() => {
-                handleUpdateGenres,
-                  closeModal(),
-                  console.log("actualizaste tus géneros favoritos");
+                handleUpdateGenres;
+                closeModal();
+                console.log("actualizaste tus géneros favoritos");
+                console.log(handleUpdateGenres())
               }}
             >
               Guardar

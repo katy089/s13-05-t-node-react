@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_URL_REGISTER_BANDAS, API_URL_UPDATE } from '../config/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { getId, setBandas } from "../redux/authSlice";
-import { setBands } from "../redux/bandsSlice";
+import { setBands, updateAllBands } from "../redux/bandsSlice";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -70,6 +70,7 @@ const useBands = () => {
               .put(`${API_URL_UPDATE}/${id}`, { bandas: bands })
               .then(async({data}) =>{
                    console.log(data)
+                   dispatch(updateAllBands(data))
               })
               .catch(async(error)=> {
                 if(error.response.status === 400){
@@ -80,7 +81,7 @@ const useBands = () => {
               }) 
 
         // Limpiar 'generos' en localStorage después de usarlos
-        // localStorage.removeItem('bands');
+        localStorage.removeItem('bands');
        
 
         navigate("/register2");
@@ -97,7 +98,7 @@ const useBands = () => {
             
             const response = await axios.put(`${API_URL_UPDATE}/${id}`, { bandas: bands })
             const data = response.data
-            console.log(data)
+            console.log(data,"hola jeje")
             
             if (data) {
                 console.log(data.bandas);

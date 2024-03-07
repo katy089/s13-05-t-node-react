@@ -73,9 +73,10 @@ const ModalBandas = () => {
             <button
               className="bg-[#BB7EBC] btn border-none w-full text-white rounded-3xl mb-4"
               onClick={() => {
-                handleUpdateBands,
-                  closeModal(),
+                handleUpdateBands;
+                  closeModal();
                   console.log("actualizaste tus bandas");
+                  console.log(handleUpdateBands());
               }}
             >
               Guardar
