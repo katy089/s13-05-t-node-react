@@ -12,7 +12,7 @@ const MiddleColumnHome = (props) => {
     navigate("/match");
   };
   const handleGetUser = ({ nombre, id }) => {
-    setSelectedUser({ nombre, id});
+    setSelectedUser({ nombre, id });
   };
   return (
     <div className="flex flex-col mx-auto">
@@ -159,6 +159,7 @@ const MiddleColumnHome = (props) => {
 
 MiddleColumnHome.propTypes = {
   datosUsuario: PropTypes.array,
+  setSelectedUser: PropTypes.func,
 };
 
 export default MiddleColumnHome;
