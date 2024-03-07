@@ -75,13 +75,13 @@ const Chat = (props) => {
           {profilePhoto ? (
             <img
               alt="Perfil"
-              src={`"${profilePhoto}"`}
+              src={'https://www.liblogo.com/img-logo/wh38f34e-whatsapp-logo-file-whatsapp-svg-wikipedia.png'}
               className="object-cover rounded-full w-12 h-12 ring"
             />
           ) : (
             <img
               alt="Foto de perfil por defecto"
-              src="https://images.pexels.com/photos/4472043/pexels-photo-4472043.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              src="https://www.liblogo.com/img-logo/wh38f34e-whatsapp-logo-file-whatsapp-svg-wikipedia.png"
               className="object-cover rounded-full w-12 h-12 ring ring-slate-200 ring-opacity-60"
             />
           )}
