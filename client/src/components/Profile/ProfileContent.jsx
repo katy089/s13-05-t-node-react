@@ -38,7 +38,7 @@ function ProfileContent() {
         generos={genres?.filter(genre => generos?.includes(genre._id)).map(genre => genre.name) ?? []}
         // bandas={datos?.bandas?.map((gen) => gen.name) ?? []}
         bandas={bands?.filter(band => bandas?.includes(band._id)).map(band => band.name) ?? []}
-        miGenero={datos.miGenero}
+        // miGenero={datos.miGenero}
         fotos={dataImg.map((band) => band.imageLink)}
       />
     </div>
