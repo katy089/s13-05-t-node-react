@@ -6,8 +6,14 @@ import { getFotos } from "../../redux/authSlice";
 import { BsFillSendFill } from "react-icons/bs";
 import { API_URL_CHAT } from "../../config/api";
 
+
 const Chat = (props) => {
-  const { selectedUser } = props;
+  const { selectedUser, tunematch } = props;
+  const pics = tunematch.filter(x => x.tuneMatchId == selectedUser.id)
+  const tuneMatchPic = pics[0].fotos[0]
+  console.log(tuneMatchPic)
+
+
   // Messages States
   const [newMessage, setMessage] = useState("");
   const [messagesReceived, setMessagesReceived] = useState([]);
@@ -25,7 +31,7 @@ const Chat = (props) => {
   }, [selectedUser]);
 
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       socket.current = io.connect(API_URL_CHAT);
       //socket.current = io.connect("localhost:8080");
       socket.current.on("getMessage", (data) => {
@@ -35,7 +41,7 @@ const Chat = (props) => {
   }, [])
 
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       socket.current.emit("addUser", userId);
     }
   }, [])
@@ -49,7 +55,7 @@ const Chat = (props) => {
       conversationId: "65e8d1c03082f0269bd7026c"
     };
 
-    socket.current.emit("sendMessage", { 
+    socket.current.emit("sendMessage", {
       senderId: message.sender,
       receiverId: selectedUser.id,
       text: message.text
@@ -69,7 +75,7 @@ const Chat = (props) => {
           {profilePhoto ? (
             <img
               alt="Perfil"
-              src={profilePhoto}
+              src={`"${profilePhoto}"`}
               className="object-cover rounded-full w-12 h-12 ring"
             />
           ) : (
@@ -88,22 +94,22 @@ const Chat = (props) => {
         <div className="px-2 flex flex-col">
           {
             messagesReceived.map((m) => {
-              if(isUserMessage(m.senderId)){
+              if (isUserMessage(m.senderId)) {
                 return <div className="flex justify-end">
-                          <p className="py-2 px-4 max-w-min bg-lime-400 text-slate-600 rounded-t-2xl rounded-bl-2xl my-2">
-                            {m.text}
-                          </p>
-                        </div>; 
+                  <p className="py-2 px-4 max-w-min bg-lime-400 text-slate-600 rounded-t-2xl rounded-bl-2xl my-2">
+                    {m.text}
+                  </p>
+                </div>;
               } else {
-                return  <div className="flex justify-start">
-                          <p className="py-2 px-4 max-w-min bg-white text-slate-600 rounded-t-2xl rounded-br-2xl my-2">
-                            {m.text}
-                          </p>
-                        </div>; 
+                return <div className="flex justify-start">
+                  <p className="py-2 px-4 max-w-min bg-white text-slate-600 rounded-t-2xl rounded-br-2xl my-2">
+                    {m.text}
+                  </p>
+                </div>;
               }
             })
           }
-          </div>
+        </div>
       </div>
       <div className="bottom-0 bg-white h-12 flex items-center px-4 justify-between">
         <input

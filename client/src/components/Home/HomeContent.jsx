@@ -30,13 +30,15 @@ const HomeContent = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [chatSection, setChatSection] = useState(null);
 
+
+
   useEffect(() => {
-    if(selectedUser != null){
-      setChatSection(<div className="w-4/5 md:w-1/4 flex flex-col mx-auto"><Chat selectedUser={selectedUser} /></div>);
+    if (selectedUser != null) {
+      setChatSection(<div className="w-4/5 md:w-1/4 flex flex-col mx-auto"><Chat selectedUser={selectedUser} tunematch={tunematch} /></div>);
     } else {
       setChatSection(null);
     }
- }, [selectedUser]);
+  }, [selectedUser]);
 
   const handleClick = (redirectUrl) => {
     window.open(redirectUrl, "_blank");
