@@ -32,6 +32,7 @@ const useGeneros = () => {
                 if (data && data?.musicalGenres) {
                     // console.log(data);
                     dispatch(setGenres(data.musicalGenres)) //aca se guardan los generos
+
                 } else {
                     console.error("Data or bands property is missing.");
                 }
