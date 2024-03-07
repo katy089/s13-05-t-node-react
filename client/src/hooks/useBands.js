@@ -32,6 +32,7 @@ const useBands = () => {
                 // console.log(data);
                 // setbandBDD(data.bands);
                 dispatch(setBands(data.bands))
+
             } else {
                 console.error("Faltan datos o propiedad de bandas.");
             }
@@ -101,6 +102,7 @@ const useBands = () => {
             if (data) {
                 console.log(data.bandas);
                 dispatch(setBandas(data.bandas))
+                //cerrar modal
             } else {
                 console.error("Genero no se actualizo");
             }

@@ -28,31 +28,26 @@ export const eventos = [
 export const obtenerDatosUsuario = async (tuneMatch) => {
   try {
     let matchIds = [];
-    if (Array.isArray(tuneMatch)) {
-      // Verificar si tuneMatch es un array de objetos con una propiedad 'id'
-      if (
-        tuneMatch.length > 0 &&
-        typeof tuneMatch[0] === "object" &&
-        "id" in tuneMatch[0]
-      ) {
-        matchIds = tuneMatch.map((match) => match.id);
-      } else {
-        matchIds = tuneMatch; // Si no es un array de objetos, se asume que es un array de ids
-      }
-    } else {
-      throw new Error("El parametro tuneMatch DEBE ser un ARRAY."); //hasta ahi llegamos con las comprobaciones, mandenlo en un array ;D
+    if (tuneMatch.length > 0) {
+      matchIds = tuneMatch.map((match) => ({
+        tuneMatchId: match.tuneMatchId,
+        nombre: match.nombre,
+        generos: match.generos,
+        bandas: match.bandas,
+        fotos: match.fotos
+      }));
     }
 
     const perfilesUsuarios = await Promise.all(
       matchIds.map(async (id) => {
         try {
           const perfilResponse = await axios.get(
-            API_URL_MATCHLIST.replace(":id", id)
+            API_URL_MATCHLIST.replace(":id", id.tuneMatchId)
           );
 
           if (!perfilResponse.data) {
             throw new Error(
-              `Error al obtener el perfil del usuario con ID: ${id}`
+              `Error al obtener el perfil del usuario con ID: ${id.tuneMatchId}`
             );
           }
 
@@ -64,7 +59,7 @@ export const obtenerDatosUsuario = async (tuneMatch) => {
         }
       })
     );
-
+    console.log('perfiles', perfilesUsuarios)
     return perfilesUsuarios;
   } catch (error) {
     console.error("Error:", error);
