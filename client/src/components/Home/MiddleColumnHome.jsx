@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../reusable-components/forms/CustomButton";
+import useGetNombres from "../../hooks/useGetNombres";
 
 const MiddleColumnHome = (props) => {
   const { datosUsuario, setSelectedUser } = props;
   const navigate = useNavigate();
+  const { bandas, generos } = useGetNombres();
 
   const handleDiscover = () => {
     navigate("/match");
@@ -53,15 +55,33 @@ const MiddleColumnHome = (props) => {
                     </div>
                     <div className="absolute bottom-2 left-2 text-white">
                       <h2 className="card-title text-sm">{match.nombre}</h2>
-                      <p className="text-xs">
-                        {match.generos
-                          .map((genre) => `#${genre.name}`)
-                          .join(" ")}
-                      </p>
+                      <>
+                        {match.generos && match.generos.length > 0 && (
+                          <>
+                            <div className="text-xs">
+                              {match.generos
+                                .slice(0, 3)
+                                .map((generoId, index) => (
+                                  <span key={index}> #{generos[generoId]}</span>
+                                ))}
+                            </div>
+                          </>
+                        )}
+                      </>
 
-                      <p className="text-xs">
-                        {match.bandas.map((band) => `#${band.name}`).join(" ")}
-                      </p>
+                      <>
+                        {match.bandas && match.bandas.length > 0 && (
+                          <>
+                            <div className="text-xs">
+                              {match.bandas
+                                .slice(0, 3)
+                                .map((bandaId, index) => (
+                                  <span key={index}> #{bandas[bandaId]}</span>
+                                ))}
+                            </div>
+                          </>
+                        )}
+                      </>
                     </div>
                   </div>
                 </div>

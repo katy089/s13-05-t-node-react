@@ -13,6 +13,7 @@ const initialState = {
   bandas: [],
   generos: [],
   tuneMatch: [],
+  misLikes: [],
   ultimaPosicion: {},
   enBuscaDe: [],
   active: false,
@@ -94,6 +95,12 @@ Por ejemplo, login establece el estado isLoggedIn en true, mientras que logout e
     setAboutMe: (state, action) => {
       state.aboutMe = action.payload;
     },
+    setLikes: (state, action) => {
+      state.misLikes = action.payload;
+    },
+    updateMisLikes: (state, action) => {
+      state.misLikes = [...state.misLikes, ...action.payload];
+    },
   },
 });
 
@@ -116,6 +123,7 @@ export const getGoogleAuth = (state) => state.auth?.google;
 export const selectIsLoggedIn = (state) => state?.auth?.isLoggedIn;
 export const getAllState = (state) => state?.auth;
 export const getAboutMe = (state) => state?.auth.aboutMe;
+export const getMisLikes = (state) => state?.auth?.misLikes;
 
 // actions
 /**Todas las acciones definidas en reducers se exportan para que puedan ser utilizadas en otros lugares de la aplicación. */
@@ -137,6 +145,8 @@ export const {
   setGoogleAuth,
   updateAll,
   setAboutMe,
+  setLikes,
+  updateMisLikes,
 } = authSlice.actions;
 
 /**El reducer (authSlice.reducer) se exporta como el valor predeterminado, lo que permite combinarlo con otros reducers utilizando combineReducers en el store de Redux. Que por ahora no está siendo utilizado pero se puede utilizar más adelante, si es necesario */
