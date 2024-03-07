@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_URL_REGISTER_GENEROS, API_URL_UPDATE } from '../config/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { getId, setGeneros } from "../redux/authSlice";
-import { setGenres } from "../redux/genresSlice"
+import { setGenres, updateAllGenres } from "../redux/genresSlice"
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -31,7 +31,8 @@ const useGeneros = () => {
 
                 if (data && data?.musicalGenres) {
                     // console.log(data);
-                    dispatch(setGenres(data.musicalGenres))
+                    dispatch(setGenres(data.musicalGenres)) //aca se guardan los generos
+
                 } else {
                     console.error("Data or bands property is missing.");
                 }
@@ -66,7 +67,8 @@ const useGeneros = () => {
         await axios
               .put(`${API_URL_UPDATE}/${id}`, { generos })
               .then(async({data}) =>{
-                   console.log(data)
+                   console.log('esta es la data de useGeneros: ', data)
+                   dispatch(updateAllGenres(data))
               })
               .catch(async(error)=> {
                 if(error.response.status === 400){
@@ -79,7 +81,6 @@ const useGeneros = () => {
         // Limpiar 'generos' en localStorage después de usarlos
         // localStorage.removeItem('generos');
         // setbuttonGeneroStorege(false)
-
         navigate("/register221");
     };
 

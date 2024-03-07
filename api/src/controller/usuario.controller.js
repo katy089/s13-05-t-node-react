@@ -114,16 +114,21 @@ const undo = async (req = request, res = response) => {
   }
 }
 
-const imagen = async (req, res) => {
+
+const imagen = async (req = request, res = response) => {
   try {
-    const { id, image } = req.body
+    const { id } = req.body
+    const image = req.file
     const user = await Usuario.findOne({ _id: id, activo: true })
+
     if (!user) return res.status(400).json({
       message: "No existe un usuario con el id proporcionado"
     })
-    const url = await savingImage(image)
-    await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
 
+    const url = await savingImage(image.path)
+    await Usuario.findByIdAndUpdate(id, { $push: { fotos: url } })
+    const archivos = fs.readdirSync('uploads/')
+    archivos.map(x => fs.unlinkSync(`uploads/${x}`))
     return res.status(201).json({
       message: 'Imagen subida correctamente',
       url
