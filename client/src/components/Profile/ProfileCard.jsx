@@ -80,7 +80,7 @@ function ProfileCard({
                 </span>
               )}
               <div>
-                {miGenero === "Mujer" ? (
+                {/* {miGenero === "Mujer" ? (
                   <span className="inline-block bg-pink-700 text-white text-sm font-bold rounded-full px-3 py-1">
                     Mujer
                   </span>
@@ -88,7 +88,7 @@ function ProfileCard({
                   <span className="inline-block bg-blue-600 text-white text-sm font-bold rounded-full px-3 py-1">
                     Hombre
                   </span>
-                )}
+                )} */}
 
               </div>
               {/* <span className="flex items-center bg-slate-600 text-white text-sm font-bold rounded-full px-3 py-1">
