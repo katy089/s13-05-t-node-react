@@ -2,11 +2,16 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../reusable-components/forms/CustomButton";
 import useGetNombres from "../../hooks/useGetNombres";
+import { useSelector } from "react-redux";
+import { getMisLikes } from "../../redux/authSlice";
+import { TiHeartFullOutline } from "react-icons/ti";
 
 const MiddleColumnHome = (props) => {
   const { datosUsuario, setSelectedUser } = props;
   const navigate = useNavigate();
   const { bandas, generos } = useGetNombres();
+  const likes = useSelector(getMisLikes);
+  console.log("Estos son mis likes:", likes);
 
   const handleDiscover = () => {
     navigate("/match");
@@ -15,6 +20,12 @@ const MiddleColumnHome = (props) => {
     setSelectedUser({ nombre, id });
   };
 
+  const getFirstPhoto = (user) => {
+    return user.fotos.length > 0 ? user.fotos[0] : null;
+  };
+
+  const firstPhotos = likes.map((likedUser) => getFirstPhoto(likedUser));
+  console.log("Esta es la primera foto:", firstPhotos);
 
   return (
     <div className="flex flex-col mx-auto">
@@ -127,32 +138,69 @@ const MiddleColumnHome = (props) => {
           aria-label="Siguiendo"
           readOnly
         />
-        <div role="tabpanel" className="tab-content">
-          <div
-            className="card w-4/5 md:w-1/2 bg-base-100 shadow-xl m-auto mt-4"
-            style={{
-              backgroundColor: "#3030303d",
-            }}
-          >
-            <figure className="px-5 pt-5">
-              <img
-                src="https://images.pexels.com/photos/3450887/pexels-photo-3450887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="Couple"
-                className="rounded-xl w-full h-1/3"
-              />
-            </figure>
-            <div className="card-body items-center text-center">
-              <h2 className="card-title">
-                ¡Conoce a otros amantes de la música como tú!
-              </h2>
-              <div className="card-actions">
-                <CustomButton
-                  text={"Descubre más"}
-                  className="btn bg-[#BB7EBC] hover:border-[#BB7EBC]"
+        <div role="tabpanel" className="tab-content mt-4">
+          {likes && likes.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {likes.map((likedUser, index) => (
+                <div
+                  key={likedUser._id}
+                  className="rounded-md shadow-md text-start relative snap-start w-36 h-56 z-10 hover:cursor-pointer hover:opacity-50"
+                >
+                  <div>
+                    <div className="relative h-56">
+                      <img
+                        src={
+                          firstPhotos[index]
+                            ? firstPhotos[index]
+                            : "https://images.pexels.com/photos/11676200/pexels-photo-11676200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        }
+                        alt={"foto de" + likedUser.nombre}
+                        className="rounded-xl -z-10 object-cover w-full h-full"
+                      />
+                      <div
+                        className="absolute top-0 left-0 w-full h-full rounded-xl"
+                        style={{
+                          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.0), rgba(0,0,0,0.8))`,
+                        }}
+                      ></div>
+                    </div>
+                    <div className="absolute top-2 right-2 text-red-500">
+                      <TiHeartFullOutline size={30} />
+                    </div>
+                    <div className="absolute bottom-2 left-2 text-white">
+                      <h2 className="card-title text-sm">{likedUser.nombre}</h2>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="card w-4/5 md:w-1/2 bg-base-100 shadow-xl m-auto"
+              style={{
+                backgroundColor: "#3030303d",
+              }}
+            >
+              <figure className="px-5 pt-5">
+                <img
+                  src="https://images.pexels.com/photos/3450887/pexels-photo-3450887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  alt="Couple"
+                  className="rounded-xl w-full h-1/3"
                 />
+              </figure>
+              <div className="card-body items-center text-center">
+                <h2 className="card-title">
+                  ¡Conoce a otros amantes de la música como tú!
+                </h2>
+                <div className="card-actions">
+                  <CustomButton
+                    text={"Descubre más"}
+                    className="btn bg-[#BB7EBC] hover:border-[#BB7EBC]"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -16,6 +16,7 @@ const TinderColumn = () => {
   const { bandas, generos } = useGetNombres();
   const { isLiking, likeError, handleLike } = useLikes();
   const userId = useSelector(getId);
+  console.log("Esto es matchList en tinderColumn:", matchList);
 
   const outOfFrame = (id) => {
     console.log(id + " left the screen!");
@@ -45,7 +46,7 @@ const TinderColumn = () => {
         {matchList.length > 0 ? (
           matchList.map((match) => (
             <TinderCard
-              className="swipe absolute bg-[#6C2B6D] rounded-2xl h-[80vh] w-4/5 sm:w-4/6 md:w-4/5"
+              className="swipe absolute bg-[#6C2B6D] rounded-2xl h-[75vh] w-4/5 sm:w-4/6 md:w-9/12"
               key={match.id}
               onSwipe={(dir) => {
                 // ...
@@ -62,11 +63,11 @@ const TinderColumn = () => {
                   backgroundImage:
                     match.fotos && match.fotos.length > 0
                       ? `url(${match.fotos[0]})`
-                      : `url(https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=600)`,
+                      : `url(https://images.pexels.com/photos/33597/guitar-classical-guitar-acoustic-guitar-electric-guitar.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)`,
                   width: "100%",
                   height: "60%",
                 }}
-                className="card relative  bg-center bg-cover p-5 shadow-md shadow-gray-600"
+                className="card relative  bg-center bg-cover p-5 shadow-md"
               >
                 <h2 className="text-white">{match.nombre}</h2>
                 <div className="absolute bottom-0 right-0 left-0 z-20">
@@ -121,7 +122,7 @@ const TinderColumn = () => {
                     </p>
                   ))}
                 <hr className="w-full rounded-full bg-[#FB98FD] h-[4px] border-[#FB98FD]" />
-                <div className="w-24 h-2/4 rounded-full bg-black flex items-center mx-auto mt-3">
+                <div className="w-20 h-20 rounded-full bg-black flex items-center mx-auto mt-3">
                   <ScoreIndicator score={match.score} />
                 </div>
               </div>

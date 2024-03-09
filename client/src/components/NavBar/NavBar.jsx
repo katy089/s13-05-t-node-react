@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { CHAT, HOME, MATCH, PROFILE } from "./../../Router/Paths";
+import { HOME, MATCH, PROFILE } from "./../../Router/Paths";
 import { RiHome6Line } from "react-icons/ri";
-import { FaHeart, FaRegBell } from "react-icons/fa";
-import { FiMessageCircle } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import LOGOBLACK from "../../assets/LOGOBLACK.png";
 import { useEffect, useRef, useState } from "react";
 import { GrMenu } from "react-icons/gr";
@@ -73,7 +72,7 @@ function NavBar() {
   }, []);
 
   return (
-    <header className="navbar sticky top-0 z-30 w-screen md:w-auto bg-black">
+    <header className="navbar sticky top-0 z-30 w-full bg-black">
       <div className="flex w-full items-center">
         <div className="flex items-center place-content-start w-1/2">
           <Link
@@ -104,17 +103,6 @@ function NavBar() {
                 <span className="hidden sm:flex text-white">Conoce Gente!</span>
               </Link>
             </li>
-            <li className="w-8 h-8 flex items-center justify-center rounded-full bg-inherit border-none shadow-none bg-slate-300 cursor-pointer hover:bg-slate-600 hover:text-white">
-              <FaRegBell size={20} />
-            </li>
-            <li>
-              <Link
-                to={CHAT}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-inherit border-none shadow-none bg-slate-300 cursor-pointer hover:bg-slate-600 hover:text-white"
-              >
-                <FiMessageCircle size={20} />
-              </Link>
-            </li>
           </ul>
           {/**Menu navbar en movil */}
           <div className="md:hidden relative w-[45vw]" ref={menuHamburguesaRef}>
@@ -142,14 +130,6 @@ function NavBar() {
                   >
                     <FaHeart size={20} color="white" />
                     <span className=" text-white">Conoce Gente!</span>
-                  </Link>
-                </li>
-                <li className="btn rounded-full bg-inherit border-none shadow-none bg-slate-300 hover:bg-slate-600 hover:text-white mx-4 sm:mx-8">
-                  <FaRegBell size={20} />
-                </li>
-                <li className="btn rounded-full bg-inherit border-none shadow-none bg-slate-300 hover:bg-slate-600 hover:text-white">
-                  <Link to={CHAT}>
-                    <FiMessageCircle size={20} />
                   </Link>
                 </li>
               </ul>

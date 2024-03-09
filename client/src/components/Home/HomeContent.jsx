@@ -9,14 +9,14 @@ import {
   selectIsLoggedIn,
 } from "../../redux/authSlice";
 import { eventos, obtenerDatosUsuario } from "./auxHome";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardColumnHome from "./CardColumnHome";
 import MiddleColumnHome from "./MiddleColumnHome";
 
 const HomeContent = () => {
   const userId = useSelector(getId);
   const tunematch = useSelector(getTuneMatch);
-  // console.log("Este es el userId:", userId);
+  // console.log("Este es el tunematch:", tunematch);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const fotos = useSelector(getFotos);
   const nombre = useSelector(getNombre);
@@ -29,16 +29,26 @@ const HomeContent = () => {
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState(null);
   const [chatSection, setChatSection] = useState(null);
-
-
+  const chatRef = useRef(null);
 
   useEffect(() => {
     if (selectedUser != null) {
-      setChatSection(<div className="w-4/5 md:w-1/4 flex flex-col mx-auto"><Chat selectedUser={selectedUser} tunematch={tunematch} /></div>);
+      setChatSection(
+        <div
+          className="w-4/5 sm:w-4/6 sm:mt-4 md:w-1/4 mx-auto pb-4"
+          ref={chatRef}
+        >
+          <Chat selectedUser={selectedUser} datosUsuario={datosUsuario} />
+        </div>
+      );
+      // Desplazo automáticamente a la sección del chat en dispositivos móviles
+      if (chatRef.current && window.innerWidth <= 768) {
+        chatRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     } else {
       setChatSection(null);
     }
-  }, [selectedUser]);
+  }, [datosUsuario, selectedUser, tunematch]);
 
   const handleClick = (redirectUrl) => {
     window.open(redirectUrl, "_blank");
@@ -50,7 +60,6 @@ const HomeContent = () => {
         if (isLoggedIn) {
           // para evitar bucle infinito
           dispatch(logout());
-
         }
         return;
       } else {
@@ -67,8 +76,8 @@ const HomeContent = () => {
   }, [dispatch, isLoggedIn, tunematch, userId]);
 
   return (
-    <div className="my-4 flex flex-col md:flex-row">
-      <div className="w-4/5 md:w-1/4 mx-auto">
+    <div className="flex flex-col md:flex-row">
+      <div className="w-4/5 sm:w-4/6 md:w-1/4 mx-auto pt-4 pb-2">
         <CardColumnHome
           profilePhoto={profilePhoto}
           nombre={nombre}
@@ -77,8 +86,11 @@ const HomeContent = () => {
           handleClick={handleClick}
         />
       </div>
-      <div className="w-4/5 md:w-2/5 mx-auto">
-        <MiddleColumnHome datosUsuario={datosUsuario} setSelectedUser={setSelectedUser} />
+      <div className="w-4/5 sm:w-4/6 md:w-2/5 mx-auto py-4">
+        <MiddleColumnHome
+          datosUsuario={datosUsuario}
+          setSelectedUser={setSelectedUser}
+        />
       </div>
       {chatSection}
     </div>
