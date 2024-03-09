@@ -27,7 +27,7 @@ const ScoreIndicator = ({ score }) => {
 
   const strokeColor = calculateStrokeColor(score);
   return (
-    <div className="relative w-24 h-24">
+    <div className="relative w-20 h-20">
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="flex flex-col items-center justify-center">
           <svg
@@ -51,7 +51,7 @@ const ScoreIndicator = ({ score }) => {
               transform="rotate(-90 12 12)"
             />
           </svg>
-          <span className={`absolute text-3xl font-semibold ${colorClass}`}>
+          <span className={`absolute text-2xl font-semibold ${colorClass}`}>
             {score}%
           </span>
         </div>

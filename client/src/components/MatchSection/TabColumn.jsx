@@ -1,45 +1,11 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getId,
-  getTuneMatch,
-  logout,
-  selectIsLoggedIn,
-} from "../../redux/authSlice";
-import { obtenerDatosUsuario } from "../Home/auxHome";
 import useGetNombres from "../../hooks/useGetNombres";
 import PropTypes from "prop-types";
 import { ChevronRightCircle } from "lucide-react";
 
 function TabColumn(props) {
-  const { chatSection, setSelectedUser, selectedUser } = props;
-  const userId = useSelector(getId);
-  const tunematch = useSelector(getTuneMatch);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const dispatch = useDispatch();
-  const [datosUsuario, setDatosUsuario] = useState(null);
+  const { chatSection, setSelectedUser, selectedUser, datosUsuario } = props;
   const { bandas, generos } = useGetNombres();
-
-  useEffect(() => {
-    const obtenerDatos = async () => {
-      if (!isLoggedIn || !userId) {
-        if (isLoggedIn) {
-          // para evitar bucle infinito
-          dispatch(logout());
-        }
-        return;
-      } else {
-        try {
-          const datos = await obtenerDatosUsuario(tunematch);
-          setDatosUsuario(datos);
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-    };
-
-    obtenerDatos();
-  }, [dispatch, isLoggedIn, tunematch, userId]);
+  console.log("ESto es datros usuarios en match: ", datosUsuario);
 
   const handleGetUser = ({ nombre, id }) => {
     setSelectedUser({ nombre, id });
@@ -47,6 +13,14 @@ function TabColumn(props) {
       .querySelector('input[name="my_tabs_1"][aria-label="Mensajes"]')
       .click();
   };
+
+  const getFirstPhoto = (user) => {
+    return user && user.fotos.length > 0 ? user.fotos[0] : null;
+  };
+
+  const firstPhotos =
+    datosUsuario && datosUsuario.map((likedUser) => getFirstPhoto(likedUser));
+  console.log("Esta es la primera foto:", firstPhotos);
 
   return (
     <div className="w-full bg-[#6C2B6D]">
@@ -74,8 +48,8 @@ function TabColumn(props) {
                       <div className="relative h-56">
                         <img
                           src={
-                            match.img
-                              ? match.img
+                            match.fotos[0]
+                              ? match.fotos[0]
                               : "https://images.pexels.com/photos/11676200/pexels-photo-11676200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                           }
                           alt={match.nombre}
@@ -170,9 +144,10 @@ function TabColumn(props) {
 }
 
 TabColumn.propTypes = {
+  datosUsuario: PropTypes.array,
   setSelectedUser: PropTypes.func,
-  selectedUser: PropTypes.func,
-  chatSection: PropTypes.func,
+  selectedUser: PropTypes.object,
+  chatSection: PropTypes.node,
 };
 
 export default TabColumn;
