@@ -94,6 +94,25 @@
 <img src="https://media1.giphy.com/media/xcFJX6T9z2iqiB9Ud9/giphy.gif" width="30px">Capturas de Pantalla
 </h1>
 
+<div align="center">
+<img src="client\src\assets\laptopChat.png" width="240px">
+<span style="margin-left: 20px;">
+<img src="client\src\assets\laptopMatch.png" width="240px">
+<span style="margin-left: 20px;">
+<img src="client\src\assets\laptopMatchChat.png" width="240px">
+</div>
+
+<br/>
+<br/>
+<br/>
+<div align="center">
+<img src="client\src\assets\mobileHome.png" width="120px" height="240">
+<span style="margin-left: 20px;">
+<img src="client\src\assets\mobilePerfil.png" width="120px" height="240">
+<span style="margin-left: 20px;">
+<img src="client\src\assets\mobileMatch.png" width="120px" height="240">
+</div>
+
 ## 🤝 Agradecimientos
 
 <div align='center'>
