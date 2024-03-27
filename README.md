@@ -26,6 +26,39 @@
 
 <hr/>
 
+### Deploy de la app
+¿Cómo veo en local el Front y el Back ?
+1ro: copiar el repositorio con: git clone https://github.com/katy089/s13-05-t-node-react.git
+
+-> Instación de dependencias: $ npm install
+
+-> Para correr la app:
+
+En development: $ npm run start
+
+(watch mode)
+
+$ npm run start:dev
+En modo produccion: $ npm run start:prod
+
+$ npm run test:cov
+
+weeb 2ro.: para el Front, ir al repositorio en client y ya dentro:
+-> Instación de dependencias: $ npm install
+
+-> Para correr la app:
+
+En development: $ npm run dev
+
+-> Para correr la app:
+
+En development: $ npm run dev
+
+web 3ro.: para el Back, ir al repositorio en api y ya dentro:
+
+En development: $ npm start
+
+
 #### 🎨 UX/UI:
 
 | <p align="center"><img src="https://www.nicepng.com/png/full/128-1280406_user-icon-png.png" width=50></p>                                                                                                                                                                                                                                                                                                     |
